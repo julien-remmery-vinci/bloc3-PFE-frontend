@@ -12,18 +12,17 @@ export class LoginComponent {
   password: string = '';
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(protected authService: AuthService, private router: Router) {}
 
   onSubmit() {
     if (this.username && this.password) {
       this.authService.login(this.username, this.password).subscribe(
           (response) => {
-            console.log('Login successful', response);
-            this.router.navigate(['/dashboard']);
+            //this.router.navigate(['/welcome']);
           },
           (error) => {
             console.error('Login failed', error);
-            this.errorMessage = error; // Show the error message in the UI
+            this.errorMessage = error;
           }
       );
     } else {

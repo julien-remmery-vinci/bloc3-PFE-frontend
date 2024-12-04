@@ -7,7 +7,9 @@ import {FormsComponent} from "./pages/forms/forms.component";
 import {BrowserModule} from "@angular/platform-browser";
 import {SidebarComponent} from "./assets/sidebar/sidebar.component";
 import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http"; // Importez le module de routage
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HttpInterceptorService} from "./services/http.interceptor";
+import {AuthGuard} from "./guard/auth.guard";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,12 @@ import {HttpClientModule} from "@angular/common/http"; // Importez le module de 
     FormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+      AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
+
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

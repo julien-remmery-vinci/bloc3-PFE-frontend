@@ -1,7 +1,13 @@
-
-<a routerLink="/login">Login</a>
-<br>
-<a routerLink="/dashboard">Dashboard</a>
-<br>
-<a routerLink="/forms">Forms</a>
-<br>
+<nav>
+    <ul>
+        <li *ngIf="authService.isTokenValid()">
+            <a href="/dashboard">Dashboard</a>
+        </li>
+        <li *ngIf="!authService.isTokenValid()">
+            <a href="/login">Login</a>
+        </li>
+        <li *ngIf="authService.isTokenValid()">
+            <a href="#" (click)="authService.logout()">Logout</a>
+        </li>
+    </ul>
+</nav>
