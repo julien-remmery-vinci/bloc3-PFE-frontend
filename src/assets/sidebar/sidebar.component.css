@@ -1,0 +1,14 @@
+/* Logo size adjustment */
+.logo {
+    height: 40px;  /* Adjust height as needed */
+    width: auto;   /* Maintain aspect ratio */
+}
+
+/* Optional margin for the logout button */
+.logout-btn {
+    margin-left: 10px;
+}
+.custom-toolbar {
+    background-color: #013238; /* Replace with your hex color */
+    color: #ffffff; /* Adjust text color if needed */
+}

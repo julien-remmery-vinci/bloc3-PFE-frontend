@@ -3,12 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import {LoginComponent} from "./pages/login/login.component";
 import {FormsComponent} from "./pages/forms/forms.component";
+import {AuthGuard} from "./guard/auth.guard";
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'forms', component: FormsComponent },
+  { path: 'forms', component: FormsComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
