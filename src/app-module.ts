@@ -10,6 +10,14 @@ import {FormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HttpInterceptorService} from "./services/http.interceptor";
 import {AuthGuard} from "./guard/auth.guard";
+import {NgxLoadingModule} from "ngx-loading";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatButtonModule} from "@angular/material/button";
+import {NgOptimizedImage} from "@angular/common";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -21,16 +29,24 @@ import {AuthGuard} from "./guard/auth.guard";
 
   ],
   imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatToolbarModule,
     AppRoutingModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    NgxLoadingModule.forRoot({}),
+    BrowserAnimationsModule,
+    MatButtonModule,
+    NgOptimizedImage,
+
   ],
   providers: [
       AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
-
-
   ],
   bootstrap: [AppComponent]
 })

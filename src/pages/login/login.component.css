@@ -1,0 +1,32 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Reduce space between form fields */
+}
+
+.compact-form-field {
+    width: 100%;
+    margin-bottom: 8px; /* Reduce space below each form field */
+}
+
+.full-width {
+    width: 100%;
+    margin-top: 8px; /* Reduce space above the button */
+}
+
+.mat-form-field-infix {
+    padding: 0 0 0 8px !important; /* Reduce padding inside form fields */
+}
+
+.mat-form-field-underline {
+    margin-bottom: 2px; /* Reduce margin below the underline */
+}
+
+.mat-form-field-subscript-wrapper {
+    margin-top: 2px; /* Reduce margin above the error message */
+}
+
+.error-message {
+    color: red;
+    margin-top: 8px; /* Reduce space above the error message */
+}
