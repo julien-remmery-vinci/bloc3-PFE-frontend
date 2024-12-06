@@ -2,14 +2,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import {LoginComponent} from "./pages/login/login.component";
+import {FormsEsgCompleteComponent} from "./pages/forms-esg-complete/forms-esg-complete.component";
+import {FormsOddCompleteComponent} from "./pages/forms-odd-complete/forms-odd-complete.component";
 import {FormsComponent} from "./pages/forms/forms.component";
 import {AuthGuard} from "./guard/auth.guard";
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'forms', component: FormsComponent, canActivate: [AuthGuard] },
+  { path: 'forms/esg/complete', component: FormsEsgCompleteComponent, canActivate: [AuthGuard] },
+  { path: 'forms/odd/complete', component: FormsOddCompleteComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

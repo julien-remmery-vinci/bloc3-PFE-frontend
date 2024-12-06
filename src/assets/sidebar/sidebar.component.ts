@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 
 @Component({
@@ -6,8 +6,19 @@ import {AuthService} from "../../services/auth.service";
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
+  user:any;
 
   constructor(protected authService: AuthService) {}
+
+  ngOnInit(): void {
+    if(this.authService.isTokenValid()){
+      this.authService.user.subscribe(user => {
+        this.user = user;
+      });
+    }
+  }
+
+
 
 }

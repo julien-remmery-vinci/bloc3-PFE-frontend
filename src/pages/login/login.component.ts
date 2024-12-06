@@ -22,6 +22,8 @@ export class LoginComponent {
       this.authService.login(this.username, this.password).subscribe(
           (response) => {
             setTimeout(() => this.loadingService.hideLoading(), 1100); // Hide spinner after 2 seconds
+            this.loadingService.hideLoading();
+            this.router.navigate(['/forms']);
           },
           (error) => {
             this.loading = false;

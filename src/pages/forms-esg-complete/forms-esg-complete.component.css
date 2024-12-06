@@ -1,0 +1,17 @@
+.flex {
+    display: flex;
+}
+
+.questions {
+    width: 20%;
+    height: 92vh;
+    background-color: #b5cdbf;
+}
+
+.question {
+    cursor: pointer;
+}
+
+.style-none {
+    list-style: none;
+}
