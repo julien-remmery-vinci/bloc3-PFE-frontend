@@ -1,1 +1,22 @@
-<p>forms-esg-complete works!</p>
+<div class="flex">
+    <div class="questions">
+        <div (click)="selectQuestion(question)" *ngFor="let question of questions" class="question">
+            <p>{{ question.text }}</p>
+        </div>
+    </div>
+    <div>
+        <div>
+            <p>Question: {{ selectedQuestion.text }}</p>
+            <div *ngFor="let answer of selectedQuestion.answers">
+                <label>{{ answer }}</label>
+                <input type="radio" name="answer">
+            </div>
+        </div>
+        <div *ngIf="!formEnd">
+            <button (click)="nextQuestion(selectedQuestion)">Question suivante</button>
+        </div>
+        <div *ngIf="formEnd">
+            <button (click)="submitForm(form)">Soumettre le questionnaire</button>
+        </div>
+    </div>
+</div>

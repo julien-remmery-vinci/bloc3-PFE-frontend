@@ -1,16 +1,10 @@
 import { Component } from '@angular/core';
-import {map, Observable} from 'rxjs';
-import {HttpClient} from "@angular/common/http";
+import { map, Observable, Subscription } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
 import { Router } from '@angular/router';
 import { AuthService } from 'src/services/auth.service';
-
-export interface Form {
-  form_id?: number; // Optional field, as indicated by Option in Rust
-  company: number;
-  form_type: string;
-  nb_questions: number;
-  template: string;
-}
+import { User } from 'src/types/User';
+import { Form } from 'src/types/Form';
 
 @Component({
   selector: 'app-forms',
@@ -18,29 +12,47 @@ export interface Form {
   styleUrls: ['./forms.component.css']
 })
 export class FormsComponent {
-  constructor(private http: HttpClient, private router: Router, private authservice: AuthService) {}
-  
-  private apiUrl = `http://127.0.0.1:3000/forms/user/${this.authservice}`;
-
+  private user: User | null = null;
+  private apiUrl!: string;
+  private userSubscription!: Subscription;
   forms: Form[] = [];
 
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private authservice: AuthService
+  ) {}
+
   ngOnInit(): void {
+    this.userSubscription = this.authservice.user.subscribe(user => {
+      this.user = user;
+      if (this.user) {
+        this.apiUrl = `http://127.0.0.1:3000/forms/user/${this.user.user_id}`;
+      }
+    });
     this.getForms().subscribe(forms => {
       this.forms = forms;
     });
   }
 
-  getForms(): Observable<Form[]> {
+  ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+  }
+
+  private getForms(): Observable<Form[]> {
     return this.http.get<Form[]>(this.apiUrl).pipe(
       map(response => response)
     );
   }
 
+  // TODO : SUPPRIMER
+  exempleClick() {
+    this.router.navigate([`/forms/esg/complete`], { state: { form: null } });
+  }
+
   onFormClick(form: Form): void {
-    if (form.form_type === 'ESG') {
-      this.router.navigate(['/forms/esg/complete'], { state: { form } });
-    } else if (form.form_type === 'ODD') {
-      this.router.navigate(['/forms/odd/complete'], { state: { form } });
-    }
+    this.router.navigate([`/forms/${form.form_type.toLowerCase()}/complete`], { state: { form } });
   }
 }

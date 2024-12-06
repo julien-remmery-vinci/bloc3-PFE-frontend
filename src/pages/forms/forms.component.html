@@ -1,6 +1,11 @@
 <div class="container-list">
     <h1>Questionnaires</h1>
+    <div (click)="exempleClick()" class="container-item">
+      <h3>Questionnaire exemple</h3>
+      <p>10 questions</p>
+    </div>
     <div (click)="onFormClick(form)" class="container-item" *ngFor="let form of forms">
-      <h2>Form: {{ form.form_id }}</h2>
+      <h3>Questionnaire {{form.form_type}}</h3>
+      <p>{{form.nb_questions}} questions</p>
     </div>
 </div>

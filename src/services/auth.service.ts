@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, map, Observable} from 'rxjs';
 import {HttpClient} from "@angular/common/http";
+import { User } from 'src/types/User';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import {HttpClient} from "@angular/common/http";
 export class AuthService {
   private apiUrl = 'http://127.0.0.1:3000/auth/login';
   private userSubject: BehaviorSubject<any>;
-  public user: Observable<any>;
+  public user: Observable<User>;
 
   constructor(private http: HttpClient) {
     this.userSubject = new BehaviorSubject<any>(this.getUserFromStorage());

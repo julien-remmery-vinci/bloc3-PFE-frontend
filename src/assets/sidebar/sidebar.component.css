@@ -9,6 +9,7 @@
     margin-left: 10px;
 }
 .custom-toolbar {
+    height: 8vh;
     background-color: #013238; /* Replace with your hex color */
     color: #ffffff; /* Adjust text color if needed */
 }
