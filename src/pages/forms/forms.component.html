@@ -1,1 +1,6 @@
-<p>forms works!</p>
+<div class="container-list">
+    <h1>Questionnaires</h1>
+    <div (click)="onFormClick(form)" class="container-item" *ngFor="let form of forms">
+      <h2>Form: {{ form.form_id }}</h2>
+    </div>
+</div>
