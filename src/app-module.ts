@@ -27,7 +27,7 @@ import { RegisterComponent } from './pages/register/register.component';
     LoginComponent,
     FormsComponent,
     SidebarComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   imports: [
     MatFormFieldModule,
