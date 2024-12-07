@@ -53,6 +53,11 @@ export class AuthService {
 
   }
 
+  registerUser(user: User): Observable<{ message: string }> {
+    const apiUrl = 'http://127.0.0.1:3000/register';
+    return this.http.post<{ message: string }>(apiUrl, user);
+  }  
+
   isTokenValid(): boolean {
     const token = this.getToken();
     if(token){
@@ -60,6 +65,11 @@ export class AuthService {
       return expirationDate ? expirationDate  > new Date() : false;
     }
     return false;
+  }
+
+  isAdmin(): boolean {
+    const user = this.userSubject.getValue();
+    return user && user.role === 'admin';
   }
   private getTokenExpirationDate(token: string): Date | null {
     const decoded: any = this.decodeToken(token);
