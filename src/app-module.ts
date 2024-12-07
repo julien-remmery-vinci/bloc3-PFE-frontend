@@ -6,7 +6,7 @@ import {LoginComponent} from "./pages/login/login.component";
 import {FormsComponent} from "./pages/forms/forms.component";
 import {BrowserModule} from "@angular/platform-browser";
 import {SidebarComponent} from "./assets/sidebar/sidebar.component";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HttpInterceptorService} from "./services/http.interceptor";
 import {AuthGuard} from "./guard/auth.guard";
@@ -18,6 +18,7 @@ import {NgOptimizedImage} from "@angular/common";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
@@ -25,8 +26,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     DashboardComponent,
     LoginComponent,
     FormsComponent,
-    SidebarComponent
-
+    SidebarComponent,
+    RegisterComponent,
   ],
   imports: [
     MatFormFieldModule,
@@ -42,7 +43,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     BrowserAnimationsModule,
     MatButtonModule,
     NgOptimizedImage,
-
+    ReactiveFormsModule,
   ],
   providers: [
       AuthGuard,
