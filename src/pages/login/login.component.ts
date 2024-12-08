@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import {LoadingService} from "../../services/loading.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-login',
@@ -9,31 +10,45 @@ import {LoadingService} from "../../services/loading.service";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  username: string = '';
-  password: string = '';
-  errorMessage: string = '';
+  loginForm: FormGroup;
+  submitted = false;
+  successMessage = '';
+  errorMessage = '';
   loading: boolean = false;
 
-  constructor(protected authService: AuthService, private router: Router,private loadingService:LoadingService) {}
+  constructor(private fb: FormBuilder,protected authService: AuthService, private router: Router,private loadingService:LoadingService) {
+    this.loginForm = this.fb.group({
+      login: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
+  }
 
+  get f() {
+    return this.loginForm.controls;
+  }
   onSubmit() {
-    if (this.username && this.password) {
+    this.submitted = true;
+    if (this.loginForm.invalid) {
+      return;
+    }
+    let loginData = { ...this.loginForm.value };
+
+    if (loginData.login && loginData.password) {
       this.loadingService.showLoading()
-      this.authService.login(this.username, this.password).subscribe(
-          (response) => {
+      this.authService.login(loginData.login, loginData.password).subscribe(
+          (response: { message: string }) => {
+            this.successMessage = response.message;
+            this.errorMessage = '';
             setTimeout(() => this.loadingService.hideLoading(), 1100); // Hide spinner after 2 seconds
-            this.loadingService.hideLoading();
             this.router.navigate(['/forms']);
+            console.log('Réponse de l’API :', response);
           },
-          (error) => {
-            this.loading = false;
-            console.error('Login failed', error);
-            this.errorMessage = error;
+          (error: any) => {
+            this.errorMessage = "Une erreur s'est produite lors de l'enregistrement.";
+            this.successMessage = '';
+            console.error('Erreur API :', error);
           }
       );
-    } else {
-      this.loading = false;
-      this.errorMessage = 'Please fill in both fields.';
     }
   }
 }

@@ -18,6 +18,7 @@ import {NgOptimizedImage} from "@angular/common";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {AnimatedButtonComponent} from "./assets/animated-button/animated-button.component";
 import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
@@ -43,6 +44,7 @@ import { RegisterComponent } from './pages/register/register.component';
     BrowserAnimationsModule,
     MatButtonModule,
     NgOptimizedImage,
+    AnimatedButtonComponent,
     ReactiveFormsModule,
   ],
   providers: [
