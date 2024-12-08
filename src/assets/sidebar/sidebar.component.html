@@ -4,7 +4,9 @@
     <div class="d-flex">
         <button *ngIf="!authService.isTokenValid()" [routerLink]="['/login']" mat-button class="btn btn-outline-light">Se connecter</button>
         <button *ngIf="authService.isTokenValid()" [routerLink]="['/dashboard']" mat-button class="btn btn-outline-light">Panneau de gestion</button>
+        <button *ngIf="authService.isAdmin()" [routerLink]="['/register']" mat-button class="btn btn-outline-light">Inscription</button>
         <button *ngIf="authService.isTokenValid()" (click)="authService.logout()" [routerLink]="['/']" mat-button class="logout-btn btn btn-outline-light">Se déconnecter</button>
     </div>
+    <span *ngIf="user" class="mr-3">Bienvenue {{ user.firstname }} {{user.lastname}}</span>
 
 </mat-toolbar>

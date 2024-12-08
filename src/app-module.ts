@@ -19,6 +19,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {AnimatedButtonComponent} from "./assets/animated-button/animated-button.component";
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {AnimatedButtonComponent} from "./assets/animated-button/animated-button.
     DashboardComponent,
     LoginComponent,
     FormsComponent,
-    SidebarComponent
+    SidebarComponent,
+    RegisterComponent,
   ],
   imports: [
     MatFormFieldModule,

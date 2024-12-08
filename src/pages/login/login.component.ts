@@ -40,7 +40,7 @@ export class LoginComponent {
             this.successMessage = response.message;
             this.errorMessage = '';
             setTimeout(() => this.loadingService.hideLoading(), 1100); // Hide spinner after 2 seconds
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/forms']);
             console.log('Réponse de l’API :', response);
           },
           (error: any) => {
