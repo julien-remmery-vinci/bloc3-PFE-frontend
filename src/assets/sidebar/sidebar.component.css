@@ -4,7 +4,6 @@
     width: auto;   /* Maintain aspect ratio */
 }
 
-/* Optional margin for the logout button */
 .logout-btn {
     margin-left: 10px;
 }
