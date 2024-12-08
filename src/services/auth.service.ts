@@ -34,6 +34,7 @@ export class AuthService {
     localStorage.setItem('authToken', token);
   }
   private setUser(user: any): void {
+    localStorage.setItem('authUser', JSON.stringify(user));
     this.userSubject.next(user);
   }
   private getToken(): string | null {
@@ -44,6 +45,7 @@ export class AuthService {
     localStorage.removeItem('authToken');
   }
   private clearUser(): void {
+    localStorage.removeItem('authUser');
     this.userSubject.next(null);
   }
 
@@ -84,7 +86,7 @@ export class AuthService {
     }
     return null;
   }
-  private getUserFromStorage(): any {
+  public getUserFromStorage(): any {
     const user = localStorage.getItem('authUser');
     return user ? JSON.parse(user) : null;
   }

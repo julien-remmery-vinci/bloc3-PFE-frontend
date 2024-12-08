@@ -14,12 +14,13 @@ import {NgxLoadingModule} from "ngx-loading";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
-import {NgOptimizedImage} from "@angular/common";
+import {NgOptimizedImage, CommonModule} from "@angular/common";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {AnimatedButtonComponent} from "./assets/animated-button/animated-button.component";
+import { HomeComponent } from './pages/home/home.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { AnimatedButtonComponent } from './assets/animated-button/animated-button.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import { RegisterComponent } from './pages/register/register.component';
     LoginComponent,
     FormsComponent,
     SidebarComponent,
+    HomeComponent,
     RegisterComponent,
+
   ],
   imports: [
     MatFormFieldModule,
@@ -44,8 +47,10 @@ import { RegisterComponent } from './pages/register/register.component';
     BrowserAnimationsModule,
     MatButtonModule,
     NgOptimizedImage,
-    AnimatedButtonComponent,
+    CommonModule,
     ReactiveFormsModule,
+      AnimatedButtonComponent
+
   ],
   providers: [
       AuthGuard,

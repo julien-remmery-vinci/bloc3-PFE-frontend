@@ -7,9 +7,11 @@ import {FormsOddCompleteComponent} from "./pages/forms-odd-complete/forms-odd-co
 import {FormsComponent} from "./pages/forms/forms.component";
 import {AuthGuard} from "./guard/auth.guard";
 import { RegisterComponent } from './pages/register/register.component';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'forms', component: FormsComponent, canActivate: [AuthGuard] },

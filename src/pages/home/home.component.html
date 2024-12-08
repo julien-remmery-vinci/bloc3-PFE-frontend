@@ -1,0 +1,13 @@
+<!-- src/pages/home/home.component.html -->
+ <p>home loaded</p>
+<div *ngIf="user">
+    <h1>Welcome, {{ user.firstname }} {{ user.lastname }}</h1>
+    <div *ngIf="user.role === 'admin'">
+      <p>This is the admin dashboard.</p>
+      <!-- Contenu spécifique à l'admin -->
+    </div>
+    <div *ngIf="user.role !== 'admin'">
+      <p>This is the user dashboard.</p>
+      <!-- Contenu spécifique à l'utilisateur normal -->
+    </div>
+  </div>
