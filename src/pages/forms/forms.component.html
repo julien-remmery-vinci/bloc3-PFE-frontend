@@ -1,5 +1,6 @@
 <div>
     <h1>Questionnaires</h1>
+    <h3 *ngIf="forms.length == 0">Vous n'avez pas de questionnaires à completer pour le moment</h3>
     <div class="container-list">
       <div (click)="onFormClick(form)" class="container-item" *ngFor="let form of forms">
         <h3>Questionnaire {{form.form.type}}</h3>
