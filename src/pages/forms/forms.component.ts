@@ -24,10 +24,9 @@ export class FormsComponent {
     });
   }
 
-  
   getForms(): Observable<Form[]> {
-      return this.http.get<Form[]>(this.apiUrl).pipe(
-        map(response => response)
+    return this.http.get<Form[]>(this.apiUrl).pipe(
+      map(response => response)
     );
   }
 
