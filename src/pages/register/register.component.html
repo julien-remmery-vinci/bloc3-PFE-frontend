@@ -1,13 +1,12 @@
 <div class="register-container">
   <h1>Enregistrer un nouvel utilisateur</h1>
 
-  <!-- Notifications -->
   <div *ngIf="successMessage" class="notification success">
     {{ successMessage }}
   </div>
   <div *ngIf="errorMessage" class="notification error">
     {{ errorMessage }}
-  </div>
+  </div>  
 
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div>
