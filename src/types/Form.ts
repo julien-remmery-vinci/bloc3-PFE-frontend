@@ -1,7 +1,5 @@
 export interface Form {
     form_id?: number;
-    company: number;
+    company_id: number;
     type: string;
-    nb_questions: number;
-    template: string;
 }
