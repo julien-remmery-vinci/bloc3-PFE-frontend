@@ -17,10 +17,20 @@ export class RegisterComponent {
     this.registerForm = this.fb.group({
       firstname: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
+      login: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       role: ['', [Validators.required]],
       company_id: [''],
+    });
+
+    this.registerForm.get('role')?.valueChanges.subscribe((role) => {
+      const companyIdControl = this.registerForm.get('company_id');
+      if (role === 'user') {
+        companyIdControl?.setValidators([Validators.required]);
+      } else {
+        companyIdControl?.clearValidators();
+      }
+      companyIdControl?.updateValueAndValidity();
     });
   }
 
@@ -30,24 +40,44 @@ export class RegisterComponent {
 
   onSubmit() {
     this.submitted = true;
-
-    // Arrêtez si le formulaire est invalide
+  
     if (this.registerForm.invalid) {
+      if (
+        this.registerForm.get('role')?.value === 'user' &&
+        !this.registerForm.get('company_id')?.value
+      ) {
+        this.errorMessage = "Un utilisateur doit avoir l'id de l'entreprise.";
+      } else {
+        this.errorMessage = "Veuillez corriger les erreurs dans le formulaire.";
+      }
       return;
     }
-
-    // Appel à l'API pour l'enregistrement
-    this.authService.registerUser(this.registerForm.value).subscribe(
+  
+    let formValues = { ...this.registerForm.value };
+    if (!formValues.company_id) {
+      formValues.company_id = null;
+    }
+  
+    this.authService.registerUser(formValues).subscribe(
       (response: { message: string }) => {
-        this.successMessage = response.message;
+        this.successMessage = "Registration successful!";
         this.errorMessage = '';
-        console.log('Réponse de l’API :', response);
+        console.log('API Response:', response);
+  
+        this.registerForm.reset();
+        this.submitted = false;
       },
       (error: any) => {
-        this.errorMessage = "Une erreur s'est produite lors de l'enregistrement.";
         this.successMessage = '';
-        console.error('Erreur API :', error);
+        if (error.status === 409) {
+          this.errorMessage = "L'email est déjà utilisé.";
+        } else if (error.status === 400) {
+          this.errorMessage = "Les données fournies sont invalides.";
+        } else {
+          this.errorMessage = "Une erreur s'est produite. Réessayez plus tard.";
+        }
+        console.error('API Error:', error);
       }
     );
-  }
+  }  
 }

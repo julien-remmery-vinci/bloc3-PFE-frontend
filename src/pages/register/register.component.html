@@ -1,35 +1,44 @@
 <div class="register-container">
-  <h1>Register New User</h1>
+  <h1>Enregistrer un nouvel utilisateur</h1>
+
+  <!-- Notifications -->
+  <div *ngIf="successMessage" class="notification success">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="notification error">
+    {{ errorMessage }}
+  </div>
+
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div>
-      <label for="firstname">First Name</label>
+      <label for="firstname">Prénom</label>
       <input id="firstname" type="text" formControlName="firstname" />
       <div class="error" *ngIf="submitted && f['firstname'].errors?.['required']">
-        First name is required.
+        Le prénom est requis.
       </div>
     </div>
 
     <div>
-      <label for="lastname">Last Name</label>
+      <label for="lastname">Nom</label>
       <input id="lastname" type="text" formControlName="lastname" />
       <div class="error" *ngIf="submitted && f['lastname'].errors?.['required']">
-        Last name is required.
+        Le nom est requis.
       </div>
     </div>
 
     <div>
-      <label for="email">Email</label>
-      <input id="email" type="email" formControlName="email" />
-      <div class="error" *ngIf="submitted && f['email'].errors?.['required']">
-        Email is required.
+      <label for="login">Email</label>
+      <input id="login" type="email" formControlName="login" />
+      <div class="error" *ngIf="submitted && f['login'].errors?.['required']">
+        L'email est requis.
       </div>
-      <div class="error" *ngIf="submitted && f['email'].errors?.['email']">
-        Please enter a valid email (e.g., user@example.com).
+      <div class="error" *ngIf="submitted && f['login'].errors?.['email']">
+        Veillez entrer un email valide. Ex: exemple@gmail.com
       </div>
     </div>
 
     <div>
-      <label for="password">Password</label>
+      <label for="password">Mot de passe</label>
       <input
         id="password"
         type="password"
@@ -37,30 +46,35 @@
         placeholder="At least 6 characters"
       />
       <div class="error" *ngIf="submitted && f['password'].errors?.['required']">
-        Password is required.
+        Le mot de passe est requis.
       </div>
       <div class="error" *ngIf="submitted && f['password'].errors?.['minlength']">
-        Password must be at least 6 characters long.
+        Le mot de passe doit contenir au moins 6 caractères.
       </div>
     </div>
 
     <div>
-      <label for="role">Role</label>
+      <label for="role">Rôle</label>
       <select id="role" formControlName="role">
-        <option value="" disabled>Select Role</option>
+        <option value="" disabled>Séléctionner le rôle</option>
         <option value="admin">Admin</option>
         <option value="user">User</option>
       </select>
       <div class="error" *ngIf="submitted && f['role'].errors?.['required']">
-        Role is required.
+        Le rôle est requis.
       </div>
     </div>
 
     <div>
-      <label for="company_id">Company ID (optional)</label>
+      <label for="company_id">Entreprise ID (optional)</label>
       <input id="company_id" type="number" formControlName="company_id" />
     </div>
 
-    <button type="submit" [disabled]="registerForm.invalid">Register</button>
+    <div class="button-container">
+      <app-animated-button
+        [text]="'Inscrire'"
+        [disabled]="registerForm.invalid"
+      ></app-animated-button>
+    </div>
   </form>
 </div>
