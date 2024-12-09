@@ -1,10 +1,22 @@
-<!-- src/pages/home/home.component.html -->
 <div *ngIf="user">
     <h1>Bienvenue, {{ user.firstname }} {{ user.lastname }}</h1>
-    <div *ngIf="user.role === 'admin'">
-      <p>Voici le tableau de bord administrateur.</p>
+    <div *ngIf="user.role === 'admin'; else userDashboard">
+        <h2>Actions disponibles</h2>
+        <div class="admin-actions">
+            <mat-card class="action-card" (click)="navigateTo('dashboard')">
+                <mat-card-content>
+                    <h3>Aller au tableau de bord</h3>
+                    <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="action-card" (click)="navigateTo('register')">
+                <mat-card-content>
+                    <h3>Enregistrer un nouvel utilisateur</h3>
+                    <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+                </mat-card-content>
+            </mat-card>
+        </div>
     </div>
-    <div *ngIf="user.role !== 'admin'">
-      <p>Voici le tableau de bord utilisateur.</p>
-    </div>
+    <ng-template #userDashboard>
+    </ng-template>
 </div>

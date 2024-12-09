@@ -3,4 +3,28 @@ ngx-loading .backdrop {
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family:"Space Grotesk", "Helvetica Neue", sans-serif; }
+
+body.dark-mode {
+    background-color: #121212;
+    color: #fff;
+}
+
+body.dark-mode button {
+    background-color: #333;
+    color: #fff;
+}
+
+.custom-toolbar {
+    background-color: #013238 !important; /* Couleur de fond de la navbar */
+    color: #ffffff !important; /* Couleur du texte de la navbar */
+}
+
+.custom-toolbar button {
+    background-color: transparent !important;
+    color: #ffffff !important;
+}
+
+.custom-toolbar mat-icon {
+    color: #ffffff !important;
+}
