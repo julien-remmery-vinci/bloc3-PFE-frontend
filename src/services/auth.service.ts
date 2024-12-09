@@ -41,7 +41,9 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem("authToken");
   }
-
+  getCurrentUser(): any {
+    return this.userSubject.getValue();
+  }
   private clearToken(): void {
     localStorage.removeItem("authToken");
   }
@@ -73,6 +75,10 @@ export class AuthService {
   isAdmin(): boolean {
     const user = this.userSubject.getValue();
     return user && user.role === "admin";
+  }
+  isUser(): boolean {
+    const user = this.userSubject.getValue();
+    return user && user.role === "user";
   }
   private getTokenExpirationDate(token: string): Date | null {
     const decoded: any = this.decodeToken(token);

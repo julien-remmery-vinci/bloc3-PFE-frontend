@@ -34,6 +34,15 @@
     >
       Inscription
     </button>
+
+    <button
+      *ngIf="authService.isUser()"
+      [routerLink]="['/userRegister']"
+      mat-button
+      class="btn btn-outline-light"
+    >
+      Inscription
+    </button>
     <button
       *ngIf="authService.isTokenValid()"
       (click)="authService.logout()"

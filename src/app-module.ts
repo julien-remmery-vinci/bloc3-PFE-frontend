@@ -25,6 +25,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { ThemeService } from "./app/theme/theme.service";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatCardModule } from '@angular/material/card';
+import { UserRegisterComponent } from "./pages/user-register/user-register.component";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { MatCardModule } from '@angular/material/card';
     SidebarComponent,
     HomeComponent,
     RegisterComponent,
+    UserRegisterComponent
   ],
   imports: [
     MatFormFieldModule,
