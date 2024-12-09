@@ -1,4 +1,4 @@
-interface AnswerEsg {
+export interface AnswerEsg {
     answer_id: number;
     question_id: number;
     template: string;
