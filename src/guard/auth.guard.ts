@@ -15,7 +15,6 @@ export class AuthGuard implements CanActivate {
 
     this.authService.getUser().subscribe(user => {
       this.currentUser = user;
-      console.log('Utilisateur actuel via subscription:', this.currentUser);
     });
 
     if (this.authService.isTokenValid()) {
