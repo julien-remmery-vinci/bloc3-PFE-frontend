@@ -13,20 +13,44 @@ import { CompanyService } from 'src/services/company.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
+  
   companies: Company[] = [];
   searchTerm: string = ''; // Search bar input
   filterTerm: string = ''; // Dropdown filter
+  progressMap: { [key: string]: number } = {}; // Map to store progress by company ID
+  
 
   constructor(
     private companyService: CompanyService
   ) {}
 
   ngOnInit(): void {
-    // Fetch companies from the service
-    this.companyService.getCompanies().subscribe(data => {
+    
+    this.companyService.getCompanies().subscribe((data) => {
       this.companies = data;
+      this.companyService.getFormStatus(1).subscribe(
+        (response) => {
+          console.log('API Response:', response);
+        },
+        (error) => {
+          console.error('API Error:', error);
+        }
+      );
+      console.log('Companies:', this.companies);
+      this.companies.forEach((company) => {
+        if (company.company_id) {
+          this.progressMap[company.company_id] = 0; // Default progress value
+          this.companyService.getFormStatus(company.company_id).subscribe((status) => {
+            // Ensure 'progress' exists and is a number, fallback to 0 if null or undefined
+            const progress = status?.progress ?? 0;
+            this.progressMap[company.company_id!] = progress;
+          }, (error) => {
+            console.error(`Failed to fetch progress for company ID: ${company.company_id}`, error);
+          });
+        }
+      });
     });
-}
+  }
 
 // Function to filter companies based on search term and filter term
 filteredCompanies(): Company[] {
@@ -56,9 +80,4 @@ isDropdownVisible: boolean = false; // Controls dropdown visibility
   toggleDropdown(): void {
     this.isDropdownVisible = !this.isDropdownVisible;
   }
-
-  goToForm(companyId: string) {
-  window.location.href = `http://127.0.0.1:3000/company/${companyId}`;
-}
-
 }
