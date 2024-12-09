@@ -9,7 +9,7 @@ export class HttpInterceptorService implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.authService.isTokenValid();
+    const token = this.authService.getToken();
 
     if (token) {
       const cloned = req.clone({

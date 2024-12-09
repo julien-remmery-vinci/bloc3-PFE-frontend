@@ -36,7 +36,7 @@ export class AuthService {
   private setUser(user: any): void {
     this.userSubject.next(user);
   }
-  private getToken(): string | null {
+  getToken(): string | null {
     return localStorage.getItem('authToken');
   }
 
