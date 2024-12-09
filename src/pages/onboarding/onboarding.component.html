@@ -11,6 +11,39 @@
   
     <form [formGroup]="onboardingForm" (ngSubmit)="onSubmit()">
       <div>
+        <label for="first_name">Prénom</label>
+        <input id="first_name" type="text" formControlName="first_name" />
+        <div class="error" *ngIf="submitted && f['first_name'].errors?.['required']">
+          Le prénom est requis.
+        </div>
+        <div class="error" *ngIf="submitted && f['first_name'].errors?.['maxLength']">
+          Le prénom ne doit pas dépasser 255 caractères.
+        </div>
+      </div>
+
+      <div>
+        <label for="last_name">Nom</label>
+        <input id="last_name" type="text" formControlName="last_name" />
+        <div class="error" *ngIf="submitted && f['last_name'].errors?.['required']">
+          Le nom est requis.
+        </div>
+        <div class="error" *ngIf="submitted && f['last_name'].errors?.['maxLength']">
+          Le nom ne doit pas dépasser 255 caractères.
+        </div>
+      </div>
+
+      <div>
+        <label for="email">Adresse e-mail</label>
+        <input id="email" type="email" formControlName="email" />
+        <div class="error" *ngIf="submitted && f['email'].errors?.['required']">
+          L'adresse e-mail est requise.
+        </div>
+        <div class="error" *ngIf="submitted && f['email'].errors?.['email']">
+          Veuillez entrer une adresse e-mail valide.
+        </div>
+      </div>
+      
+      <div>
         <label for="company_name">Nom de l'entreprise</label>
         <input id="company_name" type="text" formControlName="company_name" />
         <div class="error" *ngIf="submitted && f['company_name'].errors?.['required']">
@@ -39,7 +72,7 @@
   
       <div>
         <label for="office_address">Adresse du siège social</label>
-        <textarea id="office_address" formControlName="office_address"></textarea>
+        <input id="office_address" type="text" formControlName="office_address" />
         <div class="error" *ngIf="submitted && f['office_address'].errors?.['required']">
           L'adresse du siège social est requise.
         </div>
@@ -63,7 +96,7 @@
   
       <div>
         <label for="business_activity">Activité principale</label>
-        <textarea id="business_activity" formControlName="business_activity"></textarea>
+        <input id="business_activity" type="text" formControlName="business_activity" />
         <div class="error" *ngIf="submitted && f['business_activity'].errors?.['required']">
           L'activité principale est requise.
         </div>
@@ -87,25 +120,92 @@
   
       <div>
         <label for="labels">Labels</label>
-        <input id="labels" type="text" formControlName="labels" placeholder="Ex: label1, label2" />
-        <div class="error" *ngIf="submitted && f['labels'].errors?.['required']">
-            Les labels sont requis.
-          </div>
+        <div class="label-list">
+          <input #labelInput type="text" placeholder="Ajouter un label" />
+          <button type="button" (click)="addLabel(labelInput.value); labelInput.value = ''">
+            Ajouter
+          </button>
+          <ul>
+            <li class="label-text" *ngFor="let label of labelsArray.controls; let i = index">
+              {{ label.value }}
+              <button type="button" (click)="removeLabel(i)">Supprimer</button>
+            </li>
+          </ul>
+        </div>
+        <div class="error" *ngIf="submitted && labelsArray.length === 0">
+          Veuillez ajouter au moins un label.
+        </div>
       </div>
 
       <div>
-        <label for="template">Template</label>
-        <select id="template" formControlName="template">
-          <option value="" disabled>Sélectionnez un template</option>
-          <option *ngFor="let template of templates" [value]="template">
-            {{ template }}
-          </option>
-        </select>
-        <div class="error" *ngIf="submitted && f['template'].errors?.['required']">
-          Veuillez sélectionner un template.
+        <label>Êtes-vous propriétaire ?</label>
+        <div>
+          <input
+            type="radio"
+            id="ownerYes"
+            value="yes"
+            formControlName="is_owner"
+          />
+          <label for="ownerYes">Oui</label>
+          <input
+            type="radio"
+            id="ownerNo"
+            value="no"
+            formControlName="is_owner"
+          />
+          <label for="ownerNo">Non</label>
         </div>
-      </div>      
-  
+        <div class="error" *ngIf="submitted && f['is_owner'].errors?.['required']">
+          Cette question est requise.
+        </div>
+      </div>
+
+      <div>
+        <label>Proposez-vous des services ?</label>
+        <div>
+          <input
+            type="radio"
+            id="servicesYes"
+            value="yes"
+            formControlName="offers_services"
+          />
+          <label for="servicesYes">Oui</label>
+          <input
+            type="radio"
+            id="servicesNo"
+            value="no"
+            formControlName="offers_services"
+          />
+          <label for="servicesNo">Non</label>
+        </div>
+        <div class="error" *ngIf="submitted && f['offers_services'].errors?.['required']">
+          Cette question est requise.
+        </div>
+      </div>
+
+      <div>
+        <label>Vendez-vous des produits ?</label>
+        <div>
+          <input
+            type="radio"
+            id="productsYes"
+            value="yes"
+            formControlName="sells_products"
+          />
+          <label for="productsYes">Oui</label>
+          <input
+            type="radio"
+            id="productsNo"
+            value="no"
+            formControlName="sells_products"
+          />
+          <label for="productsNo">Non</label>
+        </div>
+        <div class="error" *ngIf="submitted && f['sells_products'].errors?.['required']">
+          Cette question est requise.
+        </div>
+      </div>
+
       <div class="button-container">
         <app-animated-button
           [text]="'Soumettre la demande'"
