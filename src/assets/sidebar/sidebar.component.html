@@ -1,12 +1,54 @@
-<mat-toolbar color="primary" class="w-100 d-flex justify-content-between align-items-center custom-toolbar">
-    <img src="./assets/images/logo_shiftingpact_verteau_blanc.png" alt="Website Logo" class="logo img-fluid">
+<mat-toolbar
+  color="primary"
+  class="w-100 d-flex justify-content-between align-items-center custom-toolbar"
+>
+  <img
+    src="./assets/images/logo_shiftingpact_verteau_blanc.png"
+    alt="Website Logo"
+    class="logo img-fluid"
+    [routerLink]="['/home']"
+  />
 
-    <div class="d-flex">
-        <button *ngIf="!authService.isTokenValid()" [routerLink]="['/login']" mat-button class="btn btn-outline-light">Se connecter</button>
-        <button *ngIf="authService.isTokenValid()" [routerLink]="['/dashboard']" mat-button class="btn btn-outline-light">Panneau de gestion</button>
-        <button *ngIf="authService.isAdmin()" [routerLink]="['/register']" mat-button class="btn btn-outline-light">Inscription</button>
-        <button *ngIf="authService.isTokenValid()" (click)="authService.logout()" [routerLink]="['/']" mat-button class="logout-btn btn btn-outline-light">Se déconnecter</button>
-    </div>
-    <span *ngIf="user" class="mr-3">Bienvenue {{ user.firstname }} {{user.lastname}}</span>
-
+  <div class="d-flex">
+    <button
+      *ngIf="!authService.isTokenValid()"
+      [routerLink]="['/login']"
+      mat-button
+      class="btn btn-outline-light"
+    >
+      Se connecter
+    </button>
+    <button
+      *ngIf="authService.isTokenValid()"
+      [routerLink]="['/dashboard']"
+      mat-button
+      class="btn btn-outline-light"
+    >
+      Panneau de gestion
+    </button>
+    <button
+      *ngIf="authService.isAdmin()"
+      [routerLink]="['/register']"
+      mat-button
+      class="btn btn-outline-light"
+    >
+      Inscription
+    </button>
+    <button
+      *ngIf="authService.isTokenValid()"
+      (click)="authService.logout()"
+      [routerLink]="['/']"
+      mat-button
+      class="logout-btn btn btn-outline-light"
+    >
+      Se déconnecter
+    </button>
+    <button mat-icon-button matTooltip="Changer de thème" (click)="toggleDarkMode()">
+      <mat-icon>{{ isDarkMode() ? "brightness_7" : "brightness_2" }}</mat-icon>
+    </button>
+  </div>
+  <span class="spacer"></span>
+  <button mat-icon-button matTooltip="Déconnexion" (click)="authService.logout()" [routerLink]="['/']" class="logout-btn">
+    <mat-icon>logout</mat-icon>
+</button>
 </mat-toolbar>

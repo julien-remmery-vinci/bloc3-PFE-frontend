@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
+import { ThemeService } from 'src/app/theme/theme.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,7 +10,7 @@ import {AuthService} from "../../services/auth.service";
 export class SidebarComponent implements OnInit {
   user:any;
 
-  constructor(protected authService: AuthService) {}
+  constructor(protected authService: AuthService, private themeService: ThemeService) {}
 
   ngOnInit(): void {
     if(this.authService.isTokenValid()){
@@ -18,7 +19,11 @@ export class SidebarComponent implements OnInit {
       });
     }
   }
+  toggleDarkMode(): void {
+    this.themeService.toggleDarkMode();
+  }
 
-
-
+  isDarkMode(): boolean {
+    return this.themeService.isDarkModeEnabled();
+  }
 }
