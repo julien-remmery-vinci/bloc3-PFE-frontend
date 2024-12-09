@@ -1,0 +1,117 @@
+<div class="register-container">
+    <h1>Vérifier l’éligibilité de mon entreprise</h1>
+  
+    <!-- Notifications -->
+    <div *ngIf="successMessage" class="notification success">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="notification error">
+      {{ errorMessage }}
+    </div>
+  
+    <form [formGroup]="onboardingForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="company_name">Nom de l'entreprise</label>
+        <input id="company_name" type="text" formControlName="company_name" />
+        <div class="error" *ngIf="submitted && f['company_name'].errors?.['required']">
+          Le nom de l'entreprise est requis.
+        </div>
+        <div class="error" *ngIf="submitted && f['company_name'].errors?.['maxLength']">
+          Le nom de l'entreprise ne doit pas dépasser 255 caractères.
+        </div>
+      </div>
+  
+      <div>
+        <label for="company_number">Numéro d'entreprise</label>
+        <input id="company_number" type="text" formControlName="company_number" />
+        <div class="error" *ngIf="submitted && f['company_number'].errors?.['required']">
+          Le numéro d'entreprise est requis.
+        </div>
+      </div>
+  
+      <div>
+        <label for="legal_form">Forme juridique</label>
+        <input id="legal_form" type="text" formControlName="legal_form" />
+        <div class="error" *ngIf="submitted && f['legal_form'].errors?.['required']">
+          La forme juridique est requise.
+        </div>
+      </div>
+  
+      <div>
+        <label for="office_address">Adresse du siège social</label>
+        <textarea id="office_address" formControlName="office_address"></textarea>
+        <div class="error" *ngIf="submitted && f['office_address'].errors?.['required']">
+          L'adresse du siège social est requise.
+        </div>
+      </div>
+  
+      <div>
+        <label for="website">Site Web</label>
+        <input id="website" type="url" formControlName="website" />
+        <div class="error" *ngIf="submitted && f['website'].errors?.['pattern']">
+          Veuillez entrer une URL valide.
+        </div>
+      </div>
+  
+      <div>
+        <label for="nace_code">Code NACE</label>
+        <input id="nace_code" type="text" formControlName="nace_code" />
+        <div class="error" *ngIf="submitted && f['nace_code'].errors?.['required']">
+          Le code NACE est requis.
+        </div>
+      </div>
+  
+      <div>
+        <label for="business_activity">Activité principale</label>
+        <textarea id="business_activity" formControlName="business_activity"></textarea>
+        <div class="error" *ngIf="submitted && f['business_activity'].errors?.['required']">
+          L'activité principale est requise.
+        </div>
+      </div>
+  
+      <div>
+        <label for="nb_workers">Nombre de travailleurs</label>
+        <input id="nb_workers" type="number" formControlName="nb_workers" />
+        <div class="error" *ngIf="submitted && f['nb_workers'].errors?.['required']">
+          Le nombre de travailleurs est requis.
+        </div>
+      </div>
+  
+      <div>
+        <label for="revenue">Revenu annuel</label>
+        <input id="revenue" type="number" formControlName="revenue" />
+        <div class="error" *ngIf="submitted && f['revenue'].errors?.['required']">
+          Le revenu annuel est requis.
+        </div>
+      </div>
+  
+      <div>
+        <label for="labels">Labels</label>
+        <input id="labels" type="text" formControlName="labels" placeholder="Ex: label1, label2" />
+        <div class="error" *ngIf="submitted && f['labels'].errors?.['required']">
+            Les labels sont requis.
+          </div>
+      </div>
+
+      <div>
+        <label for="template">Template</label>
+        <select id="template" formControlName="template">
+          <option value="" disabled>Sélectionnez un template</option>
+          <option *ngFor="let template of templates" [value]="template">
+            {{ template }}
+          </option>
+        </select>
+        <div class="error" *ngIf="submitted && f['template'].errors?.['required']">
+          Veuillez sélectionner un template.
+        </div>
+      </div>      
+  
+      <div class="button-container">
+        <app-animated-button
+          [text]="'Soumettre la demande'"
+          [disabled]="onboardingForm.invalid"
+        ></app-animated-button>
+      </div>
+    </form>
+  </div>
+  
