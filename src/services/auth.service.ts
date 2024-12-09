@@ -37,7 +37,7 @@ export class AuthService {
     localStorage.setItem('authUser', JSON.stringify(user));
     this.userSubject.next(user);
   }
-  private getToken(): string | null {
+  getToken(): string | null {
     return localStorage.getItem('authToken');
   }
 
@@ -56,7 +56,7 @@ export class AuthService {
   }
 
   registerUser(user: User): Observable<{ message: string }> {
-    const apiUrl = 'http://127.0.0.1:3000/register';
+    const apiUrl = 'http://127.0.0.1:3000/auth/register';
     return this.http.post<{ message: string }>(apiUrl, user);
   }  
 

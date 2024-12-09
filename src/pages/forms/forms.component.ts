@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { map, Observable, Subscription } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 import { Router } from '@angular/router';
-import { AuthService } from 'src/services/auth.service';
-import { User } from 'src/types/User';
 import { Form } from 'src/types/Form';
 
 @Component({
@@ -12,36 +10,21 @@ import { Form } from 'src/types/Form';
   styleUrls: ['./forms.component.css']
 })
 export class FormsComponent {
-  private user: User | null = null;
-  private apiUrl!: string;
-  private userSubscription!: Subscription;
-  forms: Form[] = [];
+  private apiUrl: string = `http://127.0.0.1:3000/forms/company`;
+  forms: any[] = [];
 
   constructor(
     private http: HttpClient,
-    private router: Router,
-    private authservice: AuthService
+    private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.userSubscription = this.authservice.user.subscribe(user => {
-      this.user = user;
-      if (this.user) {
-        this.apiUrl = `http://127.0.0.1:3000/forms/user/${this.user.user_id}`;
-      }
-    });
+  ngOnInit() {
     this.getForms().subscribe(forms => {
       this.forms = forms;
     });
   }
 
-  ngOnDestroy(): void {
-    if (this.userSubscription) {
-      this.userSubscription.unsubscribe();
-    }
-  }
-
-  private getForms(): Observable<Form[]> {
+  getForms(): Observable<Form[]> {
     return this.http.get<Form[]>(this.apiUrl).pipe(
       map(response => response)
     );
@@ -52,7 +35,7 @@ export class FormsComponent {
     this.router.navigate([`/forms/esg/complete`], { state: { form: null } });
   }
 
-  onFormClick(form: Form): void {
-    this.router.navigate([`/forms/${form.form_type.toLowerCase()}/complete`], { state: { form } });
+  onFormClick(form: any): void {   
+    this.router.navigate([`/forms/${form.form.type.toLowerCase()}/complete`], { state: { form } });
   }
 }
