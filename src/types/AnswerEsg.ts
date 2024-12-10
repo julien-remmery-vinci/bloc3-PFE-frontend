@@ -8,4 +8,5 @@ export interface AnswerEsg {
     score_now: number;
     score_commitment_pact?: number;
     is_forced_engagement: boolean;
+    is_forced_comment: boolean;
 }

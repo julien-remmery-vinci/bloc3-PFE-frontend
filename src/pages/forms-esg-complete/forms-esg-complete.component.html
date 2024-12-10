@@ -5,23 +5,60 @@
         </div>
     </div>
     <div [ngClass]="{'dark-theme': themeService.isDarkMode, 'light-theme': !themeService.isDarkMode}">
-        <div *ngIf="selectedQuestion">
-            <p>Question: {{ selectedQuestion?.question?.question }}</p>
-            <div *ngFor="let answer of selectedQuestion.answers">
-                <div *ngIf="answer.answer">
-                    <label>{{ answer.answer }}</label>
-                    <input type="radio" [value]="answer.answer_id"
-                           [(ngModel)]="selectedAnswerId"
-                           name="{{answer.answer}}"
-                    />
-                </div>
+        <p>Question: {{ selectedQuestion?.question?.question }}</p>
 
-            </div>
-        </div>
-        <div>
-            <label for="inputText">Commentaires:</label>
-            <input type="text" id="inputText">
-        </div>
+        <!-- Table for answers -->
+        <table>
+            <thead>
+            <tr>
+                <th>Answer</th>
+                <th>Maintenant</th>
+                <th>Pacte d'engagement</th>
+                <th>Commentaires</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let answer of selectedQuestion?.answers">
+                <td>
+                    <div class="answerTextdiv" *ngIf="answer.answer">
+                        <label class="answerText">{{ answer.answer }}</label>
+                    </div>
+                </td>
+                <td>
+                    <!-- Now Radio Button -->
+                    <div>
+                        <label for="now{{answer.answer_id}}">Now</label>
+                        <input
+                                type="checkbox"
+                                [id]="'now' + answer.answer_id"
+                                value="now"
+                                [checked]="isNow[answer.answer_id]"
+                                (change)="onChange(answer.answer_id,$event)"
+                                name="now{{answer.answer_id}}"
+                        />
+                    </div>
+                </td>
+                <td>
+                    <!-- Commitment Pact Radio Button -->
+                    <div>
+                        <label for="commitmentPact{{answer.answer_id}}">Commitment Pact</label>
+                        <input
+                                type="checkbox"
+                                [id]="'commitmentPact' + answer.answer_id"
+                                value="commitment_pact"
+                                [checked]= "isCommitment[answer.answer_id]"
+                                (change)="onCommitmentChange(answer.answer_id,$event)"
+                                name="commitmentGroup{{answer.answer_id}}"
+                        />
+                    </div>
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]="selectedAnswerComment[answer.answer_id]" (ngModelChange)="onAnswerChange($event)">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
         <div *ngIf="!formEnd">
             <button (click)="nextQuestion(selectedQuestion)">Question suivante</button>
         </div>
