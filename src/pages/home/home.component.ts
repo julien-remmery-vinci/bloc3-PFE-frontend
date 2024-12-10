@@ -20,19 +20,18 @@ export class HomeComponent implements OnInit {
     this.user = this.authService.getUserFromStorage();
     const token = this.authService.getToken();
     if (token) {
-    this.formService.getUserForms(token).subscribe(
-      (data) => {
-        this.forms = data;
-      },
-      (error) => {
-        this.error = error.error.message;
-      }
-    );
-    console.log(this.forms);
-  } else {
-    this.error = 'Pas de token';
-    this.router.navigate(['/login']);
-  }
+      this.formService.getUserForms(token).subscribe(
+        (data) => {
+          this.forms = data;
+        },
+        (error) => {
+          this.error = error.error.message;
+        }
+      );
+    } else {
+      this.error = 'Pas de token';
+      this.router.navigate(['/login']);
+    }
   }
 
   navigateTo(route: string): void {
@@ -40,9 +39,12 @@ export class HomeComponent implements OnInit {
   }
 
   calculateProgress(form: any): number {
-    const totalQuestions = form.questions.length;
-    const completedQuestions = form.questions.filter((q: any) => q.user_answers.length > 0).length;
-    return (completedQuestions / totalQuestions) * 100;
-  }
+    const answered = this.getAnsweredQuestionCount(form);
+    return (answered / form.questions.length) * 100;
+  }  
 
+  getAnsweredQuestionCount(form: any): number {
+    return form.questions.filter((q: any) => q.user_answers.length > 0).length;
+  }
+  
 }
