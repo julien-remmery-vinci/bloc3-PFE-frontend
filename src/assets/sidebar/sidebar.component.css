@@ -2,9 +2,9 @@
 .logo {
     height: 40px;  /* Adjust height as needed */
     width: auto;   /* Maintain aspect ratio */
+    cursor: pointer;
 }
 
-/* Optional margin for the logout button */
 .logout-btn {
     margin-left: 10px;
 }
@@ -12,4 +12,13 @@
     height: 8vh;
     background-color: #013238; /* Replace with your hex color */
     color: #ffffff; /* Adjust text color if needed */
+}
+
+.custom-toolbar .d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.custom-toolbar .spacer {
+    flex-grow: 1;
 }
