@@ -20,10 +20,10 @@
     <!-- Dropdown -->
     <div *ngIf="isDropdownVisible" class="dropdown">
       <ul>
-        <li (click)="filterTerm = ''">Tous</li>
-        <li (click)="filterTerm = 'small'">Petite entreprise</li>
-        <li (click)="filterTerm = 'medium'">Moyenne entreprise</li>
-        <li (click)="filterTerm = 'large'">Grande entreprise</li>
+        <li (click)="filterTerm = ''">Toutes les entreprises</li>
+        <li (click)="filterTerm = 'small'">Petites entreprises</li>
+        <li (click)="filterTerm = 'medium'">Moyennes entreprises</li>
+        <li (click)="filterTerm = 'large'">Grandes entreprises</li>
       </ul>
     </div>
   </div>
@@ -37,15 +37,20 @@
           <p class="text-body">Progression du formulaire ESG:</p>
           
           <div class="progress-bar">
+            <!-- Background bar -->
+            <div class="progress-bar-back"></div>
+            
+            <!-- Filled bar -->
             <div class="progress-bar-fill" [style.width.%]="progressMap[company.company_id!]">
               {{ progressMap[company.company_id!] }}%
             </div>
-            
           </div> 
                    
         </div>
-        <button class="card-button" [routerLink]="['/']">Inspecter le formulaire</button>
+        <button class="card-button" (click)="navigateTo('/forms/')">Inspecter le formulaire</button>
       </div>
     </div>
   </div>
+
+  
 </body>
