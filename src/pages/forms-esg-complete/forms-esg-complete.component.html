@@ -1,16 +1,26 @@
-<div class="flex">
-    <div class="questions">
+<div class="flex" >
+    <div class="questions" [ngClass]="{'dark-theme': themeService.isDarkMode, 'light-theme': !themeService.isDarkMode}" >
         <div (click)="selectQuestion(question)" *ngFor="let question of questions" class="question">
-            <p>{{ question.text }}</p>
+            <p>{{ question.question.question }}</p>
         </div>
     </div>
-    <div>
-        <div>
-            <p>Question: {{ selectedQuestion.text }}</p>
+    <div [ngClass]="{'dark-theme': themeService.isDarkMode, 'light-theme': !themeService.isDarkMode}">
+        <div *ngIf="selectedQuestion">
+            <p>Question: {{ selectedQuestion?.question?.question }}</p>
             <div *ngFor="let answer of selectedQuestion.answers">
-                <label>{{ answer }}</label>
-                <input type="radio" name="answer">
+                <div *ngIf="answer.answer">
+                    <label>{{ answer.answer }}</label>
+                    <input type="radio" [value]="answer.answer_id"
+                           [(ngModel)]="selectedAnswerId"
+                           name="{{answer.answer}}"
+                    />
+                </div>
+
             </div>
+        </div>
+        <div>
+            <label for="inputText">Commentaires:</label>
+            <input type="text" id="inputText">
         </div>
         <div *ngIf="!formEnd">
             <button (click)="nextQuestion(selectedQuestion)">Question suivante</button>

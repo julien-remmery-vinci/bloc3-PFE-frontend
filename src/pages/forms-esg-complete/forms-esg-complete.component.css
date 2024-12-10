@@ -5,7 +5,6 @@
 .questions {
     width: 20%;
     height: 92vh;
-    background-color: #b5cdbf;
 }
 
 .question {
@@ -14,4 +13,26 @@
 
 .style-none {
     list-style: none;
+}
+
+input {
+    width: 30%;
+}
+
+.light-theme .questions {
+    background-color: #b5cdbf;
+}
+
+.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.dark-theme .questions {
+    background-color: #3a3a3a;
+}
+
+.dark-theme {
+    background-color: #1e1e1e;
+    color: #ffffff;
 }
