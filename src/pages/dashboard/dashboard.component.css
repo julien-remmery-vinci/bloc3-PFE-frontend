@@ -162,19 +162,18 @@ html, body {
   }
   
   .progress.bar {
-    width: 100%;
-    background-color: #f3f3f3;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  
-  .progress-bar-fill {
-    height: 10px;
-    background-color: #4caf50;
-    text-align: center;
-    line-height: 10px;
-    color: white;
-    border-radius: 4px;
-    transition: width 0.3s ease;
-  }
-  
+  width: 100%;
+  background-color: #f3f3f3;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 23px;
+  background-color: #013238;
+  text-align: center;
+  line-height: 10px;
+  color: white;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}

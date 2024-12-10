@@ -31,7 +31,7 @@ export class DashboardComponent {
       this.companies.forEach((company) => {
         this.companyService.getFormStatus(company.company_id!).subscribe((status) => {
           let prog = status??0;       
-          console.log("Status: "+prog)
+          prog = Math.round(prog)
           // Ensure 'progress' exists and is a number, fallback to 0 if null or undefined
           this.progressMap[company.company_id!] = prog;
         })
