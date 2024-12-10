@@ -1,10 +1,10 @@
 import {Template} from "./template";
-import {Question} from "./Question";
+import {QuestionWithAnswer} from "./QuestionWithAnswer";
 
 export interface Form {
     form_id?: number;
     company_id: number;
     type: string;
     template: Template[]
-    questions: Question[]
+    questions: QuestionWithAnswer[]
 }
