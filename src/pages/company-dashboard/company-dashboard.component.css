@@ -62,7 +62,6 @@ html, body {
     width: 60%;
     border-radius: 1rem;
     border: none;
-    cursor: pointer;
     background-color: #013238;
     color: #fff;
     font-size: 1rem;
@@ -72,6 +71,7 @@ html, body {
     bottom: 0;
     opacity: 0;
     transition: 0.3s ease-out;
+    cursor: pointer;
 }
 
 .text-body {
@@ -93,9 +93,7 @@ html, body {
 .card:hover .card-button {
     transform: translate(-50%, 50%);
     opacity: 1;
-}
-
-.search-filter {
+}.search-filter {
     position: relative; /* Ensure the dropdown is positioned relative to this container */
     display: inline-flex;
     align-items: center;
@@ -104,9 +102,8 @@ html, body {
   
 /* Wrapper to position the search bar and filter at the top-right */
 .search-filter-wrapper {
-    position: flex; /* Keeps it fixed in place even on scroll */
-    padding-top: 50px; /* Adjust vertical position */
-    padding-left: 50px;
+    position: fixed; /* Keeps it fixed in place even on scroll */
+    top: 10px; /* Adjust vertical position */
     right: 10px; /* Adjust horizontal position */
     display: flex; /* Arrange items horizontally */
     align-items: center; /* Vertically align items */
@@ -134,8 +131,11 @@ html, body {
     font-size: 1rem;
   }
   
+  .filter svg {
+  }
+  
   .dropdown {
-    position: relative;
+    position: absolute;
     top: 105%; /* Place dropdown right below the button */
     right: 0; /* Align with the button's left edge */
     background: white;
@@ -162,7 +162,6 @@ html, body {
     background-color: #f1f1f1;
   }
   
-
   .progress-bar {
     position: relative;
     width: 100%; /* Set the full width of the progress bar */
@@ -195,4 +194,3 @@ html, body {
     border-radius: 4px; /* Match the container's border radius */
     transition: width 0.3s ease; /* Smooth transition for width changes */
   }
-
