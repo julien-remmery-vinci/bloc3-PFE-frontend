@@ -34,6 +34,24 @@
     >
       Inscription
     </button>
+
+    <button
+      *ngIf="authService.isUser()"
+      [routerLink]="['/userRegister']"
+      mat-button
+      class="btn btn-outline-light"
+    >
+      Inscription
+    </button>
+    <button
+      *ngIf="authService.isTokenValid()"
+      (click)="authService.logout()"
+      [routerLink]="['/']"
+      mat-button
+      class="logout-btn btn btn-outline-light"
+    >
+      Se déconnecter
+    </button>
     <button mat-icon-button matTooltip="Changer de thème" (click)="toggleDarkMode()">
       <mat-icon>{{ isDarkMode() ? "brightness_7" : "brightness_2" }}</mat-icon>
     </button>

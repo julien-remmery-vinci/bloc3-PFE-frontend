@@ -8,6 +8,7 @@ import {FormsComponent} from "./pages/forms/forms.component";
 import {AuthGuard} from "./guard/auth.guard";
 import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
+import { UserRegisterComponent } from './pages/user-register/user-register.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'forms', component: FormsComponent, canActivate: [AuthGuard] },
   { path: 'forms/esg/complete', component: FormsEsgCompleteComponent, canActivate: [AuthGuard] },
   { path: 'forms/odd/complete', component: FormsOddCompleteComponent, canActivate: [AuthGuard] },
-  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard], data: { role: 'admin' } }
+  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
+  { path: 'userRegister', component: UserRegisterComponent, canActivate: [AuthGuard], data: { role: 'user' } },
 ];
 
 @NgModule({
