@@ -1,4 +1,3 @@
-import {AnswerOdd} from "./AnswerOdd";
 import {AnswerEsg} from "./AnswerEsg";
 
 export interface Question {
@@ -8,5 +7,5 @@ export interface Question {
     question: string;
     is_used: boolean;
     question_type: "ODD" | "ESG";
-    answers :  AnswerOdd[] | AnswerEsg[]
+    answers :  AnswerEsg[]
 }
