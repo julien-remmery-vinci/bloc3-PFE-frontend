@@ -1,0 +1,196 @@
+/* Ensure body and HTML expand fully with content */
+html, body {
+    height: 100%; /* Make the body take full height */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    box-sizing: border-box; /* Ensure padding doesn't add extra size */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    background: rgb(2, 0, 36);
+    background: linear-gradient(8deg, rgba(2, 0, 36, 1) 0%, rgba(1, 50, 56, 1) 35%, rgba(181, 205, 191, 1) 100%);
+}
+
+/* Ensure container stretches with content */
+.container {    
+    padding: 20px; /* Add padding around the container */
+    display: flex; /* Flex layout for cards */
+    flex-wrap: wrap; /* Allow cards to wrap to new rows */
+    justify-content: center; /* Center the cards horizontally */
+    gap: 40px; /* Add space between cards */
+    min-height: 100vh; /* Make the container at least the full viewport height */
+    align-content: flex-start; /* Align rows at the top */
+}
+
+/* Adjust card size for smaller screens */
+.card {
+    width: 190px; /* Default card width */
+    height: 254px; /* Default card height */
+    border-radius: 20px;
+    background: #b5cdbf;
+    position: relative;
+    padding: 1.8rem;
+    border: 2px solid #c3c6ce;
+    transition: 0.5s ease-out;
+    overflow: visible;
+    box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .card {
+        width: 150px; /* Smaller width for smaller screens */
+        height: auto; /* Adjust height automatically */
+        padding: 1rem; /* Reduce padding for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 100%; /* Full width for very small screens */
+        height: auto;
+    }
+}
+.card-details {
+    color: black;
+    height: 100%;
+    gap: .5em;
+    display: grid;
+    place-content: top;
+}
+
+.card-button {
+    transform: translate(-50%, 125%);
+    width: 60%;
+    border-radius: 1rem;
+    border: none;
+    background-color: #013238;
+    color: #fff;
+    font-size: 1rem;
+    padding: .5rem 1rem;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    opacity: 0;
+    transition: 0.3s ease-out;
+    cursor: pointer;
+}
+
+.text-body {
+    color: white;
+}
+
+/* Text */
+.text-title {
+    font-size: 1.7em;
+    font-weight: bold;
+}
+
+/* Hover */
+.card:hover {
+    border-color: #013238;
+    box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.5);
+}
+
+.card:hover .card-button {
+    transform: translate(-50%, 50%);
+    opacity: 1;
+}.search-filter {
+    position: relative; /* Ensure the dropdown is positioned relative to this container */
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+/* Wrapper to position the search bar and filter at the top-right */
+.search-filter-wrapper {
+    position: fixed; /* Keeps it fixed in place even on scroll */
+    top: 10px; /* Adjust vertical position */
+    right: 10px; /* Adjust horizontal position */
+    display: flex; /* Arrange items horizontally */
+    align-items: center; /* Vertically align items */
+    gap: 10px; /* Space between elements */
+    z-index: 1000; /* Ensure it appears on top of other elements */
+  }
+  
+  .search-input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .filter {
+    position: relative; /* Dropdown will align relative to this button */
+    display: inline-flex;
+    align-items: center;
+    padding: 0.8rem;
+    background-color: #c5fddf;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .filter svg {
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 105%; /* Place dropdown right below the button */
+    right: 0; /* Align with the button's left edge */
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.5rem 0;
+    width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .dropdown ul li {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .dropdown ul li:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .progress-bar {
+    position: relative;
+    width: 100%; /* Set the full width of the progress bar */
+    height: 23px; /* Define the height of the progress bar */
+    border-radius: 4px; /* Optional: round the corners */
+    overflow: hidden; /* Ensure bars do not overflow the container */
+    background-color: transparent; /* Prevent overlapping background color */
+  }
+  
+  .progress-bar-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Always fill the full width */
+    height: 100%; /* Take the full height of the container */
+    background-color: grey;
+    opacity: 0.4; /* Set lower opacity for the background bar */
+    border-radius: 4px; /* Match the container's border radius */
+  }
+  
+  .progress-bar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%; /* Take the full height of the container */
+    background-color: #013238;
+    color: white;
+    text-align: center;
+    line-height: 23px; /* Vertically align text within the bar */
+    border-radius: 4px; /* Match the container's border radius */
+    transition: width 0.3s ease; /* Smooth transition for width changes */
+  }
