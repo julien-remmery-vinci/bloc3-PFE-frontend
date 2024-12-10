@@ -10,6 +10,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
 import { UserRegisterComponent } from './pages/user-register/user-register.component';
 import { OnboardingComponent } from './pages/onboarding/onboarding.component';
+import { CompanyDashboardComponent } from './pages/company-dashboard/company-dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
   { path: 'userRegister', component: UserRegisterComponent, canActivate: [AuthGuard], data: { role: 'user' } },
   { path: 'onboarding', component: OnboardingComponent }
+  { path: 'companyDashboard', component: CompanyDashboardComponent, canActivate: [AuthGuard], data: { role: 'user' } },
 ];
 
 @NgModule({
