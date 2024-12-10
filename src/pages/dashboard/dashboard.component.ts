@@ -21,7 +21,8 @@ export class DashboardComponent {
   
 
   constructor(
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -67,5 +68,10 @@ isDropdownVisible: boolean = false; // Controls dropdown visibility
 
   toggleDropdown(): void {
     this.isDropdownVisible = !this.isDropdownVisible;
+  }
+
+  
+  navigateTo(route: string): void {
+    this.router.navigate([route]);
   }
 }
