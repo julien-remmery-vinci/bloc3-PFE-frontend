@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import { Router } from '@angular/router';
 import { Form } from 'src/types/Form';
 import { CommonModule } from '@angular/common';
@@ -34,7 +34,11 @@ export class FormsEsgCompleteComponent {
   openCategories: Set<string> = new Set(); // Track which categories are open
   openSubCategories: Map<string, Set<string>> = new Map(); // Track which subcategories are open per category
 
-    constructor(private router: Router, protected themeService:ThemeService,private responseService:ResponseService,private formSerice:FormService) {
+    constructor(private router: Router,
+                protected themeService:ThemeService,
+                private responseService:ResponseService,
+                private formSerice:FormService,
+                private cdr: ChangeDetectorRef) {
       const navigation = this.router.getCurrentNavigation();
       this.form = navigation?.extras?.state?.['form'];
       this.questions = this.form.questions;
@@ -121,6 +125,8 @@ export class FormsEsgCompleteComponent {
                                             if(formU.form_id == this.form.form_id){
                                                 this.form = formU
                                                 this.questions = this.form.questions;
+                                                this.findAllCategory()
+                                                this.cdr.detectChanges();  // Trigger change detection
 
                                             }
                                         }
@@ -136,8 +142,26 @@ export class FormsEsgCompleteComponent {
                     const answerPayload: AnswerPayloadCommentOnly = {
                         form_id: this.form.form_id,
                         comment: this.selectedAnswerComment[answer.answer_id]
+
                     };
-                    this.responseService.sendAnswerCommentOnlyById(answerPayload,answer.answer_id).subscribe()
+                    this.responseService.sendAnswerCommentOnlyById(answerPayload,answer.answer_id).subscribe(
+                        () => {
+                            this.formSerice.getUserForms().subscribe(
+                                (response) =>{
+                                    const forms : Form[] = response
+                                    for (const formU of forms ){
+                                        if(formU.form_id == this.form.form_id){
+                                            this.form = formU
+                                            this.questions = this.form.questions;
+                                            this.findAllCategory()
+                                            this.cdr.detectChanges();  // Trigger change detection
+
+                                        }
+                                    }
+                                }
+                            )
+                        }
+                    )
                 }
             }
         }
@@ -193,6 +217,7 @@ export class FormsEsgCompleteComponent {
     }
 
     private findAllCategory() {
+        this.groupedQuestions = [];
         this.form.questions.forEach(question => {
             const category = question.question.category;
             const subCategory = question.question.sub_category;
