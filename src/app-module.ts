@@ -26,6 +26,8 @@ import { ThemeService } from "./app/theme/theme.service";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatCardModule } from '@angular/material/card';
 import { UserRegisterComponent } from "./pages/user-register/user-register.component";
+import { HighchartsChartModule } from "highcharts-angular";
+import { StatisticsComponent } from "./pages/statistics/statistics.component";
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { UserRegisterComponent } from "./pages/user-register/user-register.compo
     SidebarComponent,
     HomeComponent,
     RegisterComponent,
-    UserRegisterComponent
+    UserRegisterComponent,
+    StatisticsComponent
   ],
   imports: [
     MatFormFieldModule,
@@ -58,6 +61,7 @@ import { UserRegisterComponent } from "./pages/user-register/user-register.compo
     MatIconModule,
     MatTooltipModule,
     MatCardModule,
+    HighchartsChartModule,
   ],
   providers: [
     ThemeService,

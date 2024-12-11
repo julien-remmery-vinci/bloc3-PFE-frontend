@@ -1,0 +1,18 @@
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .stat-card {
+    width: 80%;
+    margin: 20px 0;
+  }
+  
+  .chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+  }
