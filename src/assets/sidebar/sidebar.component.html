@@ -9,12 +9,12 @@
     [routerLink]="['/home']"
   />
 
-  <div class="d-flex">
+  <div class="d-flex nav-buttons">
     <button
       *ngIf="!authService.isTokenValid()"
       [routerLink]="['/login']"
       mat-button
-      class="btn btn-outline-light"
+      class="btn btn-outline-light nav-button"
     >
       Se connecter
     </button>
@@ -22,7 +22,7 @@
       *ngIf="authService.isTokenValid()"
       [routerLink]="['/dashboard']"
       mat-button
-      class="btn btn-outline-light"
+      class="btn btn-outline-light nav-button"
     >
       Panneau de gestion
     </button>
@@ -30,7 +30,7 @@
       *ngIf="authService.isAdmin()"
       [routerLink]="['/register']"
       mat-button
-      class="btn btn-outline-light"
+      class="btn btn-outline-light nav-button"
     >
       Inscription
     </button>
@@ -39,25 +39,20 @@
       *ngIf="authService.isUser()"
       [routerLink]="['/userRegister']"
       mat-button
-      class="btn btn-outline-light"
+      class="btn btn-outline-light nav-button"
     >
       Inscription
     </button>
-    <button
-      *ngIf="authService.isTokenValid()"
-      (click)="authService.logout()"
-      [routerLink]="['/']"
-      mat-button
-      class="logout-btn btn btn-outline-light"
-    >
-      Se déconnecter
-    </button>
-    <button mat-icon-button matTooltip="Changer de thème" (click)="toggleDarkMode()">
-      <mat-icon>{{ isDarkMode() ? "brightness_7" : "brightness_2" }}</mat-icon>
-    </button>
   </div>
+
   <span class="spacer"></span>
-  <button mat-icon-button matTooltip="Déconnexion" *ngIf="authService.isTokenValid()" (click)="authService.logout()" [routerLink]="['/']" class="logout-btn">
+  <button
+    mat-icon-button
+    matTooltip="Déconnexion"
+    (click)="authService.logout()"
+    [routerLink]="['/']"
+    class="logout-btn nav-button"
+  >
     <mat-icon>logout</mat-icon>
-</button>
+  </button>
 </mat-toolbar>

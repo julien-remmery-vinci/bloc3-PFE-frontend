@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import { Router } from '@angular/router';
 import { Form } from 'src/types/Form';
 import { CommonModule } from '@angular/common';
@@ -27,17 +27,27 @@ export class FormsEsgCompleteComponent {
   public selectedAnswerIds: Set<number> = new Set<number>();
   public selectedAnswerId: number | null = null;
   public selectedAnswerComment: string[] = []
-  public selectedCategory :any = null ;
   public isAnswerModified :boolean[] = [false];
   public isNow : string[] = []
   public isCommitment : string[] = [];
-  constructor(private router: Router, protected themeService:ThemeService,private responseService:ResponseService,private formSerice:FormService) {
+  groupedQuestions: any = {};
+  openCategories: Set<string> = new Set(); // Track which categories are open
+  openSubCategories: Map<string, Set<string>> = new Map(); // Track which subcategories are open per category
+
+    constructor(private router: Router,
+                protected themeService:ThemeService,
+                private responseService:ResponseService,
+                private formSerice:FormService,
+                private cdr: ChangeDetectorRef) {
       const navigation = this.router.getCurrentNavigation();
       this.form = navigation?.extras?.state?.['form'];
       this.questions = this.form.questions;
       this.selectedQuestion = this.questions[0];
       this.selectedAnswerIds.clear();
       this.updateSelectedAnswerId();
+      this.findAllCategory()
+
+      console.log(this.form)
   }
   onAnswerChange(answer_id: number) {
       this.isAnswerModified[answer_id] = true;
@@ -115,6 +125,8 @@ export class FormsEsgCompleteComponent {
                                             if(formU.form_id == this.form.form_id){
                                                 this.form = formU
                                                 this.questions = this.form.questions;
+                                                this.findAllCategory()
+                                                this.cdr.detectChanges();  // Trigger change detection
 
                                             }
                                         }
@@ -130,8 +142,26 @@ export class FormsEsgCompleteComponent {
                     const answerPayload: AnswerPayloadCommentOnly = {
                         form_id: this.form.form_id,
                         comment: this.selectedAnswerComment[answer.answer_id]
+
                     };
-                    this.responseService.sendAnswerCommentOnlyById(answerPayload,answer.answer_id).subscribe()
+                    this.responseService.sendAnswerCommentOnlyById(answerPayload,answer.answer_id).subscribe(
+                        () => {
+                            this.formSerice.getUserForms().subscribe(
+                                (response) =>{
+                                    const forms : Form[] = response
+                                    for (const formU of forms ){
+                                        if(formU.form_id == this.form.form_id){
+                                            this.form = formU
+                                            this.questions = this.form.questions;
+                                            this.findAllCategory()
+                                            this.cdr.detectChanges();  // Trigger change detection
+
+                                        }
+                                    }
+                                }
+                            )
+                        }
+                    )
                 }
             }
         }
@@ -172,6 +202,68 @@ export class FormsEsgCompleteComponent {
     alert('A implementer');
   }
 
+    getCategories(): string[] {
+        return Object.keys(this.groupedQuestions);
+    }
 
+    // Get all subcategories for a specific category
+    getSubCategories(category: string): string[] {
+        return Object.keys(this.groupedQuestions[category]);
+    }
 
+    getQuestionsByCategoryAndSubCategory(category: string, subCategory: string): QuestionWithAnswer[] {
+      console.log(this.groupedQuestions[category][subCategory])
+        return this.groupedQuestions[category][subCategory] || [];
+    }
+
+    private findAllCategory() {
+        this.groupedQuestions = [];
+        this.form.questions.forEach(question => {
+            const category = question.question.category;
+            const subCategory = question.question.sub_category;
+
+            if (!this.groupedQuestions[category]) {
+                this.groupedQuestions[category] = {};
+            }
+
+            if (!this.groupedQuestions[category][subCategory]) {
+                this.groupedQuestions[category][subCategory] = [];
+            }
+            this.groupedQuestions[category][subCategory].push(question);
+        });
+    }
+    toggleCategory(category: string) {
+        const subCategorySet = this.openSubCategories.get(category) || new Set();
+
+        if (this.openCategories.has(category)) {
+            this.openCategories.delete(category); // Close if already open
+        } else {
+            this.openCategories.clear()
+            subCategorySet.clear()
+            this.openCategories.add(category); // Open if not
+        }
+    }
+
+    // Check if a category is open
+    isCategoryOpen(category: string): boolean {
+        return this.openCategories.has(category);
+    }
+
+    // Toggle the subcategory (open/close)
+    toggleSubCategory(category: string, subCategory: string) {
+        const subCategorySet = this.openSubCategories.get(category) || new Set();
+        if (subCategorySet.has(subCategory)) {
+            subCategorySet.delete(subCategory); // Close if already open
+        } else {
+            subCategorySet.clear()
+            subCategorySet.add(subCategory); // Open if not
+        }
+        this.openSubCategories.set(category, subCategorySet);
+    }
+
+    // Check if a subcategory is open
+    isSubCategoryOpen(category: string, subCategory: string): boolean {
+        const subCategorySet = this.openSubCategories.get(category);
+        return subCategorySet ? subCategorySet.has(subCategory) : false;
+    }
 }
