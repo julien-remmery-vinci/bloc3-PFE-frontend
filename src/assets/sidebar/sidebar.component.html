@@ -43,21 +43,15 @@
     >
       Inscription
     </button>
-    <button
-      *ngIf="authService.isTokenValid()"
-      (click)="authService.logout()"
-      [routerLink]="['/']"
-      mat-button
-      class="logout-btn btn btn-outline-light"
-    >
-      Se déconnecter
-    </button>
-    <button mat-icon-button matTooltip="Changer de thème" (click)="toggleDarkMode()">
-      <mat-icon>{{ isDarkMode() ? "brightness_7" : "brightness_2" }}</mat-icon>
-    </button>
   </div>
   <span class="spacer"></span>
-  <button mat-icon-button matTooltip="Déconnexion" *ngIf="authService.isTokenValid()" (click)="authService.logout()" [routerLink]="['/']" class="logout-btn">
+  <button
+    mat-icon-button
+    matTooltip="Déconnexion"
+    (click)="authService.logout()"
+    [routerLink]="['/']"
+    class="logout-btn"
+  >
     <mat-icon>logout</mat-icon>
 </button>
 </mat-toolbar>

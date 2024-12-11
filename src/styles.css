@@ -2,12 +2,24 @@ ngx-loading .backdrop {
     background: rgba(1, 50, 56, 1) !important; /* Full opacity */
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family:"Space Grotesk", "Helvetica Neue", sans-serif; }
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
 
-body.dark-mode {
-    background-color: #121212;
-    color: #fff;
+body {
+    background: linear-gradient(8deg, rgba(2, 0, 36, 1) 0%, rgba(1, 50, 56, 1) 35%, rgba(181, 205, 191, 1) 100%);
+}
+
+.full-height {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1;
 }
 
 body.dark-mode button {
