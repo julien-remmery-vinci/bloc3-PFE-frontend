@@ -1,12 +1,75 @@
-<div *ngIf="forms">
-    <h1>Formulaire: {{ forms.type }}</h1>
-    <div *ngFor="let question of forms.questions">
-      <h2>{{ question.question.question_id }}: {{ question.question.question }}</h2>
-      <div *ngFor="let answer of question.answers">
-        <p>Réponse: {{ answer.answer }}</p>
-        <p>Score Now: <input type="number" [(ngModel)]="answer.score_now"></p>
-        <p>Score Commitment: <input type="number" [(ngModel)]="answer.score_commitment_pact"></p>
-        <button (click)="updateScore(question.question.question_id, answer.answer_id, answer.score_now, answer.score_commitment_pact)">Update Score</button>
+<!-- score.component.html -->
+<div *ngIf="forms" class="container">
+  <h1>Formulaire: {{ forms.type }}</h1>
+  
+  <div class="accordion">
+    <div *ngFor="let category of getUniqueCategories(); let i = index" class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" 
+                [class.collapsed]="!isCategoryExpanded(i)"
+                (click)="toggleCategory(i)">
+          {{ category }}
+        </button>
+      </h2>
+
+      <div class="accordion-collapse" 
+           [class.collapse]="true"
+           [class.show]="isCategoryExpanded(i)">
+        <div class="accordion-body">
+          <div class="accordion sub-accordion">
+            <div *ngFor="let subCategory of getSubCategories(category); let j = index" 
+                 class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" 
+                        [class.collapsed]="!isSubCategoryExpanded(i, j)"
+                        (click)="toggleSubCategory(i, j)">
+                  {{ subCategory }}
+                </button>
+              </h2>
+
+              <div class="accordion-collapse"
+                   [class.collapse]="true"
+                   [class.show]="isSubCategoryExpanded(i, j)">
+                <div class="accordion-body">
+                  <div *ngFor="let question of getQuestionsForSubCategory(category, subCategory)" 
+                       class="question-card">
+                    <div class="card">
+                      <div class="card-header" (click)="toggleQuestion(question.question.question_id)">
+                        <span class="question-id">{{ question.question.question_id }}</span>
+                        {{ question.question.question }}
+                      </div>
+                      
+                      <div class="card-body" *ngIf="isQuestionExpanded(question.question.question_id)">
+                        <div *ngFor="let answer of question.answers" class="answer-container">
+                          <p class="answer-text">{{ answer.answer }}</p>
+                          <div class="score-inputs">
+                            <div class="score-input-group">
+                              <label>Score actuel:</label>
+                              <input type="number" class="form-control" [(ngModel)]="answer.score_now">
+                            </div>
+                            <div class="score-input-group">
+                              <label>Score engagement:</label>
+                              <input type="number" class="form-control" 
+                                     [(ngModel)]="answer.score_commitment_pact">
+                            </div>
+                            <button class="btn btn-primary" 
+                                    (click)="updateScore(question.question.question_id, 
+                                            answer.answer_id, 
+                                            answer.score_now, 
+                                            answer.score_commitment_pact)">
+                              Update Score
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+</div>
