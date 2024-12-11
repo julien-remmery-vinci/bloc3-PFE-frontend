@@ -1,9 +1,20 @@
-<div class="flex" >
-    <div class="questions" [ngClass]="{'dark-theme': themeService.isDarkMode, 'light-theme': !themeService.isDarkMode}" >
-        <div (click)="selectQuestion(question)" *ngFor="let question of questions" class="question">
-            <p>{{ question.question.question }}</p>
+<div class="flex">
+    <div class="categories-list">
+        <div *ngFor="let category of getCategories()" class="category">
+            <h3 (click)="toggleCategory(category)">{{ category }}</h3>
+            <div *ngIf="isCategoryOpen(category)" class="subcategories-list">
+                <div *ngFor="let subCategory of getSubCategories(category)" class="subcategory">
+                    <h4 (click)="toggleSubCategory(category, subCategory)">{{ subCategory }}</h4>
+                    <div *ngIf="isSubCategoryOpen(category, subCategory)" class="questions-list">
+                        <div class="question" *ngFor="let question of getQuestionsByCategoryAndSubCategory(category, subCategory)">
+                            <p (click)="selectQuestion(question)">{{ question.question.question }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 
     <div [ngClass]="{'dark-theme': themeService.isDarkMode, 'light-theme': !themeService.isDarkMode}" >
         <p>Question: {{ selectedQuestion?.question?.question }}</p>

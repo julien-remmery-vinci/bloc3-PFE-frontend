@@ -14,6 +14,21 @@
 .style-none {
     list-style: none;
 }
+.categories-list{
+    width: 40%;
+    margin-left: 3%;
+}
+
+.category, .subcategory, .question {
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.questions-list p {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
 
 input {
     width: 30%;
@@ -23,25 +38,22 @@ input {
     background-color:#1e1e1e ;
 }
 
-/* Add some space around the entire table */
 table {
     width: 100%;
-    border-collapse: collapse; /* To avoid double borders */
+    border-collapse: collapse;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-/* Styling table headers */
 th {
     text-align: left;
     padding: 8px;
-    background-color: #f2f2f2; /* Light background for header */
+    background-color: #f2f2f2;
 }
 
-/* Styling table rows */
 td {
-    vertical-align: top; /* Align content to the top */
-    border-top: 1px solid #ddd; /* Border between rows */
+    vertical-align: top;
+    border-top: 1px solid #ddd;
 }
 td div {
     display: block;
@@ -49,37 +61,35 @@ td div {
 
 td .answerText{
     display: block;
-    word-wrap: break-word; /* Allows text to wrap within the container */
-    word-break: break-word; /* Breaks long words if necessary */
-    max-width: 450px; /* Set a max width for the label (adjust as needed) */
-    min-width: 450px; /* Set a max width for the label (adjust as needed) */
-    margin-bottom: 5px; /* Optional: space between label and input */
+    word-wrap: break-word;
+    word-break: break-word;
+    max-width: 450px;
+    min-width: 450px;
+    margin-bottom: 5px;
 }
 .answerTextdiv{
     max-width: 70%;
     min-width: 70%;
 }
 td input {
-    display: block; /* Makes the input take the full width of its container */
-    margin-top: 5px; /* Optional: space between input and other elements */
+    display: block;
+    margin-top: 5px;
 }
 
-/* Add spacing between label and input fields */
 label {
     margin-bottom: 8px;
-    display: inline-block; /* Makes label occupy its own space */
+    display: inline-block;
 }
 
-/* Add space between checkboxes and labels */
 input[type="checkbox"],
 input[type="radio"] {
     margin-right: 10px;
     vertical-align: middle;
-    min-width: 15px; /* Ensures the checkbox doesn't shrink below this size */
+    min-width: 15px;
     min-height: 15px;
 }
 
-/* Styling the text inputs for comments */
+
 input[type="text"] {
     width: 100%;
     padding: 8px;
@@ -89,17 +99,17 @@ input[type="text"] {
     border-radius: 4px;
 }
 
-/* Add spacing around each radio button group */
+
 div {
     margin-bottom: 15px;
 }
 
-/* Add spacing around the entire form for better layout */
+
 form {
     margin: 20px;
 }
 
-/* Adjusting space for the buttons */
+
 button {
     margin-top: 20px;
     padding: 10px 20px;
