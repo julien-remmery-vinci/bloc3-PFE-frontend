@@ -13,4 +13,8 @@ export class FormService {
   getUserForms(): Observable<any> {
     return this.http.get(`${this.apiUrl}/forms/user`);
   }
+
+  validateForm(form_id: number | undefined): Observable<any> {
+    return this.http.post(`${this.apiUrl}/forms/${form_id}/validate`, {});
+  }
 }

@@ -84,6 +84,6 @@ isDropdownVisible: boolean = false; // Controls dropdown visibility
 
    navigateTo(form: Form): void {
     console.log("FORMS" + form)
-    this.router.navigate([`/forms/${form.type.toLowerCase()}/complete`],{state : {form}});
+    this.router.navigate([`/forms/${form.type.toLowerCase()}/validate`],{state : {form}});
   }
 }
