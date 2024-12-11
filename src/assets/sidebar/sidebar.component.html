@@ -38,6 +38,14 @@
     </button>
     <button
       *ngIf="authService.isAdmin()"
+      [routerLink]="['/statistics']"
+      mat-button
+      class="btn btn-outline-light"
+    >
+      Statistiques
+    </button>
+    <button
+      *ngIf="authService.isAdmin()"
       [routerLink]="['/register']"
       mat-button
       class="btn btn-outline-light nav-button"

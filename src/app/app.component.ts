@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {LoadingService} from "../services/loading.service";
 import {AuthService} from "../services/auth.service";
+import { HighchartsChartModule } from 'highcharts-angular';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
