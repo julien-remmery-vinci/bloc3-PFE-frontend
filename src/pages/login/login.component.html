@@ -16,6 +16,11 @@
                 Veuillez entrer votre mot de passe.
             </div>
         </div>
-        <app-animated-button [text]="'Connexion'" [disabled]="loginForm.invalid"></app-animated-button>
+        <app-animated-button [text]="'Connexion'" [disabled]="loginForm.invalid" #animatedButton></app-animated-button>
+        <div>
+            <div class="error" *ngIf="submitted && errorMessage ">
+                {{errorMessage}}
+            </div>
+        </div>
     </form>
 </div>

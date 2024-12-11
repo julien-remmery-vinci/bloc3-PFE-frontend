@@ -1,4 +1,4 @@
-interface UserAnswerEsg {
+export interface UserAnswerEsg {
     answer_id: number;
     user_id: number;
     form_id: number;

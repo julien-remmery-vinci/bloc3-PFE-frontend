@@ -26,6 +26,8 @@ export class LoginComponent {
   get f() {
     return this.loginForm.controls;
   }
+
+
   onSubmit() {
     this.submitted = true;
     if (this.loginForm.invalid) {
@@ -39,16 +41,18 @@ export class LoginComponent {
           (response: { message: string }) => {
             this.successMessage = response.message;
             this.errorMessage = '';
-            setTimeout(() => this.loadingService.hideLoading(), 1100); // Hide spinner after 2 seconds
+            setTimeout(() => this.loadingService.hideLoading(), 1100);
             this.router.navigate(['/home']);
-            console.log('Réponse de l’API :', response);
           },
           (error: any) => {
-            this.errorMessage = "Une erreur s'est produite lors de l'enregistrement.";
+            setTimeout(() => this.loadingService.hideLoading(), 700);
+            this.errorMessage = error.error;
             this.successMessage = '';
             console.error('Erreur API :', error);
           }
       );
     }
   }
+
+
 }

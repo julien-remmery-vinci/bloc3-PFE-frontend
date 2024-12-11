@@ -17,21 +17,21 @@ export class HomeComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router, private formService: FormService) { }
 
   ngOnInit(): void {
-    this.user = this.authService.getUserFromStorage();
+    this.user = this.authService.getCurrentUserValue();
     const token = this.authService.getToken();
     if (token) {
-      this.formService.getUserForms(token).subscribe(
-        (data) => {
-          this.forms = data;
-        },
-        (error) => {
-          this.error = error.error.message;
-        }
-      );
-    } else {
-      this.error = 'Pas de token';
-      this.router.navigate(['/login']);
-    }
+    this.formService.getUserForms().subscribe(
+      (data) => {
+        this.forms = data;
+      },
+      (error) => {
+        this.error = error.error.message;
+      }
+    );
+  } else {
+    this.error = 'Pas de token';
+    this.router.navigate(['/login']);
+  }
   }
 
   navigateTo(route: string): void {
@@ -41,10 +41,10 @@ export class HomeComponent implements OnInit {
   calculateProgress(form: any): number {
     const answered = this.getAnsweredQuestionCount(form);
     return (answered / form.questions.length) * 100;
-  }  
+  }
 
   getAnsweredQuestionCount(form: any): number {
     return form.questions.filter((q: any) => q.user_answers.length > 0).length;
   }
-  
+
 }
