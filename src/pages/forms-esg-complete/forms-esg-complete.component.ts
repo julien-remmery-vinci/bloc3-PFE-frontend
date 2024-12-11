@@ -38,11 +38,8 @@ export class FormsEsgCompleteComponent {
       this.selectedQuestion = this.questions[0];
       this.selectedAnswerIds.clear();
       this.updateSelectedAnswerId();
-      console.log(this.form)
-
   }
   onAnswerChange(answer_id: number) {
-      console.log("answer changed by text")
       this.isAnswerModified[answer_id] = true;
   }
   onCommitmentChange(answer_id: number,event:Event,forcedEngagement: boolean) {
@@ -101,10 +98,8 @@ export class FormsEsgCompleteComponent {
   private saveQuestion(question:QuestionWithAnswer) {
     if(this.form && this.form.form_id ){
         for (const answer of question.answers){
-            console.log(this.isAnswerModified)
             if(this.isAnswerModified[answer.answer_id]){
                 if(!answer.is_forced_comment){
-                    console.log("test1")
                     const answerPayload: AnswerPayload = {
                         form_id: this.form.form_id,
                         now: this.isNow[answer.answer_id] == "now",
@@ -118,7 +113,6 @@ export class FormsEsgCompleteComponent {
                                         const forms : Form[] = response
                                         for (const formU of forms ){
                                             if(formU.form_id == this.form.form_id){
-                                                console.log(formU.form_id == this.form.form_id);
                                                 this.form = formU
                                                 this.questions = this.form.questions;
 
@@ -128,33 +122,19 @@ export class FormsEsgCompleteComponent {
                                 )
                         },
                         (error) => {
-                            // This block is executed if there is an error
                             console.error('Error occurred:', error);
-                            // Add your error handling logic here
                         }
                     )
                 }
                 else {
-                    console.log("test2")
-
                     const answerPayload: AnswerPayloadCommentOnly = {
                         form_id: this.form.form_id,
                         comment: this.selectedAnswerComment[answer.answer_id]
                     };
                     this.responseService.sendAnswerCommentOnlyById(answerPayload,answer.answer_id).subscribe()
-
                 }
-
             }
         }
-        /*
-        if(this.selectedQuestion?.answers[0].answer == null){
-
-            this.responseService.sendAnswerCommentOnlyById(answerPayload,question.question.question_id)
-        }
-
-         */
-
     }
   }
 
