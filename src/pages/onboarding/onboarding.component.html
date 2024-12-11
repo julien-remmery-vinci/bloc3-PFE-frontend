@@ -1,217 +1,111 @@
-<div class="register-container">
+<div class="onboarding-wrapper">
+  <div class="onboarding-container">
     <h1>Vérifier l’éligibilité de mon entreprise</h1>
-  
-    <!-- Notifications -->
-    <div *ngIf="successMessage" class="notification success">
-      {{ successMessage }}
-    </div>
-    <div *ngIf="errorMessage" class="notification error">
-      {{ errorMessage }}
-    </div>
-  
-    <form [formGroup]="onboardingForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="first_name">Prénom</label>
-        <input id="first_name" type="text" formControlName="first_name" />
-        <div class="error" *ngIf="submitted && f['first_name'].errors?.['required']">
-          Le prénom est requis.
-        </div>
-        <div class="error" *ngIf="submitted && f['first_name'].errors?.['maxLength']">
-          Le prénom ne doit pas dépasser 255 caractères.
-        </div>
-      </div>
 
-      <div>
-        <label for="last_name">Nom</label>
-        <input id="last_name" type="text" formControlName="last_name" />
-        <div class="error" *ngIf="submitted && f['last_name'].errors?.['required']">
-          Le nom est requis.
-        </div>
-        <div class="error" *ngIf="submitted && f['last_name'].errors?.['maxLength']">
-          Le nom ne doit pas dépasser 255 caractères.
-        </div>
-      </div>
+    <!-- Success Message -->
+    <div *ngIf="submitted">
+      <p class="success-message">
+        {{ successMessage }}
+      </p>
+    </div>
+    
+    <div class="step-container">
+      <h2>{{ steps[currentStep] }}</h2>
 
-      <div>
-        <label for="email">Adresse e-mail</label>
-        <input id="email" type="email" formControlName="email" />
-        <div class="error" *ngIf="submitted && f['email'].errors?.['required']">
-          L'adresse e-mail est requise.
-        </div>
-        <div class="error" *ngIf="submitted && f['email'].errors?.['email']">
-          Veuillez entrer une adresse e-mail valide.
-        </div>
-      </div>
-      
-      <div>
-        <label for="company_name">Nom de l'entreprise</label>
-        <input id="company_name" type="text" formControlName="company_name" />
-        <div class="error" *ngIf="submitted && f['company_name'].errors?.['required']">
-          Le nom de l'entreprise est requis.
-        </div>
-        <div class="error" *ngIf="submitted && f['company_name'].errors?.['maxLength']">
-          Le nom de l'entreprise ne doit pas dépasser 255 caractères.
-        </div>
-      </div>
-  
-      <div>
-        <label for="company_number">Numéro d'entreprise</label>
-        <input id="company_number" type="text" formControlName="company_number" />
-        <div class="error" *ngIf="submitted && f['company_number'].errors?.['required']">
-          Le numéro d'entreprise est requis.
-        </div>
-      </div>
-  
-      <div>
-        <label for="legal_form">Forme juridique</label>
-        <input id="legal_form" type="text" formControlName="legal_form" />
-        <div class="error" *ngIf="submitted && f['legal_form'].errors?.['required']">
-          La forme juridique est requise.
-        </div>
-      </div>
-  
-      <div>
-        <label for="office_address">Adresse du siège social</label>
-        <input id="office_address" type="text" formControlName="office_address" />
-        <div class="error" *ngIf="submitted && f['office_address'].errors?.['required']">
-          L'adresse du siège social est requise.
-        </div>
-      </div>
-  
-      <div>
-        <label for="website">Site Web</label>
-        <input id="website" type="url" formControlName="website" />
-        <div class="error" *ngIf="submitted && f['website'].errors?.['pattern']">
-          Veuillez entrer une URL valide.
-        </div>
-      </div>
-  
-      <div>
-        <label for="nace_code">Code NACE</label>
-        <input id="nace_code" type="text" formControlName="nace_code" />
-        <div class="error" *ngIf="submitted && f['nace_code'].errors?.['required']">
-          Le code NACE est requis.
-        </div>
-      </div>
-  
-      <div>
-        <label for="business_activity">Activité principale</label>
-        <input id="business_activity" type="text" formControlName="business_activity" />
-        <div class="error" *ngIf="submitted && f['business_activity'].errors?.['required']">
-          L'activité principale est requise.
-        </div>
-      </div>
-  
-      <div>
-        <label for="nb_workers">Nombre de travailleurs</label>
-        <input id="nb_workers" type="number" formControlName="nb_workers" />
-        <div class="error" *ngIf="submitted && f['nb_workers'].errors?.['required']">
-          Le nombre de travailleurs est requis.
-        </div>
-      </div>
-  
-      <div>
-        <label for="revenue">Revenu annuel</label>
-        <input id="revenue" type="number" formControlName="revenue" />
-        <div class="error" *ngIf="submitted && f['revenue'].errors?.['required']">
-          Le revenu annuel est requis.
-        </div>
-      </div>
-  
-      <div>
-        <label for="labels">Labels</label>
-        <div class="label-list">
-          <input #labelInput type="text" placeholder="Ajouter un label" />
-          <button type="button" (click)="addLabel(labelInput.value); labelInput.value = ''">
-            Ajouter
+      <form [formGroup]="onboardingForm" (ngSubmit)="submit()">
+        <ng-container [ngSwitch]="currentStep">
+          <!-- Step 1: User Information -->
+          <div *ngSwitchCase="0">
+            <label for="firstname">Prénom</label>
+            <input id="firstname" formControlName="firstname" type="text" placeholder="Prénom" />
+
+            <label for="lastname">Nom</label>
+            <input id="lastname" formControlName="lastname" type="text" placeholder="Nom" />
+
+            <label for="email">E-mail</label>
+            <input id="email" formControlName="email" type="email" placeholder="Adresse e-mail" />
+
+            <label for="password">Mot de passe</label>
+            <input id="password" formControlName="password" type="password" placeholder="Mot de passe" />
+
+            <label for="position">Fonction</label>
+            <input id="position" formControlName="position" type="text" placeholder="Fonction" />
+          </div>
+
+          <!-- Step 2: Company Information -->
+          <div *ngSwitchCase="1">
+            <label for="company_name">Nom de l'entreprise</label>
+            <input id="company_name" formControlName="company_name" type="text" placeholder="Nom de l'entreprise" />
+
+            <label for="company_number">Numéro d'entreprise</label>
+            <input id="company_number" formControlName="company_number" type="text" placeholder="Numéro d'entreprise" />
+
+            <label for="legal_form">Forme juridique</label>
+            <input id="legal_form" formControlName="legal_form" type="text" placeholder="Forme juridique" />
+
+            <label for="office_address">Adresse</label>
+            <input id="office_address" formControlName="office_address" type="text" placeholder="Adresse" />
+
+            <label for="website">Site Web</label>
+            <input id="website" formControlName="website" type="url" placeholder="Site Web" />
+
+            <label for="nace_code">Code NACE</label>
+            <input id="nace_code" formControlName="nace_code" type="text" placeholder="Code NACE" />
+
+            <label for="revenue">Chiffre d'affaires</label>
+            <input id="revenue" formControlName="revenue" type="number" placeholder="Chiffre d'affaires" />
+          </div>
+
+          <!-- Step 3: Additional Information -->
+          <div *ngSwitchCase="2">
+            <div class="radio-group">
+              <label>Franchise ?</label>
+              <label><input type="radio" formControlName="franchise" value="true" /> Oui</label>
+              <label><input type="radio" formControlName="franchise" value="false" /> Non</label>
+            </div>
+
+            <label for="nb_workers">Nombre de travailleurs</label>
+            <input id="nb_workers" formControlName="nb_workers" type="number" placeholder="Nombre de travailleurs" />
+
+            <div class="radio-group">
+              <label>Litiges sociaux/environnementaux ?</label>
+              <label><input type="radio" formControlName="dispute" value="true" /> Oui</label>
+              <label><input type="radio" formControlName="dispute" value="false" /> Non</label>
+            </div>
+
+            <div class="radio-group">
+              <label>Engagement honnête ?</label>
+              <label><input type="radio" formControlName="honor_engagement" value="true" /> Oui</label>
+              <label><input type="radio" formControlName="honor_engagement" value="false" /> Non</label>
+            </div>
+
+            <div class="radio-group">
+              <label>Demande de subside ?</label>
+              <label><input type="radio" formControlName="grant_application" value="true" /> Oui</label>
+              <label><input type="radio" formControlName="grant_application" value="false" /> Non</label>
+            </div>
+
+            <label for="grant_application_partner">Partenaire pour subside</label>
+            <input id="grant_application_partner" formControlName="grant_application_partner" type="text" placeholder="Partenaire" />
+
+            <label for="something_else">Autres informations</label>
+            <textarea id="something_else" formControlName="something_else" placeholder="Autres informations"></textarea>
+
+            <label for="comment">Commentaires</label>
+            <textarea id="comment" formControlName="comment" placeholder="Commentaires"></textarea>
+          </div>
+        </ng-container>
+
+        <div class="navigation-buttons">
+          <button type="button" (click)="previousStep()" [disabled]="currentStep === 0">Précédent</button>
+          <button type="button" *ngIf="currentStep < steps.length - 1" (click)="nextStep()" [disabled]="!isCurrentStepValid()">
+            Suivant
           </button>
-          <ul>
-            <li class="label-text" *ngFor="let label of labelsArray.controls; let i = index">
-              {{ label.value }}
-              <button type="button" (click)="removeLabel(i)">Supprimer</button>
-            </li>
-          </ul>
+          <button type="submit" *ngIf="currentStep === steps.length - 1" [disabled]="!onboardingForm.valid">
+            Soumettre
+          </button>
         </div>
-        <div class="error" *ngIf="submitted && labelsArray.length === 0">
-          Veuillez ajouter au moins un label.
-        </div>
-      </div>
-
-      <div>
-        <label>Êtes-vous propriétaire ?</label>
-        <div>
-          <input
-            type="radio"
-            id="ownerYes"
-            value="yes"
-            formControlName="is_owner"
-          />
-          <label for="ownerYes">Oui</label>
-          <input
-            type="radio"
-            id="ownerNo"
-            value="no"
-            formControlName="is_owner"
-          />
-          <label for="ownerNo">Non</label>
-        </div>
-        <div class="error" *ngIf="submitted && f['is_owner'].errors?.['required']">
-          Cette question est requise.
-        </div>
-      </div>
-
-      <div>
-        <label>Proposez-vous des services ?</label>
-        <div>
-          <input
-            type="radio"
-            id="servicesYes"
-            value="yes"
-            formControlName="offers_services"
-          />
-          <label for="servicesYes">Oui</label>
-          <input
-            type="radio"
-            id="servicesNo"
-            value="no"
-            formControlName="offers_services"
-          />
-          <label for="servicesNo">Non</label>
-        </div>
-        <div class="error" *ngIf="submitted && f['offers_services'].errors?.['required']">
-          Cette question est requise.
-        </div>
-      </div>
-
-      <div>
-        <label>Vendez-vous des produits ?</label>
-        <div>
-          <input
-            type="radio"
-            id="productsYes"
-            value="yes"
-            formControlName="sells_products"
-          />
-          <label for="productsYes">Oui</label>
-          <input
-            type="radio"
-            id="productsNo"
-            value="no"
-            formControlName="sells_products"
-          />
-          <label for="productsNo">Non</label>
-        </div>
-        <div class="error" *ngIf="submitted && f['sells_products'].errors?.['required']">
-          Cette question est requise.
-        </div>
-      </div>
-
-      <div class="button-container">
-        <app-animated-button
-          [text]="'Soumettre la demande'"
-          [disabled]="onboardingForm.invalid"
-        ></app-animated-button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-  
+</div>
