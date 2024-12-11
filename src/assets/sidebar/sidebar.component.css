@@ -1,24 +1,62 @@
-/* Logo size adjustment */
-.logo {
-    height: 40px;  /* Adjust height as needed */
-    width: auto;   /* Maintain aspect ratio */
-    cursor: pointer;
-}
-
-.logout-btn {
-    margin-left: 10px;
-}
 .custom-toolbar {
     height: 8vh;
-    background-color: #013238; /* Replace with your hex color */
-    color: #ffffff; /* Adjust text color if needed */
-}
-
-.custom-toolbar .d-flex {
+    background-color: #013238;
+    color: #ffffff;
     display: flex;
     align-items: center;
-}
-
-.custom-toolbar .spacer {
+    padding: 0 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo {
+    height: 40px;
+    width: auto;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    margin-right: 40px; 
+  }
+  
+  .logo:hover {
+    transform: scale(1.2); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  }
+  
+  .nav-buttons {
+    display: flex;
+    gap: 15px; 
+  }
+  
+  .nav-button {
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: transparent;
+    border: 1px solid #002a2f; 
+    color: #ffffff;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .nav-button:hover {
+    background-color: #0b4a59;
+    color: #ffffff;
+    transform: scale(1.05); 
+    border-color: #004d4f; 
+  }
+  
+  .logout-btn {
+    margin-left: 10px;
+    color: #ffffff;
+    border: 1px solid #002a2f;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+  
+  .logout-btn:hover {
+    transform: rotate(20deg); 
+    color: #ff4d4d; 
+    border-color: gray; 
+  }
+  
+  .spacer {
     flex-grow: 1;
-}
+  }
+  
