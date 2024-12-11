@@ -9,6 +9,8 @@ import {ResponseService} from "../../services/response.service";
 import {AnswerPayload} from "../../types/answer-payload";
 import {AnswerPayloadCommentOnly} from "../../types/answer-payloadCommentOnly";
 import {FormService} from "../../services/form.service";
+import { AnswerValidationPayload } from 'src/types/answer-validation-payload';
+import { AnswerPayloadCommentOnlyValidationPayload } from 'src/types/answer-comment-validation-payload';
 
 
 @Component({
@@ -110,18 +112,17 @@ export class FormsEsgValidateComponent {
         for (const answer of question.answers){
             if(this.isAnswerModified[answer.answer_id]){
                 if(!answer.is_forced_comment){
-                    const answerPayload: AnswerPayload = {
+                    const answerPayload: AnswerValidationPayload = {
                         form_id: this.form.form_id,
                         now: this.isNow[answer.answer_id] == "now",
-                        commitment_pact: this.isCommitment[answer.answer_id]=="commitment_pact",
-                        comment: this.selectedAnswerComment[answer.answer_id]
+                        commitment_pact: this.isCommitment[answer.answer_id]=="commitment_pact"
                     };
-                    this.responseService.sendAnswerById(answerPayload,answer.answer_id).subscribe(
+                    this.responseService.sendAnswerValidationById(answerPayload,answer.answer_id).subscribe(
                         (response) => {
                                 this.formSerice.getUserForms().subscribe(
                                     (response) =>{
                                         const forms : Form[] = response
-                                        for (const formU of forms ){
+                                        for (const formU of forms){
                                             if(formU.form_id == this.form.form_id){
                                                 this.form = formU
                                                 this.questions = this.form.questions;
@@ -139,12 +140,11 @@ export class FormsEsgValidateComponent {
                     )
                 }
                 else {
-                    const answerPayload: AnswerPayloadCommentOnly = {
+                    const answerPayload: AnswerPayloadCommentOnlyValidationPayload = {
                         form_id: this.form.form_id,
                         comment: this.selectedAnswerComment[answer.answer_id]
-
                     };
-                    this.responseService.sendAnswerCommentOnlyById(answerPayload,answer.answer_id).subscribe(
+                    this.responseService.sendAnswerCommentOnlyValidationById(answerPayload,answer.answer_id).subscribe(
                         () => {
                             this.formSerice.getUserForms().subscribe(
                                 (response) =>{

@@ -3,6 +3,8 @@ import { Observable } from "rxjs";
 import { AnswerPayload } from "../types/answer-payload";
 import { AnswerPayloadCommentOnly } from "../types/answer-payloadCommentOnly";
 import {HttpClient} from "@angular/common/http";
+import { AnswerValidationPayload } from 'src/types/answer-validation-payload';
+import { AnswerPayloadCommentOnlyValidationPayload } from 'src/types/answer-comment-validation-payload';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +21,13 @@ export class ResponseService {
   sendAnswerCommentOnlyById(answerPayload: AnswerPayloadCommentOnly, answerId: number): Observable<any> {
 
     return this.http.post<any>(`${this.apiUrl}/${answerId}`, answerPayload);
+  }
+
+  sendAnswerValidationById(answerPayload: AnswerValidationPayload, answerId: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${answerId}/validate`, answerPayload);
+  }
+
+  sendAnswerCommentOnlyValidationById(answerPayload: AnswerPayloadCommentOnlyValidationPayload, answerId: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${answerId}/validate`, answerPayload);
   }
 }
