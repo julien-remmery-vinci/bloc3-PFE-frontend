@@ -8,7 +8,6 @@ import {FormsModule} from "@angular/forms";
 import {ResponseService} from "../../services/response.service";
 import {AnswerPayload} from "../../types/answer-payload";
 import {AnswerPayloadCommentOnly} from "../../types/answer-payloadCommentOnly";
-import * as events from "node:events";
 import {FormService} from "../../services/form.service";
 
 
@@ -23,7 +22,7 @@ import {FormService} from "../../services/form.service";
 export class FormsEsgCompleteComponent {
   public form: Form;
   public formEnd = false;
-  questions: QuestionWithAnswer[] = [];
+  public questions: QuestionWithAnswer[] = [];
   selectedQuestion: QuestionWithAnswer | null = null;
   public selectedAnswerIds: Set<number> = new Set<number>();
   public selectedAnswerId: number | null = null;
@@ -32,19 +31,21 @@ export class FormsEsgCompleteComponent {
   public isAnswerModified :boolean[] = [false];
   public isNow : string[] = []
   public isCommitment : string[] = [];
-  constructor(private router: Router, protected themeService:ThemeService,private responseService:ResponseService) {
+  constructor(private router: Router, protected themeService:ThemeService,private responseService:ResponseService,private formSerice:FormService) {
       const navigation = this.router.getCurrentNavigation();
       this.form = navigation?.extras?.state?.['form'];
       this.questions = this.form.questions;
       this.selectedQuestion = this.questions[0];
       this.selectedAnswerIds.clear();
       this.updateSelectedAnswerId();
+      console.log(this.form)
 
   }
   onAnswerChange(answer_id: number) {
+      console.log("answer changed by text")
       this.isAnswerModified[answer_id] = true;
   }
-  onCommitmentChange(answer_id: number,event:Event) {
+  onCommitmentChange(answer_id: number,event:Event,forcedEngagement: boolean) {
       this.isAnswerModified[answer_id] = true;
       const checkbox = event.target as HTMLInputElement;
       if(!checkbox.checked){
@@ -52,9 +53,12 @@ export class FormsEsgCompleteComponent {
       }
       else{
           this.isCommitment[answer_id] = "commitment_pact"
+          if(!forcedEngagement) {
+              this.isNow[answer_id] = ""
+          }
       }
   }
-  onChange(answer_id: number,event:Event) {
+  onChange(answer_id: number,event:Event,forcedEngagement: boolean) {
       this.isAnswerModified[answer_id] = true;
       const checkbox = event.target as HTMLInputElement;
       if(!checkbox.checked){
@@ -62,6 +66,9 @@ export class FormsEsgCompleteComponent {
       }
       else{
           this.isNow[answer_id] = "now"
+          if(!forcedEngagement){
+              this.isCommitment[answer_id]= ""
+          }
       }
   }
   updateSelectedAnswerId() {
@@ -94,39 +101,60 @@ export class FormsEsgCompleteComponent {
   private saveQuestion(question:QuestionWithAnswer) {
     if(this.form && this.form.form_id ){
         for (const answer of question.answers){
+            console.log(this.isAnswerModified)
             if(this.isAnswerModified[answer.answer_id]){
+                if(!answer.is_forced_comment){
+                    console.log("test1")
+                    const answerPayload: AnswerPayload = {
+                        form_id: this.form.form_id,
+                        now: this.isNow[answer.answer_id] == "now",
+                        commitment_pact: this.isCommitment[answer.answer_id]=="commitment_pact",
+                        comment: this.selectedAnswerComment[answer.answer_id]
+                    };
+                    this.responseService.sendAnswerById(answerPayload,answer.answer_id).subscribe(
+                        (response) => {
+                                this.formSerice.getUserForms().subscribe(
+                                    (response) =>{
+                                        const forms : Form[] = response
+                                        for (const formU of forms ){
+                                            if(formU.form_id == this.form.form_id){
+                                                console.log(formU.form_id == this.form.form_id);
+                                                this.form = formU
+                                                this.questions = this.form.questions;
 
-                const answerPayload: AnswerPayload = {
-                    form_id: this.form.form_id,
-                    now: this.isNow[answer.answer_id] == "now",
-                    commitment_pact: this.isCommitment[answer.answer_id]=="commitment_pact",
-                    comment: this.selectedAnswerComment[answer.answer_id]
+                                            }
+                                        }
+                                    }
+                                )
+                        },
+                        (error) => {
+                            // This block is executed if there is an error
+                            console.error('Error occurred:', error);
+                            // Add your error handling logic here
+                        }
+                    )
+                }
+                else {
+                    console.log("test2")
 
-                };
-                console.log("JE SAVE QUESTIONS")
-                this.responseService.sendAnswerById(answerPayload,question.question.question_id)
+                    const answerPayload: AnswerPayloadCommentOnly = {
+                        form_id: this.form.form_id,
+                        comment: this.selectedAnswerComment[answer.answer_id]
+                    };
+                    this.responseService.sendAnswerCommentOnlyById(answerPayload,answer.answer_id).subscribe()
+
+                }
+
             }
         }
         /*
         if(this.selectedQuestion?.answers[0].answer == null){
-            const answerPayload: AnswerPayloadCommentOnly = {
-                form_id: this.form.form_id,
-                comment: this.selectedAnswerComment
-            };
-            this.responseService.sendAnswerCommentOnlyById(answerPayload,question.question.question_id)
-        }
-        else{
-            const answerPayload: AnswerPayload = {
-                form_id: this.form.form_id,
-                now: isNow[answer_id],
-                commitment_pact: isCommitment[answer_id],
-                comment: this.selectedAnswerComment
-            };
 
-            this.responseService.sendAnswerById(answerPayload,question.question.question_id)
+            this.responseService.sendAnswerCommentOnlyById(answerPayload,question.question.question_id)
         }
 
          */
+
     }
   }
 
