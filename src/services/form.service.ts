@@ -16,4 +16,8 @@ export class FormService {
     });
     return this.http.get(`${this.apiUrl}/forms/user`, { headers });
   }
+
+  getAnswers(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/forms`);
+  }
 }

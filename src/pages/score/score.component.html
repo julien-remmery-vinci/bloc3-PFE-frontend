@@ -1,1 +1,12 @@
-<p>score works!</p>
+<div *ngIf="forms">
+    <h1>Formulaire: {{ forms.type }}</h1>
+    <div *ngFor="let question of forms.questions">
+      <h2>{{ question.question.question_id }}: {{ question.question.question }}</h2>
+      <div *ngFor="let answer of question.answers">
+        <p>Réponse: {{ answer.answer }}</p>
+        <p>Score Now: <input type="number" [(ngModel)]="answer.score_now"></p>
+        <p>Score Commitment: <input type="number" [(ngModel)]="answer.score_commitment_pact"></p>
+        <button (click)="updateScore(question.question.question_id, answer.answer_id, answer.score_now, answer.score_commitment_pact)">Update Score</button>
+      </div>
+    </div>
+  </div>
