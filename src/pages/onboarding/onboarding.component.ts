@@ -38,11 +38,14 @@ export class OnboardingComponent {
       website: ['', Validators.pattern('^(https?:\\/\\/)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}.*$')],
       nace_code: ['', Validators.required],
       revenue: [null, [Validators.required, Validators.min(0)]],
-      franchise: [null, Validators.required],
+      franchise: [null, Validators.required], // Boolean field
       nb_workers: [null, [Validators.required, Validators.min(0)]],
-      dispute: [null, Validators.required],
-      honor_engagement: [null, Validators.required],
-      grant_application: [null, Validators.required],
+      dispute: [null, Validators.required], // Boolean field
+      honor_engagement: [null, Validators.required], // Boolean field
+      grant_application: [null, Validators.required], // Boolean field
+      is_owner: [null, Validators.required], // Boolean field
+      offers_services: [null, Validators.required], // Boolean field
+      sells_products: [null, Validators.required], // Boolean field
       grant_application_partner: [''],
       something_else: [''],
       comment: [''],
@@ -72,7 +75,9 @@ export class OnboardingComponent {
 
   submit(): void {
     if (this.onboardingForm.valid) {
+      // Debug pour confirmer les valeurs soumises
       console.log('Form data to be submitted:', this.onboardingForm.value);
+
       this.onboardingService.submitOnboardingRequest(this.onboardingForm.value).subscribe(
         (response) => {
           console.log('Onboarding request submitted successfully:', response);
@@ -87,5 +92,5 @@ export class OnboardingComponent {
     } else {
       console.log('Formulaire invalide:', this.onboardingForm);
     }
-  }  
+  }
 }

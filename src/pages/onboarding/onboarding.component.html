@@ -2,114 +2,105 @@
   <div class="onboarding-container">
     <h1>Vérifier l’éligibilité de mon entreprise</h1>
 
-    <!-- Success Message -->
     <div *ngIf="submitted">
-      <p class="success-message">
-        {{ successMessage }}
-      </p>
+      <p class="success-message">{{ successMessage }}</p>
     </div>
 
     <form [formGroup]="onboardingForm" (ngSubmit)="submit()">
-      <!-- User Information -->
       <div *ngIf="currentStep === 0">
         <h2>Informations utilisateur</h2>
-
         <label for="firstname">Prénom</label>
         <input id="firstname" formControlName="firstname" type="text" placeholder="Prénom" />
-
         <label for="lastname">Nom</label>
         <input id="lastname" formControlName="lastname" type="text" placeholder="Nom" />
-
         <label for="email">E-mail</label>
         <input id="email" formControlName="email" type="email" placeholder="Adresse e-mail" />
-
         <label for="password">Mot de passe</label>
         <input id="password" formControlName="password" type="password" placeholder="Mot de passe" />
-
         <label for="position">Fonction</label>
         <input id="position" formControlName="position" type="text" placeholder="Fonction" />
       </div>
 
-      <!-- Company Information -->
       <div *ngIf="currentStep === 1">
         <h2>Informations sur l'entreprise</h2>
-
         <label for="company_name">Nom de l'entreprise</label>
         <input id="company_name" formControlName="company_name" type="text" placeholder="Nom de l'entreprise" />
-
         <label for="company_number">Numéro d'entreprise</label>
         <input id="company_number" formControlName="company_number" type="text" placeholder="Numéro d'entreprise" />
-
         <label for="legal_form">Forme juridique</label>
         <input id="legal_form" formControlName="legal_form" type="text" placeholder="Forme juridique" />
-
         <label for="office_address">Adresse</label>
         <input id="office_address" formControlName="office_address" type="text" placeholder="Adresse" />
-
         <label for="website">Site Web</label>
         <input id="website" formControlName="website" type="url" placeholder="Site Web" />
-
         <label for="nace_code">Code NACE</label>
         <input id="nace_code" formControlName="nace_code" type="text" placeholder="Code NACE" />
-
         <label for="revenue">Chiffre d'affaires</label>
         <input id="revenue" formControlName="revenue" type="number" placeholder="Chiffre d'affaires" />
       </div>
 
-      <!-- Additional Information: Part 1 -->
       <div *ngIf="currentStep === 2">
         <h2>Informations supplémentaires</h2>
-
-        <div class="radio-group">
-          <label>Franchise ?</label>
-          <label><input type="radio" formControlName="franchise" value="true" /> Oui</label>
-          <label><input type="radio" formControlName="franchise" value="false" /> Non</label>
-        </div>
-
         <label for="nb_workers">Nombre de travailleurs</label>
         <input id="nb_workers" formControlName="nb_workers" type="number" placeholder="Nombre de travailleurs" />
+        
+        <div class="radio-group">
+          <label>Franchise ?</label>
+          <label><input type="radio" formControlName="franchise" [value]=true /> Oui</label>
+          <label><input type="radio" formControlName="franchise" [value]=false /> Non</label>
+        </div>
 
         <div class="radio-group">
           <label>Litiges sociaux/environnementaux ?</label>
-          <label><input type="radio" formControlName="dispute" value="true" /> Oui</label>
-          <label><input type="radio" formControlName="dispute" value="false" /> Non</label>
+          <label><input type="radio" formControlName="dispute" [value]=true /> Oui</label>
+          <label><input type="radio" formControlName="dispute" [value]=false /> Non</label>
         </div>
 
         <div class="radio-group">
           <label>Engagement honnête ?</label>
-          <label><input type="radio" formControlName="honor_engagement" value="true" /> Oui</label>
-          <label><input type="radio" formControlName="honor_engagement" value="false" /> Non</label>
+          <label><input type="radio" formControlName="honor_engagement" [value]=true /> Oui</label>
+          <label><input type="radio" formControlName="honor_engagement" [value]=false /> Non</label>
         </div>
 
         <div class="radio-group">
           <label>Demande de subside ?</label>
-          <label><input type="radio" formControlName="grant_application" value="true" /> Oui</label>
-          <label><input type="radio" formControlName="grant_application" value="false" /> Non</label>
+          <label><input type="radio" formControlName="grant_application" [value]=true /> Oui</label>
+          <label><input type="radio" formControlName="grant_application" [value]=false /> Non</label>
+        </div>
+
+        <div class="radio-group">
+          <label>Êtes-vous propriétaire ?</label>
+          <label><input type="radio" formControlName="is_owner" [value]=true /> Oui</label>
+          <label><input type="radio" formControlName="is_owner" [value]=false /> Non</label>
+        </div>
+
+        <div class="radio-group">
+          <label>Proposez-vous des services ?</label>
+          <label><input type="radio" formControlName="offers_services" [value]=true /> Oui</label>
+          <label><input type="radio" formControlName="offers_services" [value]=false /> Non</label>
+        </div>
+
+        <div class="radio-group">
+          <label>Vendez-vous des produits ?</label>
+          <label><input type="radio" formControlName="sells_products" [value]=true /> Oui</label>
+          <label><input type="radio" formControlName="sells_products" [value]=false /> Non</label>
         </div>
       </div>
 
-      <!-- Additional Information: Part 2 -->
       <div *ngIf="currentStep === 3">
         <h2>Informations complémentaires</h2>
-
         <label for="grant_application_partner">Partenaire pour subside</label>
-        <input id="grant_application_partner" formControlName="grant_application_partner" type="text" placeholder="Partenaire" />
-
+        <input id="grant_application_partner" formControlName="grant_application_partner" type="text" />
         <label for="something_else">Autres informations</label>
-        <textarea id="something_else" formControlName="something_else" placeholder="Autres informations"></textarea>
-
+        <textarea id="something_else" formControlName="something_else"></textarea>
         <label for="comment">Commentaires</label>
-        <textarea id="comment" formControlName="comment" placeholder="Commentaires"></textarea>
+        <textarea id="comment" formControlName="comment"></textarea>
       </div>
 
       <div class="navigation-buttons">
         <button type="button" (click)="previousStep()" [disabled]="currentStep === 0">Précédent</button>
-        <button type="button" *ngIf="currentStep < 3" (click)="nextStep()" [disabled]="!isCurrentStepValid()">
-          Suivant
-        </button>
-        <button type="submit" *ngIf="currentStep === 3" [disabled]="!onboardingForm.valid">
-          Soumettre
-        </button>
+        <button type="button" *ngIf="currentStep < 3" (click)="nextStep()" [disabled]="!isCurrentStepValid()">Suivant</button>
+        <button type="submit" *ngIf="currentStep === 3" [disabled]="!onboardingForm.valid">Soumettre</button>
       </div>
     </form>
   </div>
