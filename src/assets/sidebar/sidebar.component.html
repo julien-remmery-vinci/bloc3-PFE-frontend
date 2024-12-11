@@ -8,6 +8,7 @@
     class="logo img-fluid"
     [routerLink]="['/home']"
   />
+
   <div class="d-flex">
     <button
       *ngIf="!authService.isTokenValid()"
@@ -41,6 +42,7 @@
     >
       Inscription
     </button>
+
     <button
       *ngIf="authService.isUser()"
       [routerLink]="['/userRegister']"
@@ -59,5 +61,5 @@
     class="logout-btn"
   >
     <mat-icon>logout</mat-icon>
-  </button>
+</button>
 </mat-toolbar>

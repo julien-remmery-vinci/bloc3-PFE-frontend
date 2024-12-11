@@ -1,4 +1,4 @@
-interface ChoiceOdd {
+export interface ChoiceOdd {
     choice_id: number;
     choice: 
         | "Ne correspond pas à mes activités"

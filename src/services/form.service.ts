@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +10,7 @@ export class FormService {
 
   constructor(private http: HttpClient) {}
 
-  getUserForms(token: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get(`${this.apiUrl}/forms/user`, { headers });
+  getUserForms(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/forms/user`);
   }
 }

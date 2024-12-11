@@ -5,50 +5,59 @@ import { HttpClient } from "@angular/common/http";
 import { User } from "src/types/User";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = "http://127.0.0.1:3000/auth/login";
+  private apiUrl = 'http://127.0.0.1:3000/auth/login';
+  private apiFetchUserUrl = 'http://127.0.0.1:3000/auth/verify'
   private userSubject: BehaviorSubject<any>;
   public user: Observable<User>;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.userSubject = new BehaviorSubject<any>(this.getUserFromStorage());
+      this.userSubject = new BehaviorSubject<User|null>(null);
     this.user = this.userSubject.asObservable();
   }
 
   login(login: string, password: string): Observable<any> {
     const loginData = { login, password };
-    return this.http.post<any>(`${this.apiUrl}`, loginData).pipe(
-      map((response) => {
-        console.log(response);
-        if (response && response.token) {
-          this.setToken(response.token);
-          this.setUser(response.user);
-        }
-        return response;
-      })
-    );
+    return this.http.post<any>(`${this.apiUrl}`, loginData)
+        .pipe(map(response => {
+          if (response && response.token) {
+            this.setToken(response.token);
+            this.setUser(response.user);
+          }
+          return response;
+        }));
+  }
+
+  loadUserFromServerIfTokenValid(): void {
+    if (this.isTokenValid()) {
+      this.fetchUserFromServer().subscribe(
+          user => {
+            this.setUser(user);  // Update BehaviorSubject
+          })
+    }
+  }
+  private fetchUserFromServer(): Observable<User> {
+    return this.http.get<User>(`${this.apiFetchUserUrl}`);
   }
 
   private setToken(token: string): void {
-    localStorage.setItem("authToken", token);
+    localStorage.setItem('authToken', token);
   }
-  private setUser(user: any): void {
-    localStorage.setItem("authUser", JSON.stringify(user));
+  setUser(user: any): void {
     this.userSubject.next(user);
   }
   getToken(): string | null {
-    return localStorage.getItem("authToken");
+    return localStorage.getItem('authToken');
   }
   getCurrentUser(): any {
     return this.userSubject.getValue();
   }
   private clearToken(): void {
-    localStorage.removeItem("authToken");
+    localStorage.removeItem('authToken');
   }
   private clearUser(): void {
-    localStorage.removeItem("authUser");
     this.userSubject.next(null);
   }
 
@@ -89,12 +98,16 @@ export class AuthService {
   }
   private decodeToken(token: string): any {
     if (token) {
-      return JSON.parse(atob(token.split(".")[1]));
+      return JSON.parse(atob(token.split('.')[1]));
     }
     return null;
   }
-  public getUserFromStorage(): any {
-    const user = localStorage.getItem("authUser");
-    return user ? JSON.parse(user) : null;
+
+  public getUser(): Observable<User> {
+    return this.user;
+  }
+
+  public getCurrentUserValue(): User {
+    return this.userSubject.value;
   }
 }
