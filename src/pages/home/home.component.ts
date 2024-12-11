@@ -17,10 +17,10 @@ export class HomeComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router, private formService: FormService) { }
 
   ngOnInit(): void {
-    this.user = this.authService.getUserFromStorage();
+    this.user = this.authService.getCurrentUserValue();
     const token = this.authService.getToken();
     if (token) {
-    this.formService.getUserForms(token).subscribe(
+    this.formService.getUserForms().subscribe(
       (data) => {
         this.forms = data;
       },

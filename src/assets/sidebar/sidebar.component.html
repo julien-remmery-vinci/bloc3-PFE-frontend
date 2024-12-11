@@ -57,7 +57,7 @@
     </button>
   </div>
   <span class="spacer"></span>
-  <button mat-icon-button matTooltip="Déconnexion" (click)="authService.logout()" [routerLink]="['/']" class="logout-btn">
+  <button mat-icon-button matTooltip="Déconnexion" *ngIf="authService.isTokenValid()" (click)="authService.logout()" [routerLink]="['/']" class="logout-btn">
     <mat-icon>logout</mat-icon>
 </button>
 </mat-toolbar>
