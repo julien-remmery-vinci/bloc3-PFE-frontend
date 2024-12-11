@@ -26,6 +26,7 @@ import { ThemeService } from "./app/theme/theme.service";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatCardModule } from '@angular/material/card';
 import { UserRegisterComponent } from "./pages/user-register/user-register.component";
+import { OnboardingComponent } from "./pages/onboarding/onboarding.component";
 import { ScoreComponent } from "./pages/score/score.component";
 
 @NgModule({
@@ -37,6 +38,8 @@ import { ScoreComponent } from "./pages/score/score.component";
     SidebarComponent,
     HomeComponent,
     RegisterComponent,
+    UserRegisterComponent,
+    OnboardingComponent,
     UserRegisterComponent,
     ScoreComponent
   ],

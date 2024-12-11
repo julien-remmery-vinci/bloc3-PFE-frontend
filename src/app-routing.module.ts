@@ -9,6 +9,7 @@ import {AuthGuard} from "./guard/auth.guard";
 import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
 import { UserRegisterComponent } from './pages/user-register/user-register.component';
+import { OnboardingComponent } from './pages/onboarding/onboarding.component';
 import { CompanyDashboardComponent } from './pages/company-dashboard/company-dashboard.component';
 import { ScoreComponent } from './pages/score/score.component';
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'forms/odd/complete', component: FormsOddCompleteComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
   { path: 'userRegister', component: UserRegisterComponent, canActivate: [AuthGuard], data: { role: 'user' } },
+  { path: 'onboarding', component: OnboardingComponent },
   { path: 'companyDashboard', component: CompanyDashboardComponent, canActivate: [AuthGuard], data: { role: 'user' } },
   { path: 'score',component: ScoreComponent, canActivate: [AuthGuard], data: { role: 'admin' } }
 ];
