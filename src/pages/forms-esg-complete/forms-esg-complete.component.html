@@ -1,17 +1,76 @@
 <div class="flex">
-    <div class="questions">
-        <div (click)="selectQuestion(question)" *ngFor="let question of questions" class="question">
-            <p>{{ question.text }}</p>
-        </div>
-    </div>
-    <div>
-        <div>
-            <p>Question: {{ selectedQuestion.text }}</p>
-            <div *ngFor="let answer of selectedQuestion.answers">
-                <label>{{ answer }}</label>
-                <input type="radio" name="answer">
+    <div class="categories-list">
+        <div *ngFor="let category of getCategories()" class="category">
+            <h3 (click)="toggleCategory(category)">{{ category }}</h3>
+            <div *ngIf="isCategoryOpen(category)" class="subcategories-list">
+                <div *ngFor="let subCategory of getSubCategories(category)" class="subcategory">
+                    <h4 (click)="toggleSubCategory(category, subCategory)">{{ subCategory }}</h4>
+                    <div *ngIf="isSubCategoryOpen(category, subCategory)" class="questions-list">
+                        <div class="question" *ngFor="let question of getQuestionsByCategoryAndSubCategory(category, subCategory)">
+                            <p (click)="selectQuestion(question)">{{ question.question.question }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+
+
+    <div>
+        <p>Question: {{ selectedQuestion?.question?.question }}</p>
+
+        <!-- Table for answers -->
+        <table>
+            <thead>
+            <tr>
+                <th>Answer</th>
+                <th>Maintenant</th>
+                <th>Pacte d'engagement</th>
+                <th>Commentaires</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let answer of selectedQuestion?.answers">
+                <td>
+                    <div class="answerTextdiv" *ngIf="answer.answer">
+                        <label class="answerText">{{ answer.answer }}</label>
+                    </div>
+                </td>
+                <td>
+                    <!-- Now Radio Button -->
+                    <div *ngIf="answer.answer">
+                        <label for="now{{answer.answer_id}}">Now</label>
+                        <input
+                                type="checkbox"
+                                [id]="'now' + answer.answer_id"
+                                value="now"
+                                [checked]="isNow[answer.answer_id]"
+                                (change)="onChange(answer.answer_id,$event,answer.is_forced_engagement)"
+                                name="now{{answer.answer_id}}"
+                        />
+                    </div>
+                </td>
+                <td>
+                    <!-- Commitment Pact Radio Button -->
+                    <div *ngIf="answer.answer">
+                        <label for="commitmentPact{{answer.answer_id}}">Commitment Pact</label>
+                        <input
+                                type="checkbox"
+                                [id]="'commitmentPact' + answer.answer_id"
+                                value="commitment_pact"
+                                [checked]= "isCommitment[answer.answer_id]"
+                                (change)="onCommitmentChange(answer.answer_id,$event,answer.is_forced_engagement)"
+                                name="commitmentGroup{{answer.answer_id}}"
+                        />
+                    </div>
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]="selectedAnswerComment[answer.answer_id]" (ngModelChange)="onAnswerChange(answer.answer_id)">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
         <div *ngIf="!formEnd">
             <button (click)="nextQuestion(selectedQuestion)">Question suivante</button>
         </div>

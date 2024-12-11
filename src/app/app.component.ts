@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {LoadingService} from "../services/loading.service";
+import {AuthService} from "../services/auth.service";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  loading: boolean = false;
+  loading: boolean = true;
 
   spinnerConfig = {
     backdropBorderRadius: '3px',
@@ -16,9 +17,11 @@ export class AppComponent implements OnInit{
     tertiaryColour: '#b5cdbf',
     fullScreen: true
   };
-    constructor(private loadingService: LoadingService) {}
+    constructor(private loadingService: LoadingService,private authService: AuthService) {}
 
     ngOnInit() {
+      this.authService.loadUserFromServerIfTokenValid()
+
       this.loadingService.loading$.subscribe(isLoading => {
         this.loading = isLoading;
       });
