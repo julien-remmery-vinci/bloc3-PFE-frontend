@@ -1,6 +1,7 @@
-// score.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormService } from 'src/services/form.service';
+import { ScoreService } from 'src/services/score.service';
+import { ScoreUpdate } from 'src/types/score.types';
 
 interface Question {
   question: {
@@ -34,8 +35,10 @@ export class ScoreComponent implements OnInit {
   expandedCategories: Set<number> = new Set();
   expandedSubCategories: Set<string> = new Set();
   expandedQuestions: Set<number> = new Set();
+  successMessage: string = '';
+  errorMessage: string = '';
 
-  constructor(private formService: FormService) {}
+  constructor(private formService: FormService, private scoreService:ScoreService) {}
 
   ngOnInit(): void {
     this.formService.getAnswers().subscribe(
@@ -79,7 +82,6 @@ export class ScoreComponent implements OnInit {
   toggleCategory(index: number): void {
     if (this.expandedCategories.has(index)) {
       this.expandedCategories.delete(index);
-      // Close all related subcategories
       this.expandedSubCategories.forEach(key => {
         if (key.startsWith(`${index}-`)) {
           this.expandedSubCategories.delete(key);
@@ -111,8 +113,25 @@ export class ScoreComponent implements OnInit {
     return this.expandedQuestions.has(questionId);
   }
 
-  updateScore(questionId: number, answerId: number, scoreNow: number, scoreCommitment: number): void {
-    console.log(`Updating score for question ${questionId}, answer ${answerId} to ${scoreNow}, ${scoreCommitment}`);
-    // Implement score update logic here
+  updateScore(questionId: number, answerId: number, scoreNow?: number, scoreCommitment?: number): void {
+    const scoreUpdate: ScoreUpdate = {};
+    if (scoreNow !== undefined) scoreUpdate.score_now = scoreNow;
+    if (scoreCommitment !== undefined) scoreUpdate.score_commitment_pact = scoreCommitment;
+
+    if (Object.keys(scoreUpdate).length > 0) {
+      this.scoreService.updateScore(answerId, scoreUpdate).subscribe(
+        () => {
+          this.successMessage = "Score(s) mis à jour avec succès";
+          setTimeout(() => this.successMessage = '', 3000);
+        },
+        (error) => {
+          if (error.status === 400) {
+            this.errorMessage = "Score(s) invalide(s)";
+          } else {
+            this.errorMessage = "Erreur lors de la mise à jour";
+          }
+        }
+      );
+    }
   }
 }
