@@ -67,6 +67,7 @@ export class FormsEsgValidateComponent {
           }
       }
   }
+
   onChange(answer_id: number,event:Event,forcedEngagement: boolean) {
       this.isAnswerModified[answer_id] = true;
       const checkbox = event.target as HTMLInputElement;
@@ -80,6 +81,7 @@ export class FormsEsgValidateComponent {
           }
       }
   }
+
   updateSelectedAnswerId() {
     if (this.selectedQuestion?.user_answers && this.selectedQuestion.user_answers.length > 0) {
         for (const answer of this.selectedQuestion.user_answers) {
@@ -110,15 +112,15 @@ export class FormsEsgValidateComponent {
   private saveQuestion(question:QuestionWithAnswer) {
     if(this.form && this.form.form_id ){
         for (const answer of question.answers){
-            if(this.isAnswerModified[answer.answer_id]){
+            // if(this.isAnswerModified[answer.answer_id]){
                 if(!answer.is_forced_comment){
                     const answerPayload: AnswerValidationPayload = {
                         form_id: this.form.form_id,
                         now: this.isNow[answer.answer_id] == "now",
                         commitment_pact: this.isCommitment[answer.answer_id]=="commitment_pact"
                     };
-                    this.responseService.sendAnswerValidationById(answerPayload,answer.answer_id).subscribe(
-                        (response) => {
+                    this.responseService.sendAnswerValidationById(answerPayload, answer.answer_id).subscribe(
+                        (response) => {                               
                                 this.formSerice.getUserForms().subscribe(
                                     (response) =>{
                                         const forms : Form[] = response
@@ -128,7 +130,6 @@ export class FormsEsgValidateComponent {
                                                 this.questions = this.form.questions;
                                                 this.findAllCategory()
                                                 this.cdr.detectChanges();  // Trigger change detection
-
                                             }
                                         }
                                     }
@@ -163,7 +164,7 @@ export class FormsEsgValidateComponent {
                         }
                     )
                 }
-            }
+            // }
         }
     }
   }
@@ -194,12 +195,23 @@ export class FormsEsgValidateComponent {
   nextQuestion(answer: any) {
     if(this.form && this.questions && this.selectedQuestion){
       const index = this.questions.indexOf(this.selectedQuestion);
+      if (index + 1 === this.questions.length) {
+        this.formEnd = true;
+        return;
+      }
       this.selectQuestion(this.questions[index + 1]);
     }
   }
 
   submitForm(form: Form) {
-    alert('A implementer');
+    this.formSerice.validateForm(form.form_id).subscribe(
+        (response) => {
+            this.router.navigate(['/dashboard']);
+        },
+        (error) => {
+            console.error('Error occurred:', error);
+        }
+    )
   }
 
     getCategories(): string[] {

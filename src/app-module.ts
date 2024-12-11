@@ -40,7 +40,7 @@ import { OnboardingComponent } from "./pages/onboarding/onboarding.component";
     HomeComponent,
     RegisterComponent,
     UserRegisterComponent,
-    StatisticsComponent
+    StatisticsComponent,
     OnboardingComponent
   ],
   imports: [
