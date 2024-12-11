@@ -18,6 +18,16 @@
     >
       Se connecter
     </button>
+
+    <button
+    *ngIf="!authService.isTokenValid()"
+    [routerLink]="['/onboarding']"
+    mat-button
+    class="btn btn-outline-light"
+    >
+    On boarding
+    </button>
+
     <button
       *ngIf="authService.isTokenValid()"
       [routerLink]="['/dashboard']"
