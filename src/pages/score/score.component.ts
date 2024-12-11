@@ -113,6 +113,8 @@ export class ScoreComponent implements OnInit {
     return this.expandedQuestions.has(questionId);
   }
 
+  errorMessages: { [answerId: number]: string } = {};
+
   updateScore(questionId: number, answerId: number, scoreNow?: number, scoreCommitment?: number): void {
     const scoreUpdate: ScoreUpdate = {};
     if (scoreNow !== undefined) scoreUpdate.score_now = scoreNow;
@@ -122,16 +124,21 @@ export class ScoreComponent implements OnInit {
       this.scoreService.updateScore(answerId, scoreUpdate).subscribe(
         () => {
           this.successMessage = "Score(s) mis à jour avec succès";
+          this.errorMessages[answerId] = '';
           setTimeout(() => this.successMessage = '', 3000);
         },
         (error) => {
           if (error.status === 400) {
-            this.errorMessage = "Score(s) invalide(s)";
+            this.errorMessages[answerId] = "Score(s) invalide(s)";
           } else {
-            this.errorMessage = "Erreur lors de la mise à jour";
+            this.errorMessages[answerId] = "Erreur lors de la mise à jour";
           }
         }
       );
     }
+  }
+
+  clearError(answerId: number): void {
+    this.errorMessages[answerId] = '';
   }
 }

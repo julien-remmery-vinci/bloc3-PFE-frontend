@@ -99,6 +99,12 @@
     align-items: center;
     transition: background-color var(--transition-speed);
   }
+
+  .error-message {
+    color: #dc3545;
+    margin-top: 8px;
+    font-size: 0.875rem;
+  }
   
   .question-header:hover {
     background: var(--hover-bg);
