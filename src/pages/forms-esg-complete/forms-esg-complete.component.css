@@ -14,7 +14,8 @@
 .style-none {
     list-style: none;
 }
-.categories-list{
+
+.categories-list {
     width: 40%;
     margin-left: 3%;
 }
@@ -34,10 +35,6 @@ input {
     width: 30%;
 }
 
-.dark-theme th {
-    background-color:#1e1e1e ;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -48,18 +45,18 @@ table {
 th {
     text-align: left;
     padding: 8px;
-    background-color: #f2f2f2;
 }
 
 td {
     vertical-align: top;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid;
 }
+
 td div {
     display: block;
 }
 
-td .answerText{
+td .answerText {
     display: block;
     word-wrap: break-word;
     word-break: break-word;
@@ -67,10 +64,12 @@ td .answerText{
     min-width: 450px;
     margin-bottom: 5px;
 }
-.answerTextdiv{
+
+.answerTextdiv {
     max-width: 70%;
     min-width: 70%;
 }
+
 td input {
     display: block;
     margin-top: 5px;
@@ -89,26 +88,22 @@ input[type="radio"] {
     min-height: 15px;
 }
 
-
 input[type="text"] {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
 }
-
 
 div {
     margin-bottom: 15px;
 }
 
-
 form {
     margin: 20px;
 }
-
 
 button {
     margin-top: 20px;
