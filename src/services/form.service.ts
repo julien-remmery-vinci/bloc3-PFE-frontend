@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {SubmitValidation} from "../types/SubmitValidation";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,10 @@ export class FormService {
 
   getUserForms(): Observable<any> {
     return this.http.get(`${this.apiUrl}/forms/user`);
+  }
+  
+  submitForm(form_id:number,confirmation:SubmitValidation) : Observable<any> {
+    return this.http.post(`${this.apiUrl}/forms/${form_id}/submit`,confirmation);
   }
 
   validateForm(form_id: number | undefined): Observable<any> {

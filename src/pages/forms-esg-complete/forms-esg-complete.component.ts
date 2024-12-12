@@ -9,6 +9,8 @@ import {ResponseService} from "../../services/response.service";
 import {AnswerPayload} from "../../types/answer-payload";
 import {AnswerPayloadCommentOnly} from "../../types/answer-payloadCommentOnly";
 import {FormService} from "../../services/form.service";
+import {SubmitValidation} from "../../types/SubmitValidation";
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -204,8 +206,44 @@ export class FormsEsgCompleteComponent {
     }
   }
 
-  submitForm(form: Form) {
-    alert('A implementer');
+  submitForm() {
+      let confirmation: SubmitValidation = {
+          confirmation: false
+      };
+      if(this.form && this.form.form_id){
+          this.formSerice.submitForm(this.form.form_id,confirmation).subscribe(
+              (response) => {
+                  console.log("success")
+              },
+              (error) => {
+                  console.log(error)
+                  this.showModal()
+              })
+      }
+  }
+    showModal() {
+        Swal.fire({
+            title: 'Reponses manquantes',
+            text: 'Il reste des questions sans réponses, voulez vous quand même envoyer le formulaire ?',
+            icon: 'warning',
+            confirmButtonText: 'Oui',
+            showCancelButton: true,
+            cancelButtonText: 'Revenir au questionnaire',
+            background : '#013238',
+            color : 'white'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.forceSubmitForm()
+            }
+        });
+    }
+  forceSubmitForm() {
+      let confirmation: SubmitValidation = {
+          confirmation: true
+      };
+      if(this.form && this.form.form_id){
+          this.formSerice.submitForm(this.form.form_id,confirmation).subscribe()
+      }
   }
 
     getCategories(): string[] {

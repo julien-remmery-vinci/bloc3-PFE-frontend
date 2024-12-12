@@ -6,4 +6,5 @@ export interface QuestionWithAnswer {
     question : Question
     answers: AnswerEsg[]
     user_answers: UserAnswerEsg[]
+    isUnanswered : boolean
 }
