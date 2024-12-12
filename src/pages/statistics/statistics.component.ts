@@ -24,7 +24,7 @@ export class StatisticsComponent implements OnInit {
         text: 'Pourcentage des entreprises par type de template'
       },
       xAxis: {
-        categories: ['OWNED FACILITY', 'WORKERS', 'PRODUITS', 'FACILITY']
+        categories: ['Entreprise propriétaires', 'Entreprise avec employés', 'Entreprises qui vendent des produits', 'Entreprises locataires']
       },
       yAxis: {
         title: {
@@ -34,7 +34,7 @@ export class StatisticsComponent implements OnInit {
       series: [{
         type: 'column',
         name: 'Pourcentage',
-        data: [0, 0, 0, 0]
+        data: [50, 40, 70, 80]
       }]
     };
 
@@ -63,42 +63,48 @@ export class StatisticsComponent implements OnInit {
   loadStats(): void {
     this.statsService.getStats().subscribe((stats: Stats) => {
       this.stats = stats;
-      this.updateChartOptions();
+      // this.updateChartOptions();
       this.updatePieChartOptions();
       this.updateFlag = true;
     });
   }
 
-  updateChartOptions(): void {
-    if (!this.stats) return;
+  // updateChartOptions(): void {
+  //   if (!this.stats) return;
 
-    this.chartOptions = {
-      chart: {
-        type: 'column'
-      },
-      title: {
-        text: 'Pourcentage des entreprises par type de template'
-      },
-      xAxis: {
-        categories: ['OWNED FACILITY', 'WORKERS', 'PRODUITS', 'FACILITY']
-      },
-      yAxis: {
-        title: {
-          text: 'Pourcentage'
-        }
-      },
-      series: [{
-        type: 'column',
-        name: 'Pourcentage',
-        data: [
-          this.stats.total_templates_owned_facility,
-          this.stats.total_templates_workers,
-          this.stats.total_templates_products,
-          this.stats.total_templates_facility
-        ]
-      }]
-    };
-  }
+  //   const totalCompanies = this.stats.total_companies;
+  //   const ownedFacilityCount = this.stats.total_templates_owned_facility + this.stats.total_templates_all;
+  //   const workersCount = this.stats.total_templates_workers + this.stats.total_templates_all;
+  //   const productsCount = this.stats.total_templates_products + this.stats.total_templates_all;
+  //   const facilityCount = this.stats.total_templates_facility;
+
+  //   this.chartOptions = {
+  //     chart: {
+  //       type: 'column'
+  //     },
+  //     title: {
+  //       text: 'Pourcentage des entreprises par type de template'
+  //     },
+  //     xAxis: {
+  //       categories: ['Entreprises propriétaires', 'Entreprises avec des employés', 'Entreprises qui vendent des produits', 'Entreprises locataires']
+  //     },
+  //     yAxis: {
+  //       title: {
+  //         text: 'Pourcentage'
+  //       }
+  //     },
+  //     series: [{
+  //       type: 'column',
+  //       name: 'Pourcentage',
+  //       data: [
+  //         (ownedFacilityCount / totalCompanies) * 100,
+  //         (workersCount / totalCompanies) * 100,
+  //         (productsCount / totalCompanies) * 100,
+  //         (facilityCount / totalCompanies) * 100
+  //       ]
+  //     }]
+  //   };
+  // }
 
   updatePieChartOptions(): void {
     if (!this.stats) return;
@@ -119,5 +125,12 @@ export class StatisticsComponent implements OnInit {
         ]
       }]
     };
+  }
+
+  getAcceptedOnboardingPercentage(): number {
+    if (!this.stats || this.stats.total_onboarding === 0) return 0;
+    const accepted = this.stats.total_accepted_onboarding;
+    const total = this.stats.total_onboarding;
+    return (accepted / total) * 100;
   }
 }

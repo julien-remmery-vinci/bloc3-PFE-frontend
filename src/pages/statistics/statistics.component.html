@@ -43,34 +43,15 @@
       </mat-card>
       <mat-card class="stat-card data-card">
         <mat-card-header>
-          <mat-card-title>Total Templates All</mat-card-title>
+          <mat-card-title>Pourcentage Onboarding Accepté</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <p>{{ stats?.total_templates_all }}</p>
-        </mat-card-content>
-      </mat-card>
-      <mat-card class="stat-card data-card">
-        <mat-card-header>
-          <mat-card-title>Total Onboarding</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>{{ stats?.total_onboarding }}</p>
-        </mat-card-content>
-      </mat-card>
-      <mat-card class="stat-card data-card">
-        <mat-card-header>
-          <mat-card-title>Total Accepted Onboarding</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>{{ stats?.total_accepted_onboarding }}</p>
-        </mat-card-content>
-      </mat-card>
-      <mat-card class="stat-card data-card">
-        <mat-card-header>
-          <mat-card-title>Total Rejected Onboarding</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>{{ stats?.total_rejected_onboarding }}</p>
+          <mat-progress-spinner
+            [value]="getAcceptedOnboardingPercentage()"
+            mode="determinate"
+            diameter="100">
+          </mat-progress-spinner>
+          <p>{{ getAcceptedOnboardingPercentage() | number: '1.0-2' }}%</p>
         </mat-card-content>
       </mat-card>
     </div>
@@ -83,14 +64,6 @@
           <highcharts-chart
             [Highcharts]="Highcharts"
             [options]="chartOptions"
-            [(update)]="updateFlag"
-            style="width: 100%; height: 400px; display: block;">
-          </highcharts-chart>
-        </div>
-        <div class="chart-container">
-          <highcharts-chart
-            [Highcharts]="Highcharts"
-            [options]="pieChartOptions"
             [(update)]="updateFlag"
             style="width: 100%; height: 400px; display: block;">
           </highcharts-chart>
