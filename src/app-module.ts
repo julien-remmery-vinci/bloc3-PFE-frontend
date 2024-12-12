@@ -30,6 +30,7 @@ import { HighchartsChartModule } from "highcharts-angular";
 import { StatisticsComponent } from "./pages/statistics/statistics.component";
 import { OnboardingComponent } from "./pages/onboarding/onboarding.component";
 import { ScoreComponent } from "./pages/score/score.component";
+import { StatsService } from "./services/stats.service";
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { ScoreComponent } from "./pages/score/score.component";
   providers: [
     ThemeService,
     AuthGuard,
+    StatsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,

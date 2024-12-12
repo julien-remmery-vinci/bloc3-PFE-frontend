@@ -15,5 +15,4 @@ export class UserService {
   getCompany(): Observable<Company> {
     return this.http.get<Company>(this.companyUrl);
   }
-
 }
