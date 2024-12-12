@@ -73,6 +73,7 @@
 
   <span class="spacer"></span>
   <button
+    *ngIf="authService.isTokenValid()"
     mat-icon-button
     matTooltip="Déconnexion"
     (click)="authService.logout()"
