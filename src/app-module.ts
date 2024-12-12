@@ -29,9 +29,11 @@ import { HighchartsChartModule } from "highcharts-angular";
 import { StatisticsComponent } from "./pages/statistics/statistics.component";
 import { OnboardingComponent } from "./pages/onboarding/onboarding.component";
 import { ScoreComponent } from "./pages/score/score.component";
+import { ScoreReviewComponent } from "./pages/scoreReview/scoreReview.component";
 import {OnboardingValidationComponent} from "./pages/onboarding-validation/onboarding-validation.component";
 import { StatsService } from "./services/stats.service";
-import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from "@angular/common";
+import {LocationStrategy, PathLocationStrategy } from "@angular/common";
+import {CompanyDashboardComponent} from "./pages/company-dashboard/company-dashboard.component";
 
 @NgModule({
   declarations: [
@@ -45,6 +47,9 @@ import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from "@a
     StatisticsComponent,
     OnboardingComponent,
     ScoreComponent,
+    OnboardingValidationComponent,
+    CompanyDashboardComponent,
+    ScoreReviewComponent,
     OnboardingValidationComponent
   ],
   imports: [

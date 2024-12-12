@@ -12,6 +12,7 @@ import { UserRegisterComponent } from './pages/user-register/user-register.compo
 import { OnboardingComponent } from './pages/onboarding/onboarding.component';
 import { CompanyDashboardComponent } from './pages/company-dashboard/company-dashboard.component';
 import { ScoreComponent } from './pages/score/score.component';
+import { ScoreReviewComponent } from './pages/scoreReview/scoreReview.component';
 import {OnboardingValidationComponent} from "./pages/onboarding-validation/onboarding-validation.component";
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
   { path: 'forms/esg/validate', component: FormsEsgValidateComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
   { path: 'score',component: ScoreComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
+  { path: 'forms/score',component: ScoreReviewComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
   { path: 'onboarding/validate',component: OnboardingValidationComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
   { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
   { path: 'score',component: ScoreComponent, canActivate: [AuthGuard], data: { role: 'admin' } },

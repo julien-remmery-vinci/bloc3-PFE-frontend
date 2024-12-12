@@ -41,8 +41,18 @@ export class FormsEsgCompleteComponent {
                 private cdr: ChangeDetectorRef) {
       const navigation = this.router.getCurrentNavigation();
       this.form = navigation?.extras?.state?.['form'];
+        this.form.questions.sort((a, b) => {
+            if (a.question.question_id < b.question.question_id) {
+                return -1;
+            } else if (a.question.question_id > b.question.question_id) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+
       this.questions = this.form.questions;
-      this.selectedQuestion = this.questions[0];
+      this.selectedQuestion = this.questions[this.getLatestAnsweredQuestion()];//this.getLatestAnsweredQuestion() //
       this.selectedAnswerIds.clear();
       this.updateSelectedAnswerId();
       this.findAllCategory()
@@ -152,8 +162,7 @@ export class FormsEsgCompleteComponent {
                                             this.form = formU
                                             this.questions = this.form.questions;
                                             this.findAllCategory()
-                                            this.cdr.detectChanges();  // Trigger change detection
-
+                                            this.cdr.detectChanges();
                                         }
                                     }
                                 }
@@ -232,11 +241,11 @@ export class FormsEsgCompleteComponent {
         const subCategorySet = this.openSubCategories.get(category) || new Set();
 
         if (this.openCategories.has(category)) {
-            this.openCategories.delete(category); // Close if already open
+            this.openCategories.delete(category);
         } else {
             this.openCategories.clear()
             subCategorySet.clear()
-            this.openCategories.add(category); // Open if not
+            this.openCategories.add(category);
         }
     }
 
@@ -249,17 +258,21 @@ export class FormsEsgCompleteComponent {
     toggleSubCategory(category: string, subCategory: string) {
         const subCategorySet = this.openSubCategories.get(category) || new Set();
         if (subCategorySet.has(subCategory)) {
-            subCategorySet.delete(subCategory); // Close if already open
+            subCategorySet.delete(subCategory);
         } else {
             subCategorySet.clear()
-            subCategorySet.add(subCategory); // Open if not
+            subCategorySet.add(subCategory);
         }
         this.openSubCategories.set(category, subCategorySet);
     }
 
-    // Check if a subcategory is open
     isSubCategoryOpen(category: string, subCategory: string): boolean {
         const subCategorySet = this.openSubCategories.get(category);
         return subCategorySet ? subCategorySet.has(subCategory) : false;
+    }
+
+    private getLatestAnsweredQuestion(): number {
+        const index = this.form.questions.findIndex((question) => question.user_answers.length == 0);
+        return index;
     }
 }
