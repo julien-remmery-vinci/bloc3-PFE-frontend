@@ -28,6 +28,8 @@ import { MatCardModule } from '@angular/material/card';
 import { UserRegisterComponent } from "./pages/user-register/user-register.component";
 import { HighchartsChartModule } from "highcharts-angular";
 import { StatisticsComponent } from "./pages/statistics/statistics.component";
+import { OnboardingComponent } from "./pages/onboarding/onboarding.component";
+import { ScoreComponent } from "./pages/score/score.component";
 import { StatsService } from "./services/stats.service";
 
 @NgModule({
@@ -40,7 +42,9 @@ import { StatsService } from "./services/stats.service";
     HomeComponent,
     RegisterComponent,
     UserRegisterComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    OnboardingComponent,
+    ScoreComponent
   ],
   imports: [
     MatFormFieldModule,

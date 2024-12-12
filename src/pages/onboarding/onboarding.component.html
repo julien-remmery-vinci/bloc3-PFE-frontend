@@ -1,0 +1,119 @@
+<div class="onboarding-wrapper">
+  <div class="onboarding-container">
+    <h1>Vérifier l’éligibilité de mon entreprise</h1>
+
+    <div *ngIf="submitted">
+      <p class="success-message">{{ successMessage }}</p>
+    </div>
+
+    <form [formGroup]="onboardingForm" (ngSubmit)="submit()">
+      <div *ngIf="currentStep === 0">
+        <h2>Informations utilisateur</h2>
+        <label for="firstname">Quel est votre prénom ?</label>
+        <input id="firstname" formControlName="firstname" type="text" placeholder="Prénom" />
+
+        <label for="lastname">Quel est votre nom ?</label>
+        <input id="lastname" formControlName="lastname" type="text" placeholder="Nom" />
+
+        <label for="email">Quelle est votre adresse e-mail ?</label>
+        <input id="email" formControlName="email" type="email" placeholder="Adresse e-mail" />
+
+        <label for="password">Mot de passe</label>
+        <input id="password" formControlName="password" type="password" placeholder="Mot de passe" />
+
+        <label for="position">Quelle est votre fonction ?</label>
+        <input id="position" formControlName="position" type="text" placeholder="Fonction" />
+      </div>
+
+      <div *ngIf="currentStep === 1">
+        <h2>Informations sur l'entreprise</h2>
+        <label for="company_name">Quel est le nom de votre entreprise ?</label>
+        <input id="company_name" formControlName="company_name" type="text" placeholder="Nom de l'entreprise" />
+
+        <label for="company_number">Quel est votre n° d'entreprise ?</label>
+        <input id="company_number" formControlName="company_number" type="text" placeholder="Numéro d'entreprise" />
+
+        <label for="legal_form">Quelle est la forme juridique ?</label>
+        <input id="legal_form" formControlName="legal_form" type="text" placeholder="Forme juridique" />
+
+        <label for="office_address">Quelle est l'adresse du siège social ?</label>
+        <input id="office_address" formControlName="office_address" type="text" placeholder="Adresse du siège social" />
+
+        <label for="website">Quelle est l'adresse de votre site web ?</label>
+        <input id="website" formControlName="website" type="url" placeholder="Site Web" />
+
+        <label for="nace_code">Quel est le Code NACE de votre activité principale ?</label>
+        <input id="nace_code" formControlName="nace_code" type="text" placeholder="Code NACE" />
+
+        <label for="revenue">Quel est le chiffre d'affaires du dernier exercice clôturé ?</label>
+        <input id="revenue" formControlName="revenue" type="number" placeholder="Chiffre d'affaires" />
+      </div>
+
+      <div *ngIf="currentStep === 2">
+        <h2>Informations supplémentaires</h2>
+        <label for="nb_workers">Combien de travailleurs comptez-vous ?</label>
+        <input id="nb_workers" formControlName="nb_workers" type="number" placeholder="Nombre de travailleurs" />
+
+        <div class="radio-group">
+          <label>Votre entreprise est-elle une franchise ?</label>
+          <label><input type="radio" formControlName="franchise" [value]=true /> Oui</label>
+          <label><input type="radio" formControlName="franchise" [value]=false /> Non</label>
+        </div>
+
+        <div class="radio-group">
+          <label>Est-ce que votre entreprise est actuellement en litige social ou environnemental ?</label>
+          <label><input type="radio" formControlName="dispute" [value]=true /> Oui</label>
+          <label><input type="radio" formControlName="dispute" [value]=false /> Non</label>
+        </div>
+
+        <div class="radio-group">
+          <label>Dans le cadre de la certification Shifting Pact, vous engagez-vous à respecter nos critères ?</label>
+          <label><input type="radio" formControlName="honor_engagement" [value]=true /> Oui</label>
+          <label><input type="radio" formControlName="honor_engagement" [value]=false /> Non</label>
+        </div>
+
+        <div class="radio-group">
+          <label>Avez-vous l'intention de soumettre une demande de subside ?</label>
+          <label><input type="radio" formControlName="grant_application" [value]=true /> Oui</label>
+          <label><input type="radio" formControlName="grant_application" [value]=false /> Non</label>
+        </div>
+
+        <div class="radio-group">
+          <label>Êtes-vous propriétaire ?</label>
+          <label><input type="radio" formControlName="is_owner" [value]=true /> Oui</label>
+          <label><input type="radio" formControlName="is_owner" [value]=false /> Non</label>
+        </div>
+
+        <div class="radio-group">
+          <label>Proposez-vous des services ?</label>
+          <label><input type="radio" formControlName="offers_services" [value]=true /> Oui</label>
+          <label><input type="radio" formControlName="offers_services" [value]=false /> Non</label>
+        </div>
+
+        <div class="radio-group">
+          <label>Vendez-vous des produits ?</label>
+          <label><input type="radio" formControlName="sells_products" [value]=true /> Oui</label>
+          <label><input type="radio" formControlName="sells_products" [value]=false /> Non</label>
+        </div>
+      </div>
+
+      <div *ngIf="currentStep === 3">
+        <h2>Informations complémentaires</h2>
+        <label for="grant_application_partner">Qui est votre partenaire pour introduire une demande de subside ?</label>
+        <input id="grant_application_partner" formControlName="grant_application_partner" type="text" />
+
+        <label for="something_else">Souhaitez-vous ajouter autre chose ?</label>
+        <textarea id="something_else" formControlName="something_else" placeholder="Autres informations"></textarea>
+
+        <label for="comment">Commentaires</label>
+        <textarea id="comment" formControlName="comment" placeholder="Commentaires"></textarea>
+      </div>
+
+      <div class="navigation-buttons">
+        <button type="button" (click)="previousStep()" [disabled]="currentStep === 0">Précédent</button>
+        <button type="button" *ngIf="currentStep < 3" (click)="nextStep()" [disabled]="!isCurrentStepValid()">Suivant</button>
+        <button type="submit" *ngIf="currentStep === 3" [disabled]="!onboardingForm.valid">Soumettre</button>
+      </div>
+    </form>
+  </div>
+</div>
