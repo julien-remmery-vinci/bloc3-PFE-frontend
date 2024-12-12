@@ -23,7 +23,7 @@
     *ngIf="!authService.isTokenValid()"
     [routerLink]="['/onboarding']"
     mat-button
-    class="btn btn-outline-light"
+    class="btn btn-outline-light nav-button"
     >
     On boarding
     </button>
@@ -50,7 +50,7 @@
       *ngIf="authService.isAdmin()"
       [routerLink]="['/statistics']"
       mat-button
-      class="btn btn-outline-light"
+      class="btn btn-outline-light nav-button"
     >
       Statistiques
     </button>
@@ -88,7 +88,6 @@
     matTooltip="Déconnexion"
     (click)="authService.logout()"
     [routerLink]="['/']"
-    class="logout-btn nav-button"
   >
     <mat-icon>logout</mat-icon>
   </button>
