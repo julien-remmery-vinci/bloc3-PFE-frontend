@@ -31,6 +31,7 @@ import { StatisticsComponent } from "./pages/statistics/statistics.component";
 import { OnboardingComponent } from "./pages/onboarding/onboarding.component";
 import { ScoreComponent } from "./pages/score/score.component";
 import {OnboardingValidationComponent} from "./pages/onboarding-validation/onboarding-validation.component";
+import { StatsService } from "./services/stats.service";
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import {OnboardingValidationComponent} from "./pages/onboarding-validation/onboa
   providers: [
     ThemeService,
     AuthGuard,
+    StatsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
