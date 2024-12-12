@@ -29,13 +29,23 @@
     </button>
 
     <button
-      *ngIf="authService.isTokenValid()"
+      *ngIf="authService.isAdmin()"
       [routerLink]="['/dashboard']"
       mat-button
       class="btn btn-outline-light nav-button"
     >
       Panneau de gestion
     </button>
+
+    <button
+    *ngIf="authService.isUser()"
+    [routerLink]="['/companyDashboard']"
+    mat-button
+    class="btn btn-outline-light nav-button"
+    >
+    Questionnaires
+    </button>
+
     <button
       *ngIf="authService.isAdmin()"
       [routerLink]="['/statistics']"

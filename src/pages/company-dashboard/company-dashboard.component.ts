@@ -7,6 +7,8 @@ import { User } from 'src/types/User';
 import { Company } from 'src/types/Company';
 import { CompanyService } from 'src/services/company.service';
 import { UserService } from 'src/services/user.service';
+import { Form } from 'src/types/Form';
+import { FormService } from 'src/services/form.service';
 
 
 @Component({
@@ -26,6 +28,7 @@ export class CompanyDashboardComponent {
     private userService: UserService,
     private companyService: CompanyService,
     private authService: AuthService,
+    private formService: FormService,
     private router: Router
   ) {}
 
@@ -43,6 +46,9 @@ export class CompanyDashboardComponent {
   }
 
   navigateTo(route: string): void {
-    this.router.navigate([route]);
+    this.formService.getUserForms().subscribe((forms: Form[]) => {
+      let form = forms[forms.length - 1];            
+      this.router.navigate([route], { state: { form } } );
+    });
   }
 }
