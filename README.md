@@ -32,6 +32,11 @@ npm install
 ```bash
 ng serve
 ```
+L'application sera accessible à l'adresse http://localhost:4200
+
+## Important
+N'oubliez pas de lancer le backend pour profiter d'une expérience optimale !
+Lien du repository backend : https://github.com/julien-remmery-vinci/bloc3-PFE-backend.git
 
 ## Auteurs de la partie frontend :
 - Hadjera Emroska
