@@ -228,7 +228,8 @@ export class FormsEsgCompleteComponent {
                     Toast.fire({
                     icon: "success",
                     title: "Questionnaire envoyé"
-                    });  
+                    });
+                    this.router.navigate(['/home']);
               },
               (error) => {
                   console.log(error)
@@ -257,7 +258,44 @@ export class FormsEsgCompleteComponent {
           confirmation: true
       };
       if(this.form && this.form.form_id){
-          this.formSerice.submitForm(this.form.form_id,confirmation).subscribe()
+          this.formSerice.submitForm(this.form.form_id,confirmation).subscribe(
+            (response) => {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                    });
+                    Toast.fire({
+                    icon: "success",
+                    title: "Questionnaire envoyé"
+                    }); 
+                    this.router.navigate(['/home']);
+            },
+            (error) => {
+                console.log(error)
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+                });
+                Toast.fire({
+                icon: "error",
+                title: "Error lors de l'envoie du questionnaire"
+                });
+            }
+          )
       }
   }
 
