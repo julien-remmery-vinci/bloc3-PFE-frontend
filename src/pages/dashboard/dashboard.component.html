@@ -1,56 +1,122 @@
 <body>
-  <div class="search-filter-wrapper">
-    <!-- Search Bar -->
-    <input
-      type="text"
-      placeholder="Rechercher une entreprise..."
-      [(ngModel)]="searchTerm"
-      class="search-input"
-    />
-
-    <!-- Filter Button -->
-    <button title="filter" class="filter" (click)="toggleDropdown()">
-      <svg viewBox="0 0 512 512" height="1em">
-        <path
-          d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"
-        ></path>
-      </svg>
-    </button>
-
-    <!-- Dropdown -->
-    <div *ngIf="isDropdownVisible" class="dropdown">
-      <ul>
-        <li (click)="filterTerm = ''">Toutes les entreprises</li>
-        <li (click)="filterTerm = 'small'">Petites entreprises</li>
-        <li (click)="filterTerm = 'medium'">Moyennes entreprises</li>
-        <li (click)="filterTerm = 'large'">Grandes entreprises</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <div class="container">
-    <div *ngFor="let company of filteredCompanies()">
-      <div class="card">
-        <div class="card-details">
-          <p class="text-title">Entreprise: {{ company.company_name }}</p>
-          <p class="text-body">Progression du formulaire ESG:</p>
-          
-          <div class="progress-bar">
-            <!-- Background bar -->
-            <div class="progress-bar-back"></div>
-            
-            <!-- Filled bar -->
-            <div class="progress-bar-fill" [style.width.%]="progressMap[company.company_id!]">
-              {{ progressMap[company.company_id!] }}%
+  <div class="section section-pending">
+      <h2>Entreprises en attente de validation de l'onboarding</h2>
+      <div class="container">
+        <div *ngFor="let onboarding of pendingOnboardings">
+          <div class="card-onboarding">
+            <div class="card-details-onboarding">
+              <p class="text-title">{{ onboarding.company_name}}</p>
+              <p class="onboarding-text">Adresse : {{onboarding.office_address}}</p>
+              <p class="onboarding-text">Nombres employés : {{onboarding.nb_workers}}</p>
             </div>
-          </div> 
-                   
+            <button
+              class="card-button"
+              (click)="goToOnboarding(onboarding)"
+            >
+              Inspecter l'onboarding
+            </button>
+          </div>
         </div>
-        <button class="card-button" (click)="navigateTo('/forms/')">Inspecter le formulaire</button>
+      </div>
+  </div>
+  <!-- Section: Pending Status Cards -->
+  <div class="section section-pending">
+    <div class="search-filter-wrapper">
+      <!-- Search Bar -->
+      <input
+        type="text"
+        placeholder="Rechercher une entreprise..."
+        [(ngModel)]="searchTerm"
+        class="search-input"
+      />
+      <!-- Filter Button -->
+      <button title="filter" class="filter" (click)="toggleDropdown()">
+        <svg viewBox="0 0 512 512" height="1em">
+          <path
+            d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"
+          ></path>
+        </svg>
+      </button>
+
+      <!-- Dropdown -->
+      <div *ngIf="isDropdownVisible" class="dropdown">
+        <ul>
+          <li (click)="filterTerm = ''">Toutes les entreprises</li>
+          <li (click)="filterTerm = 'small'">Petites entreprises</li>
+          <li (click)="filterTerm = 'medium'">Moyennes entreprises</li>
+          <li (click)="filterTerm = 'large'">Grandes entreprises</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Entreprises avec un formulaire en attente de validation</h2>
+    <div class="container">
+      <div *ngFor="let company of getPendingCompanies()">
+        <div class="card">
+          <div class="card-details">
+            <p class="text-title">Entreprise: {{ company.company_name }}</p>
+            <p class="text-body">Progression du formulaire ESG:</p>
+            <div class="progress-bar">
+              <div class="progress-bar-back"></div>
+              <div
+                class="progress-bar-fill"
+                [style.width.%]="progressMap[company.company_id!]">
+                {{ progressMap[company.company_id!] }}%
+              </div>
+            </div>
+          </div>
+          <button
+            class="card-button"
+            (click)="navigateTo(getFormFromMap(company.company_id!))">
+            Inspecter le formulaire
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  
+  <!-- Section: Validated Status Cards -->
+  <div class="section section-validated">
+    <h2>Formulaires validés</h2>
+    <div class="container">
+      <div *ngFor="let company of getValidatedCompanies()">
+        <div class="card-approved">
+          <div class="medal-circle">{{Math.round(getScoreTotal(getFormFromMap(company.company_id!).form_id!))}}%</div>
+          <div class="card-details">
+            <p class="text-title">Entreprise: {{ company.company_name }}</p>
+            <p class="text-body">Progression du formulaire ESG:</p>
+            <div class="progress-bar">
+              <div class="progress-bar-back"></div>
+              <div
+                class="progress-bar-fill"
+                [style.width.%]="100"
+              >
+               Validé
+              </div>
+            </div>
+          </div>
+          <button
+            class="card-button"
+            (click)="navigateToScoreDetail(scoresMap[getFormFromMap(company.company_id!).form_id!])"
+          >
+            Détail du score
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section section-pending">
+      <h2>Entreprises dont l'onboarding a été refusé</h2>
+      <div class="container">
+          <div *ngFor="let onboarding of rejectedOnboardings">
+              <div class="card-onboarding">
+                  <div class="card-details-onboarding">
+                      <p class="text-title">{{ onboarding.company_name}}</p>
+                      <p class="onboarding-text">Adresse : {{onboarding.office_address}}</p>
+                      <p class="onboarding-text">Nombres employés : {{onboarding.nb_workers}}</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </body>

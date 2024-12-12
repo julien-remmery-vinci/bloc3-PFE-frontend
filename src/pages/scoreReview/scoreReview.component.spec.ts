@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormsComponent } from './forms.component';
+import { ScoreReviewComponent } from './scoreReview.component';
 
-describe('FormsComponent', () => {
-  let component: FormsComponent;
-  let fixture: ComponentFixture<FormsComponent>;
+describe('ScoreReviewComponent', () => {
+  let component: ScoreReviewComponent;
+  let fixture: ComponentFixture<ScoreReviewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FormsComponent ]
+      declarations: [ ScoreReviewComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FormsComponent);
+    fixture = TestBed.createComponent(ScoreReviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

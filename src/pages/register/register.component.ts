@@ -60,9 +60,8 @@ export class RegisterComponent {
   
     this.authService.registerUser(formValues).subscribe(
       (response: { message: string }) => {
-        this.successMessage = "Registration successful!";
+        this.successMessage = "Votre compte a été créé avec succès.";
         this.errorMessage = '';
-        console.log('API Response:', response);
   
         this.registerForm.reset();
         this.submitted = false;

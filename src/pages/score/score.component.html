@@ -1,0 +1,104 @@
+<!-- score.component.html -->
+<div *ngIf="forms" class="container">
+  <div class="main-card">
+    <h1>Formulaire: {{ forms.type }}</h1>
+
+    <div
+      *ngFor="let category of getUniqueCategories(); let i = index"
+      class="category-section"
+    >
+      <div
+        class="category-header"
+        [class.expanded]="isCategoryExpanded(i)"
+        (click)="toggleCategory(i)"
+      >
+        {{ category }}
+      </div>
+
+      <div class="category-content" *ngIf="isCategoryExpanded(i)">
+        <div
+          *ngFor="let subCategory of getSubCategories(category); let j = index"
+          class="sub-category-section"
+        >
+          <div
+            class="sub-category-header"
+            [class.expanded]="isSubCategoryExpanded(i, j)"
+            (click)="toggleSubCategory(i, j)"
+          >
+            {{ subCategory }}
+          </div>
+
+          <div *ngIf="isSubCategoryExpanded(i, j)">
+            <div
+              *ngFor="
+                let question of getQuestionsForSubCategory(
+                  category,
+                  subCategory
+                )
+              "
+              class="question-card"
+            >
+              <div
+                class="question-header"
+                (click)="toggleQuestion(question.question.question_id)"
+              >
+                <span class="question-id">{{
+                  question.question.question_id
+                }}</span>
+                {{ question.question.question }}
+              </div>
+
+              <div *ngIf="isQuestionExpanded(question.question.question_id)">
+                <div
+                  *ngFor="let answer of question.answers"
+                  class="answer-container"
+                >
+                  <p class="answer-text">{{ answer.answer }}</p>
+                  <div class="score-inputs">
+                    <div class="score-input-group">
+                      <label>Score actuel:</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        [(ngModel)]="answer.score_now"
+                        (ngModelChange)="clearError(answer.answer_id)"
+                      />
+                    </div>
+                    <div class="score-input-group">
+                      <label>Score engagement:</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        [(ngModel)]="answer.score_commitment_pact"
+                        (ngModelChange)="clearError(answer.answer_id)"
+                      />
+                    </div>
+                    <button
+                      class="btn btn-primary"
+                      (click)="
+                        updateScore(
+                          question.question.question_id,
+                          answer.answer_id,
+                          answer.score_now,
+                          answer.score_commitment_pact
+                        )
+                      "
+                    >
+                      Update Score
+                    </button>
+                    <div
+                      *ngIf="errorMessages[answer.answer_id]"
+                      class="error-message"
+                    >
+                      {{ errorMessages[answer.answer_id] }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

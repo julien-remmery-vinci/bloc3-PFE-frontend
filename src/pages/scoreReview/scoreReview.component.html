@@ -1,0 +1,20 @@
+<!-- score.component.html -->
+<div *ngIf="forms" class="container">
+  <div class="main-card">
+    <h1>Formulaire: {{ forms.type }}</h1>
+
+    <div
+      *ngFor="let category of getUniqueCategories(); let i = index"
+      class="category-section"
+    > 
+      <div
+        class="category-header"
+        (click)="toggleCategory(i)"
+      >
+        {{ category }}
+      </div>
+      <div>Score Actuel : {{sommeScoreActuel(category)}} </div>
+      <div>Score Engagement : {{sommeScoreFutur(category)}} </div>
+    </div>
+  </div>
+</div>

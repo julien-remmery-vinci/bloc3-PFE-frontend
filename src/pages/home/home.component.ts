@@ -1,8 +1,7 @@
-// src/pages/home/home.component.ts
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/services/auth.service';
-import { FormService } from 'src/services/form.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../types/User';
 
 @Component({
   selector: 'app-home',
@@ -10,41 +9,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  user: any;
-  forms: any[] = [];
-  error: string = '';
+  user: User | null = null;
 
-  constructor(private authService: AuthService, private router: Router, private formService: FormService) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.user = this.authService.getCurrentUserValue();
-    const token = this.authService.getToken();
-    if (token) {
-    this.formService.getUserForms().subscribe(
-      (data) => {
-        this.forms = data;
-      },
-      (error) => {
-        this.error = error.error.message;
-      }
-    );
-  } else {
-    this.error = 'Pas de token';
-    this.router.navigate(['/login']);
-  }
+    this.user = this.authService.getCurrentUser();
   }
 
   navigateTo(route: string): void {
     this.router.navigate([route]);
   }
-
-  calculateProgress(form: any): number {
-    const answered = this.getAnsweredQuestionCount(form);
-    return (answered / form.questions.length) * 100;
-  }
-
-  getAnsweredQuestionCount(form: any): number {
-    return form.questions.filter((q: any) => q.user_answers.length > 0).length;
-  }
-
 }

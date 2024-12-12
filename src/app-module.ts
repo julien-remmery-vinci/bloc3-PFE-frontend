@@ -3,7 +3,6 @@ import { AppComponent } from "./app/app.component";
 import { NgModule } from "@angular/core";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { LoginComponent } from "./pages/login/login.component";
-import { FormsComponent } from "./pages/forms/forms.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { SidebarComponent } from "./assets/sidebar/sidebar.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -26,17 +25,32 @@ import { ThemeService } from "./app/theme/theme.service";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatCardModule } from '@angular/material/card';
 import { UserRegisterComponent } from "./pages/user-register/user-register.component";
+import { HighchartsChartModule } from "highcharts-angular";
+import { StatisticsComponent } from "./pages/statistics/statistics.component";
+import { OnboardingComponent } from "./pages/onboarding/onboarding.component";
+import { ScoreComponent } from "./pages/score/score.component";
+import { ScoreReviewComponent } from "./pages/scoreReview/scoreReview.component";
+import {OnboardingValidationComponent} from "./pages/onboarding-validation/onboarding-validation.component";
+import { StatsService } from "./services/stats.service";
+import {LocationStrategy, PathLocationStrategy } from "@angular/common";
+import {CompanyDashboardComponent} from "./pages/company-dashboard/company-dashboard.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     LoginComponent,
-    FormsComponent,
     SidebarComponent,
     HomeComponent,
     RegisterComponent,
-    UserRegisterComponent
+    UserRegisterComponent,
+    StatisticsComponent,
+    OnboardingComponent,
+    ScoreComponent,
+    OnboardingValidationComponent,
+    CompanyDashboardComponent,
+    ScoreReviewComponent,
+    OnboardingValidationComponent
   ],
   imports: [
     MatFormFieldModule,
@@ -58,15 +72,18 @@ import { UserRegisterComponent } from "./pages/user-register/user-register.compo
     MatIconModule,
     MatTooltipModule,
     MatCardModule,
+    HighchartsChartModule,
   ],
   providers: [
     ThemeService,
     AuthGuard,
+    StatsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
       multi: true,
     },
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
   ],
   bootstrap: [AppComponent],
 })

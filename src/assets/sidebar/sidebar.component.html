@@ -18,13 +18,41 @@
     >
       Se connecter
     </button>
+
     <button
-      *ngIf="authService.isTokenValid()"
+    *ngIf="!authService.isTokenValid()"
+    [routerLink]="['/onboarding']"
+    mat-button
+    class="btn btn-outline-light nav-button"
+    >
+    On boarding
+    </button>
+
+    <button
+      *ngIf="authService.isAdmin()"
       [routerLink]="['/dashboard']"
       mat-button
       class="btn btn-outline-light nav-button"
     >
       Panneau de gestion
+    </button>
+
+    <button
+    *ngIf="authService.isUser()"
+    [routerLink]="['/companyDashboard']"
+    mat-button
+    class="btn btn-outline-light nav-button"
+    >
+    Questionnaires
+    </button>
+
+    <button
+      *ngIf="authService.isAdmin()"
+      [routerLink]="['/statistics']"
+      mat-button
+      class="btn btn-outline-light nav-button"
+    >
+      Statistiques
     </button>
     <button
       *ngIf="authService.isAdmin()"
@@ -33,6 +61,14 @@
       class="btn btn-outline-light nav-button"
     >
       Inscription
+    </button>
+    <button
+      *ngIf="authService.isAdmin()"
+      [routerLink]="['/score']"
+      mat-button
+      class="btn btn-outline-light nav-button"
+    >
+      Score
     </button>
 
     <button
@@ -47,11 +83,11 @@
 
   <span class="spacer"></span>
   <button
+    *ngIf="authService.isTokenValid()"
     mat-icon-button
     matTooltip="Déconnexion"
     (click)="authService.logout()"
     [routerLink]="['/']"
-    class="logout-btn nav-button"
   >
     <mat-icon>logout</mat-icon>
   </button>
