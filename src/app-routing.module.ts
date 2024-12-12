@@ -13,6 +13,7 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { UserRegisterComponent } from './pages/user-register/user-register.component';
 import { OnboardingComponent } from './pages/onboarding/onboarding.component';
 import { CompanyDashboardComponent } from './pages/company-dashboard/company-dashboard.component';
+import { ScoreComponent } from './pages/score/score.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'onboarding', component: OnboardingComponent },
   { path: 'companyDashboard', component: CompanyDashboardComponent, canActivate: [AuthGuard], data: { role: 'user' } },
   { path: 'forms/esg/validate', component: FormsEsgValidateComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
+  { path: 'score',component: ScoreComponent, canActivate: [AuthGuard], data: { role: 'admin' } }
 ];
 
 @NgModule({

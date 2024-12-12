@@ -52,6 +52,14 @@
     >
       Inscription
     </button>
+    <button
+      *ngIf="authService.isAdmin()"
+      [routerLink]="['/score']"
+      mat-button
+      class="btn btn-outline-light nav-button"
+    >
+      Score
+    </button>
 
     <button
       *ngIf="authService.isUser()"
