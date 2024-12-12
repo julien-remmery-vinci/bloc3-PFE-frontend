@@ -26,6 +26,8 @@ import { ThemeService } from "./app/theme/theme.service";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatCardModule } from '@angular/material/card';
 import { UserRegisterComponent } from "./pages/user-register/user-register.component";
+import { HighchartsChartModule } from "highcharts-angular";
+import { StatisticsComponent } from "./pages/statistics/statistics.component";
 import { OnboardingComponent } from "./pages/onboarding/onboarding.component";
 import { ScoreComponent } from "./pages/score/score.component";
 
@@ -39,8 +41,8 @@ import { ScoreComponent } from "./pages/score/score.component";
     HomeComponent,
     RegisterComponent,
     UserRegisterComponent,
+    StatisticsComponent,
     OnboardingComponent,
-    UserRegisterComponent,
     ScoreComponent
   ],
   imports: [
@@ -63,6 +65,7 @@ import { ScoreComponent } from "./pages/score/score.component";
     MatIconModule,
     MatTooltipModule,
     MatCardModule,
+    HighchartsChartModule,
   ],
   providers: [
     ThemeService,

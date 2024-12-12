@@ -6,6 +6,7 @@ import { AuthService } from 'src/services/auth.service';
 import { User } from 'src/types/User';
 import { Company } from 'src/types/Company';
 import { CompanyService } from 'src/services/company.service';
+import { Form } from 'src/types/Form';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,8 +19,7 @@ export class DashboardComponent {
   searchTerm: string = ''; // Search bar input
   filterTerm: string = ''; // Dropdown filter
   progressMap: { [key: string]: number } = {}; // Map to store progress by company ID
-  
-
+  formsMap: {[key: string] : Form} = {};
   constructor(
     private companyService: CompanyService,
     private router: Router
@@ -36,8 +36,15 @@ export class DashboardComponent {
           // Ensure 'progress' exists and is a number, fallback to 0 if null or undefined
           this.progressMap[company.company_id!] = prog;
         })
+        this.companyService.getForms(company.company_id!).subscribe((forms) => {   
+          console.log("LE PREMIER ELEMENT : ", forms)
+          let form = forms.forms[0];
+          // Ensure 'progress' exists and is a number, fallback to 0 if null or undefined
+          this.formsMap[company.company_id!] = form;
+        })
       });
       console.log(this.progressMap);
+      console.log(this.formsMap);
     });
   }
 
@@ -70,8 +77,13 @@ isDropdownVisible: boolean = false; // Controls dropdown visibility
     this.isDropdownVisible = !this.isDropdownVisible;
   }
 
-  
-  navigateTo(route: string): void {
-    this.router.navigate([route]);
+  getFormFromMap(id : number): Form {
+    console.log("Test", this.formsMap[id]);
+    return this.formsMap[id];
+  }
+
+   navigateTo(form: Form): void {
+    console.log("FORMS" + form)
+    this.router.navigate([`/forms/${form.type.toLowerCase()}/validate`],{state : {form}});
   }
 }
