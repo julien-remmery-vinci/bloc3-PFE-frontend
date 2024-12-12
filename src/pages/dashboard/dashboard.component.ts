@@ -73,7 +73,7 @@ export class DashboardComponent {
   }
 
   goToOnboarding(onboarding:Onboarding): void {
-    this.router.navigate([`/onboarding/${onboarding.onboarding_id}/validate`],{
+    this.router.navigate([`/onboarding/validate`],{
     state:{onboarding},
     });
   }
