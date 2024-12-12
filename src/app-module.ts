@@ -3,7 +3,6 @@ import { AppComponent } from "./app/app.component";
 import { NgModule } from "@angular/core";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { LoginComponent } from "./pages/login/login.component";
-import { FormsComponent } from "./pages/forms/forms.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { SidebarComponent } from "./assets/sidebar/sidebar.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -31,13 +30,15 @@ import { StatisticsComponent } from "./pages/statistics/statistics.component";
 import { OnboardingComponent } from "./pages/onboarding/onboarding.component";
 import { ScoreComponent } from "./pages/score/score.component";
 import { ScoreReviewComponent } from "./pages/scoreReview/scoreReview.component";
+import {OnboardingValidationComponent} from "./pages/onboarding-validation/onboarding-validation.component";
+import { StatsService } from "./services/stats.service";
+import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from "@angular/common";
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     LoginComponent,
-    FormsComponent,
     SidebarComponent,
     HomeComponent,
     RegisterComponent,
@@ -45,7 +46,8 @@ import { ScoreReviewComponent } from "./pages/scoreReview/scoreReview.component"
     StatisticsComponent,
     OnboardingComponent,
     ScoreComponent,
-    ScoreReviewComponent
+    ScoreReviewComponent,
+    OnboardingValidationComponent
   ],
   imports: [
     MatFormFieldModule,
@@ -72,11 +74,13 @@ import { ScoreReviewComponent } from "./pages/scoreReview/scoreReview.component"
   providers: [
     ThemeService,
     AuthGuard,
+    StatsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
       multi: true,
     },
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
   ],
   bootstrap: [AppComponent],
 })

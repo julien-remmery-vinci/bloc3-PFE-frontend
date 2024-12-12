@@ -45,7 +45,6 @@ export class UserRegisterComponent {
       (response: { message: string }) => {
         this.successMessage = "L'inscription a réussi !";
         this.errorMessage = '';
-        console.log('Réponse de l’API :', response);
 
         this.registerForm.reset();
         this.submitted = false;

@@ -48,8 +48,6 @@ export class FormsEsgValidateComponent {
       this.selectedAnswerIds.clear();
       this.updateSelectedAnswerId();
       this.findAllCategory()
-
-      console.log(this.form)
   }
   onAnswerChange(answer_id: number) {
       this.isAnswerModified[answer_id] = true;
@@ -191,7 +189,6 @@ export class FormsEsgValidateComponent {
     }
   }
 
-  // TODO : Envoyer la réponse à l'API
   nextQuestion(answer: any) {
     if(this.form && this.questions && this.selectedQuestion){
       const index = this.questions.indexOf(this.selectedQuestion);
@@ -224,7 +221,6 @@ export class FormsEsgValidateComponent {
     }
 
     getQuestionsByCategoryAndSubCategory(category: string, subCategory: string): QuestionWithAnswer[] {
-      console.log(this.groupedQuestions[category][subCategory])
         return this.groupedQuestions[category][subCategory] || [];
     }
 

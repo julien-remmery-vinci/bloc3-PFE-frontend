@@ -1,30 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../../services/auth.service";
-import {User} from "../../types/User";
-import { ThemeService } from 'src/app/theme/theme.service';
+import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service'; // Corriger le chemin d'importation
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
-  user: User | undefined;
-
-  constructor(protected authService: AuthService, private themeService: ThemeService) {}
-
-  ngOnInit(): void {
-    if(this.authService.isTokenValid()){
-      this.authService.user.subscribe(user => {
-        return this.user = user;
-      });
-    }
-  }
-  toggleDarkMode(): void {
-    this.themeService.toggleDarkMode();
-  }
-
-  isDarkMode(): boolean {
-    return this.themeService.isDarkModeEnabled();
-  }
+export class SidebarComponent {
+  constructor(public authService: AuthService) {}
 }

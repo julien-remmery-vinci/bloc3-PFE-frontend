@@ -9,6 +9,8 @@ import { Company } from 'src/types/Company';
 import { CompanyService } from 'src/services/company.service';
 import { UserService } from 'src/services/user.service';
 import { ScoreService } from 'src/services/score.service';
+import { Form } from 'src/types/Form';
+import { FormService } from 'src/services/form.service';
 
 
 @Component({
@@ -31,13 +33,13 @@ export class CompanyDashboardComponent {
     private companyService: CompanyService,
     private authService: AuthService,
     private router: Router,
-    private scoreService : ScoreService
+    private scoreService : ScoreService,
+    private formService: FormService
   ) {}
 
   ngOnInit(): void {
     this.userService.getCompany().subscribe((data) => {
       this.company = data;
-      console.log(this.company);
       this.companyService.getFormStatus(this.company.company_id!).subscribe((status) => {
         let prog = status??0;       
         prog = Math.round(prog)

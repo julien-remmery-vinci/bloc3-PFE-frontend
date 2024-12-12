@@ -16,6 +16,7 @@ import { Score } from 'src/types/Score';
 export class DashboardComponent {
   companies: Company[] = [];
   pendingOnboardings : Onboarding[]= [];
+  rejectedOnboardings : Onboarding[] = [];
   searchTerm: string = ''; // Search bar input
   filterTerm: string = ''; // Dropdown filter
   progressMap: { [key: string]: number } = {}; // Map to store progress by company ID
@@ -29,7 +30,9 @@ export class DashboardComponent {
   ngOnInit(): void {
     this.onboardingService.getPendingOnboardingForms().subscribe((onboardings)=>{
       this.pendingOnboardings = onboardings;
-      //console.log(this.pendingOnboardings);
+    })
+    this.onboardingService.getRejectedOnboardingForms().subscribe((onboardings)=>{
+      this.rejectedOnboardings = onboardings;
     })
     this.companyService.getCompanies().subscribe((data) => {
       this.companies = data;
@@ -46,7 +49,6 @@ export class DashboardComponent {
         });
         
       });
-      console.log(this.scoresMap)
     });
   }
 
@@ -79,7 +81,7 @@ export class DashboardComponent {
   }
 
   goToOnboarding(onboarding:Onboarding): void {
-    this.router.navigate([`/onboarding/${onboarding.onboarding_id}/validate`],{
+    this.router.navigate([`/onboarding/validate`],{
     state:{onboarding},
     });
   }

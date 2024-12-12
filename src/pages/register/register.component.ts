@@ -62,7 +62,6 @@ export class RegisterComponent {
       (response: { message: string }) => {
         this.successMessage = "Registration successful!";
         this.errorMessage = '';
-        console.log('API Response:', response);
   
         this.registerForm.reset();
         this.submitted = false;
