@@ -3,7 +3,6 @@ import { AppComponent } from "./app/app.component";
 import { NgModule } from "@angular/core";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { LoginComponent } from "./pages/login/login.component";
-import { FormsComponent } from "./pages/forms/forms.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { SidebarComponent } from "./assets/sidebar/sidebar.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -37,7 +36,6 @@ import { StatsService } from "./services/stats.service";
     AppComponent,
     DashboardComponent,
     LoginComponent,
-    FormsComponent,
     SidebarComponent,
     HomeComponent,
     RegisterComponent,
