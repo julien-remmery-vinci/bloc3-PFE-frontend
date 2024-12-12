@@ -38,7 +38,7 @@
                 <td>
                     <!-- Now Radio Button -->
                     <div *ngIf="answer.answer">
-                        <label for="now{{answer.answer_id}}">aujourd'hui</label>
+                        <!-- <label for="now{{answer.answer_id}}">aujourd'hui</label> -->
                         <input
                                 type="checkbox"
                                 [id]="'now' + answer.answer_id"
@@ -52,7 +52,7 @@
                 <td>
                     <!-- Commitment Pact Radio Button -->
                     <div *ngIf="answer.answer">
-                        <label for="commitmentPact{{answer.answer_id}}">Pacte d'engagement</label>
+                        <!-- <label for="commitmentPact{{answer.answer_id}}">Pacte d'engagement</label> -->
                         <input
                                 type="checkbox"
                                 [id]="'commitmentPact' + answer.answer_id"
@@ -71,7 +71,14 @@
         </table>
 
         <div *ngIf="!formEnd">
-            <button (click)="nextQuestion(selectedQuestion)">Valider la question</button>
+            <button (click)="nextQuestion(selectedQuestion)" style="margin-bottom: 10px;">Valider la question</button>
+            <div *ngIf="questionIsValidated" style="color: green; border: 3px solid green; width: fit-content; padding: 10px; border-radius: 10px;">
+                <p>Cette question a déjà été validée</p>
+                <p>(Il est toujours possible de la modifier)</p>
+            </div>
+            <div *ngIf="!questionIsValidated" style="color: red; border: 3px solid lightcoral; width: fit-content; padding: 10px; border-radius: 10px;">
+                <p>Cette question n'a pas encore été validée</p>
+            </div>
         </div>
         <div *ngIf="formEnd">
             <button (click)="submitForm(form)">Soumettre la validation du qestionnaire</button>

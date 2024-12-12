@@ -10,6 +10,7 @@ import {FormService} from "../../services/form.service";
 import { AnswerValidationPayload } from 'src/types/answer-validation-payload';
 import { AnswerPayloadCommentOnlyValidationPayload } from 'src/types/answer-comment-validation-payload';
 import {CompanyService} from "../../services/company.service";
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class FormsEsgValidateComponent {
   public isAnswerModified :boolean[] = [false];
   public isNow : string[] = []
   public isCommitment : string[] = [];
+  public questionIsValidated: boolean | undefined = false;
   groupedQuestions: any = {};
   openCategories: Set<string> = new Set(); // Track which categories are open
   openSubCategories: Map<string, Set<string>> = new Map(); // Track which subcategories are open per category
@@ -47,7 +49,8 @@ export class FormsEsgValidateComponent {
       this.selectedQuestion = this.questions[this.getLatestNotValidatedQuestion()];
       this.selectedAnswerIds.clear();
       this.updateDisplayOfAnswer();
-      this.findAllCategory()
+      this.findAllCategory();     
+      this.questionIsValidated = this.selectedQuestion.user_answers.some((userAnswer) => userAnswer.status === "VALIDATED");
   }
   onAnswerChange(answer_id: number) {
       this.isAnswerModified[answer_id] = true;
@@ -130,7 +133,22 @@ export class FormsEsgValidateComponent {
 
                     };
                     this.responseService.sendAnswerValidationById(answerPayload, answer.answer_id).subscribe(
-                        (response) => {                               
+                        (response) => {
+                            const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                            });
+                            Toast.fire({
+                            icon: "success",
+                            title: "Validation enregistrée"
+                            });                            
                                 this.companyService.getForms(this.form.company_id).subscribe(//formSerice.getUserForms().subscribe(
                                     (response) =>{
                                         const forms : Form[] = response.forms
@@ -146,7 +164,21 @@ export class FormsEsgValidateComponent {
                                 )
                         },
                         (error) => {
-                            console.error('Error occurred:', error);
+                            const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                            });
+                            Toast.fire({
+                            icon: "error",
+                            title: "Erreur lors de la validation"
+                            });  
                         }
                     )
                 }
@@ -189,6 +221,7 @@ export class FormsEsgValidateComponent {
     this.isNow = [];
     this.isCommitment = [];
     this.updateDisplayOfAnswer();
+    this.questionIsValidated = this.selectedQuestion?.user_answers.some((userAnswer) => userAnswer.status === "VALIDATED");
 
     if(this.form && this.questions && this.selectedQuestion) {
       const index = this.questions.indexOf(this.selectedQuestion);
@@ -203,7 +236,7 @@ export class FormsEsgValidateComponent {
   nextQuestion(answer: any) {
     if(this.form && this.questions && this.selectedQuestion){
       const index = this.questions.indexOf(this.selectedQuestion);
-      if (index + 1 === this.questions.length) {
+      if (index == -1) {
         this.formEnd = true;
         return;
       }
@@ -214,9 +247,39 @@ export class FormsEsgValidateComponent {
   submitForm(form: Form) {
     this.formSerice.validateForm(form.form_id).subscribe(
         (response) => {
+            const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+            });
+            Toast.fire({
+            icon: "success",
+            title: "Questionnaire validé"
+            });  
             this.router.navigate(['/dashboard']);
         },
         (error) => {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+                });
+                Toast.fire({
+                icon: "error",
+                title: "Erreur lors de la validation"
+                });  
             console.error('Error occurred:', error);
         }
     )
