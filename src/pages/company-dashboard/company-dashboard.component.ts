@@ -9,7 +9,6 @@ import { Company } from 'src/types/Company';
 import { CompanyService } from 'src/services/company.service';
 import { UserService } from 'src/services/user.service';
 import { ScoreService } from 'src/services/score.service';
-import { Form } from 'src/types/Form';
 import { FormService } from 'src/services/form.service';
 
 
