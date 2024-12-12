@@ -28,6 +28,8 @@ import { UserRegisterComponent } from "./pages/user-register/user-register.compo
 import { HighchartsChartModule } from "highcharts-angular";
 import { StatisticsComponent } from "./pages/statistics/statistics.component";
 import { OnboardingComponent } from "./pages/onboarding/onboarding.component";
+import { ScoreComponent } from "./pages/score/score.component";
+import { StatsService } from "./services/stats.service";
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { OnboardingComponent } from "./pages/onboarding/onboarding.component";
     RegisterComponent,
     UserRegisterComponent,
     StatisticsComponent,
-    OnboardingComponent
+    OnboardingComponent,
+    ScoreComponent
   ],
   imports: [
     MatFormFieldModule,
@@ -66,6 +69,7 @@ import { OnboardingComponent } from "./pages/onboarding/onboarding.component";
   providers: [
     ThemeService,
     AuthGuard,
+    StatsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,

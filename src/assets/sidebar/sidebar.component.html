@@ -52,6 +52,14 @@
     >
       Inscription
     </button>
+    <button
+      *ngIf="authService.isAdmin()"
+      [routerLink]="['/score']"
+      mat-button
+      class="btn btn-outline-light nav-button"
+    >
+      Score
+    </button>
 
     <button
       *ngIf="authService.isUser()"
@@ -65,6 +73,7 @@
 
   <span class="spacer"></span>
   <button
+    *ngIf="authService.isTokenValid()"
     mat-icon-button
     matTooltip="Déconnexion"
     (click)="authService.logout()"
