@@ -2,30 +2,56 @@
     <h1>Bienvenue, {{ user.firstname }} {{ user.lastname }}</h1>
     <div *ngIf="user.role === 'admin'; else userDashboard">
         <h2>Actions disponibles</h2>
-        <div class="admin-actions">
-            <mat-card class="action-card" (click)="navigateTo('dashboard')">
-                <mat-card-content>
-                    <h3>Aller au tableau de bord</h3>
-                    <mat-icon class="arrow-icon">arrow_forward</mat-icon>
-                </mat-card-content>
-            </mat-card>
-            <mat-card class="action-card" (click)="navigateTo('register')">
-                <mat-card-content>
-                    <h3>Enregistrer un nouvel utilisateur</h3>
-                    <mat-icon class="arrow-icon">arrow_forward</mat-icon>
-                </mat-card-content>
-            </mat-card>
-        </div>
+        <mat-card class="central-card">
+            <mat-card-content>
+                <div class="admin-actions">
+                    <mat-card class="action-card" (click)="navigateTo('dashboard')">
+                        <mat-card-content>
+                            <h3>Aller au tableau de bord</h3>
+                            <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card class="action-card" (click)="navigateTo('register')">
+                        <mat-card-content>
+                            <h3>Enregistrer un nouvel utilisateur</h3>
+                            <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card class="action-card" (click)="navigateTo('statistics')">
+                        <mat-card-content>
+                            <h3>Voir les statistiques</h3>
+                            <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card class="action-card" (click)="navigateTo('score')">
+                        <mat-card-content>
+                            <h3>Voir les scores</h3>
+                            <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </mat-card-content>
+        </mat-card>
     </div>
     <ng-template #userDashboard>
         <h2>Actions disponibles</h2>
-        <div class="admin-actions">
-            <mat-card class="action-card" (click)="navigateTo('companyDashboard')"> 
-                <mat-card-content>
-                    <h3>Aller au tableau de bord</h3>
-                    <mat-icon class="arrow-icon">arrow_forward</mat-icon>
-                </mat-card-content>
-            </mat-card>
-        </div>
+        <mat-card class="central-card">
+            <mat-card-content>
+                <div class="user-actions">
+                    <mat-card class="action-card" (click)="navigateTo('companyDashboard')">
+                        <mat-card-content>
+                            <h3>Voir les questionnaires</h3>
+                            <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card class="action-card" (click)="navigateTo('userRegister')">
+                        <mat-card-content>
+                            <h3>Enregistrer un nouvel utilisateur</h3>
+                            <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </mat-card-content>
+        </mat-card>
     </ng-template>
 </div>
