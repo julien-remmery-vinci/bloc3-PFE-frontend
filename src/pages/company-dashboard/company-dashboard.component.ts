@@ -35,7 +35,6 @@ export class CompanyDashboardComponent {
   ngOnInit(): void {
     this.userService.getCompany().subscribe((data) => {
       this.company = data;
-      console.log(this.company);
       this.companyService.getFormStatus(this.company.company_id!).subscribe((status) => {
         let prog = status??0;       
         prog = Math.round(prog)

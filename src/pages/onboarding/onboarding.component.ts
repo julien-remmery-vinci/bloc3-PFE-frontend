@@ -76,11 +76,9 @@ export class OnboardingComponent {
   submit(): void {
     if (this.onboardingForm.valid) {
       // Debug pour confirmer les valeurs soumises
-      console.log('Form data to be submitted:', this.onboardingForm.value);
 
       this.onboardingService.submitOnboardingRequest(this.onboardingForm.value).subscribe(
         (response) => {
-          console.log('Onboarding request submitted successfully:', response);
           this.successMessage = 'Votre demande a été soumise avec succès.';
           this.submitted = true;
         },
@@ -90,7 +88,6 @@ export class OnboardingComponent {
         }
       );
     } else {
-      console.log('Formulaire invalide:', this.onboardingForm);
     }
   }
 }

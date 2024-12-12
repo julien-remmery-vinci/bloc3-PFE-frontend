@@ -16,11 +16,10 @@ export class ScoreService {
     const payload = Object.fromEntries(
       Object.entries(scoreUpdate).filter(([_, value]) => value !== undefined)
     );
-    console.log(payload);
     return this.http.patch(`${this.apiUrl}/answers/${answerId}/update-score`, payload);
   }
 
   getScoreFromFormId(formId : number): Observable<Score>{
     return this.http.get<Score>(this.apiUrl+`/score/${formId}`);
-     }
+  }
 }
