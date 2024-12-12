@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Onboarding } from 'src/types/onboarding';
 
 @Injectable({
   providedIn: 'root',
@@ -13,4 +14,7 @@ export class OnboardingService {
   submitOnboardingRequest(data: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, data);
   }
+  getPendingOnboardingForms(): Observable<Onboarding[]> {
+       return this.http.get<Onboarding[]>(this.apiUrl+`/pending`);
+     }
 }

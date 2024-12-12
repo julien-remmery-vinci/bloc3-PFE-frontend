@@ -7,4 +7,5 @@ export interface Form {
     type: string;
     template: Template[]
     questions: QuestionWithAnswer[]
+    status: string;
 }

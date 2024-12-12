@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ScoreUpdate } from '../types/score.types'; // Adjust the path as necessary
+import { Score } from 'src/types/Score';
 
 @Injectable({
   providedIn: 'root'
@@ -18,4 +19,8 @@ export class ScoreService {
     console.log(payload);
     return this.http.patch(`${this.apiUrl}/answers/${answerId}/update-score`, payload);
   }
+
+  getScoreFromFormId(formId : number): Observable<Score>{
+    return this.http.get<Score>(this.apiUrl+`/score/${formId}`);
+     }
 }
