@@ -13,4 +13,7 @@ export class FormService {
   getUserForms(): Observable<any> {
     return this.http.get(`${this.apiUrl}/forms/user`);
   }
+  getForms(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/forms`);
+  }
 }

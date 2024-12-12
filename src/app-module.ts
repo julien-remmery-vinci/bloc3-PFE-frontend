@@ -28,6 +28,7 @@ import { MatCardModule } from '@angular/material/card';
 import { UserRegisterComponent } from "./pages/user-register/user-register.component";
 import { HighchartsChartModule } from "highcharts-angular";
 import { StatisticsComponent } from "./pages/statistics/statistics.component";
+import { StatsService } from "./services/stats.service";
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { StatisticsComponent } from "./pages/statistics/statistics.component";
   providers: [
     ThemeService,
     AuthGuard,
+    StatsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,

@@ -5,6 +5,6 @@ export interface Form {
     form_id?: number;
     company_id: number;
     type: string;
-    template: Template[]
-    questions: QuestionWithAnswer[]
+    template: Template[];
+    questions: QuestionWithAnswer[];
 }
