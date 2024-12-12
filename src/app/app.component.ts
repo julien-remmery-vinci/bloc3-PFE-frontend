@@ -50,13 +50,25 @@ export class AppComponent implements OnInit {
     } else if (url.includes('/statistics')) {
       title = 'Statistiques';
     } else if (url.includes('/register')) {
-      title = 'Inscrire';
+      title = 'Inscrire utilisateur';
     } else if (url.includes('/login')) {
       title = 'Login';
     } else if (url.includes('/onboarding')) {
       title = 'Onboarding';
     } else if (url.includes('/score')) {
       title = 'Score';
+    } else if (url.includes('/userRegister')) {
+      title = 'Inscrire utilisateur';
+    } else if (url.includes('/companyDashboard')) {
+      title = 'Questionnaires';
+    } else if (url.includes('/forms/esg/complete')) {
+      title = 'Formulaire ESG';
+    } else if (url.includes('/forms/esg/validate')) {
+      title = 'Valider formulaire ESG';
+    } else if (url.includes('/onboarding/validate')) {
+      title = 'Valider onboarding';
+    } else if (url.includes('/score')) {
+      title = 'Modifier le score';
     }
     this.titleService.setTitle(title);
   }
