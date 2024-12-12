@@ -8,16 +8,85 @@ html, body {
     background: rgb(2, 0, 36);
     background: linear-gradient(8deg, rgba(2, 0, 36, 1) 0%, rgba(1, 50, 56, 1) 35%, rgba(181, 205, 191, 1) 100%);
 }
+/* General Section Styling */
+.section {
+  padding: 20px;
+  margin: 50px auto; /* Center sections horizontally */
+  border-radius: 10px;
+  max-width: 90%; /* Limit section width */
+}
 
-/* Ensure container stretches with content */
-.container {    
-    padding: 20px; /* Add padding around the container */
-    display: flex; /* Flex layout for cards */
-    flex-wrap: wrap; /* Allow cards to wrap to new rows */
-    justify-content: center; /* Center the cards horizontally */
-    gap: 40px; /* Add space between cards */
-    min-height: 100vh; /* Make the container at least the full viewport height */
-    align-content: flex-start; /* Align rows at the top */
+/* Adjust container size dynamically */
+.container {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; /* Smaller gaps between cards */
+}
+
+.section-table {
+  background-color: #f8f9fa; /* Light gray background for the table section */
+}
+
+
+/* Styling for Pending Section */
+.section-pending {
+  background-color: rgba(255, 255, 255, 0.1); /* Light white background with 10% opacity */
+  border: 1px solid #ddd;
+}
+
+/* Styling for Validated Section */
+.section-validated {
+  background-color: rgba(255, 255, 255, 0.1); /* Slightly greenish background for validated section */
+  border: 1px solid #ddd;
+}
+
+/* Adjust card size for smaller screens */
+.card-onboarding {
+  width: 190px; /* Default card width */
+  height: 254px; /* Default card height */
+  border-radius: 20px;
+  background: #c9b5cd;
+  position: relative;
+  padding: 1.8rem;
+  border: 2px solid #c3c6ce;
+  transition: 0.5s ease-out;
+  overflow: visible;
+  box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.5);
+}
+
+.card-approved{
+  
+  width: 190px; /* Default card width */
+  height: 254px; /* Default card height */
+  border-radius: 20px;
+  background: #cdcab5;
+  position: relative;
+  padding: 1.8rem;
+  border: 2px solid #c3c6ce;
+  transition: 0.5s ease-out;
+  overflow: visible;
+  box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.5);
+}
+.medal-circle {
+  position: absolute;
+  top: -10px; /* Adjust the vertical overlap */
+  right: -10px; /* Adjust the horizontal overlap */
+  width: 70px; /* Diameter of the circle */
+  height: 70px; /* Diameter of the circle */
+  border-radius: 50%; /* Makes it a perfect circle */
+  background: radial-gradient(circle, rgb(255, 229, 80) 60%, rgb(250, 168, 69) 100%); /* Medal-like gradient */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-align: center;
+  border: 2px solid white; /* Border to make it stand out */
+  z-index: 2; /* Ensure it overlaps the card */
 }
 
 /* Adjust card size for smaller screens */
@@ -36,7 +105,7 @@ html, body {
 
 /* Media Queries for Responsive Design */
 @media (max-width: 768px) {
-    .card {
+    .card,.card-onboarding,.card-approved {
         width: 150px; /* Smaller width for smaller screens */
         height: auto; /* Adjust height automatically */
         padding: 1rem; /* Reduce padding for smaller screens */
@@ -44,10 +113,16 @@ html, body {
 }
 
 @media (max-width: 480px) {
-    .card {
+    .card,.card-onboarding,.card-approved {
         width: 100%; /* Full width for very small screens */
         height: auto;
     }
+}
+.card-details-onboarding{
+  color: rgb(52, 18, 18);
+  height: 100%;
+  display: grid;
+  place-content: top;
 }
 .card-details {
     color: black;
@@ -57,7 +132,7 @@ html, body {
     place-content: top;
 }
 
-.card-button {
+.card-button, .card-button-onboarding {
     transform: translate(-50%, 125%);
     width: 60%;
     border-radius: 1rem;
@@ -73,7 +148,9 @@ html, body {
     opacity: 0;
     transition: 0.3s ease-out;
 }
-
+.onboarding-text{
+  color :rgb(2, 0, 36);
+}
 .text-body {
     color: white;
 }
@@ -85,15 +162,15 @@ html, body {
 }
 
 /* Hover */
-.card:hover {
+.card:hover,.card-onboarding:hover,.card-approved:hover {
     border-color: #013238;
     box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.5);
 }
 
-.card:hover .card-button {
+.card:hover .card-button, .card-onboarding:hover .card-button, .card-approved:hover  .card-button{
     transform: translate(-50%, 50%);
     opacity: 1;
-}
+} 
 
 .search-filter {
     position: relative; /* Ensure the dropdown is positioned relative to this container */
