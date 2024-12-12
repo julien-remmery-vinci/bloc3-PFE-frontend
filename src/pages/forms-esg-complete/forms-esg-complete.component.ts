@@ -266,7 +266,6 @@ export class FormsEsgCompleteComponent {
         this.openSubCategories.set(category, subCategorySet);
     }
 
-    // Check if a subcategory is open
     isSubCategoryOpen(category: string, subCategory: string): boolean {
         const subCategorySet = this.openSubCategories.get(category);
         return subCategorySet ? subCategorySet.has(subCategory) : false;

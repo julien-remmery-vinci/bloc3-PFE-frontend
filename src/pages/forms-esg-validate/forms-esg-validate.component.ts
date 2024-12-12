@@ -6,12 +6,9 @@ import {QuestionWithAnswer} from "../../types/QuestionWithAnswer";
 import {ThemeService} from "../../app/theme/theme.service";
 import {FormsModule} from "@angular/forms";
 import {ResponseService} from "../../services/response.service";
-import {AnswerPayload} from "../../types/answer-payload";
-import {AnswerPayloadCommentOnly} from "../../types/answer-payloadCommentOnly";
 import {FormService} from "../../services/form.service";
 import { AnswerValidationPayload } from 'src/types/answer-validation-payload';
 import { AnswerPayloadCommentOnlyValidationPayload } from 'src/types/answer-comment-validation-payload';
-import {Company} from "../../types/Company";
 import {CompanyService} from "../../services/company.service";
 
 
@@ -283,7 +280,6 @@ export class FormsEsgValidateComponent {
         this.openSubCategories.set(category, subCategorySet);
     }
 
-    // Check if a subcategory is open
     isSubCategoryOpen(category: string, subCategory: string): boolean {
         const subCategorySet = this.openSubCategories.get(category);
         return subCategorySet ? subCategorySet.has(subCategory) : false;

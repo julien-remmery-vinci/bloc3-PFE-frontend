@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
-import { map, Observable, Subscription,tap } from 'rxjs';
-import { HttpClient } from "@angular/common/http";
 import { Router } from '@angular/router';
 import { AuthService } from 'src/services/auth.service';
-import { User } from 'src/types/User';
-import { Company } from 'src/types/Company';
 import { CompanyService } from 'src/services/company.service';
 import { UserService } from 'src/services/user.service';
 import { Form } from 'src/types/Form';
