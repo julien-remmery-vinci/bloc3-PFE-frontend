@@ -11,6 +11,8 @@ import {AnswerPayloadCommentOnly} from "../../types/answer-payloadCommentOnly";
 import {FormService} from "../../services/form.service";
 import { AnswerValidationPayload } from 'src/types/answer-validation-payload';
 import { AnswerPayloadCommentOnlyValidationPayload } from 'src/types/answer-comment-validation-payload';
+import {Company} from "../../types/Company";
+import {CompanyService} from "../../services/company.service";
 
 
 @Component({
@@ -40,13 +42,14 @@ export class FormsEsgValidateComponent {
                 protected themeService:ThemeService,
                 private responseService:ResponseService,
                 private formSerice:FormService,
-                private cdr: ChangeDetectorRef) {
+                private cdr: ChangeDetectorRef,
+                private companyService:CompanyService) {
       const navigation = this.router.getCurrentNavigation();
       this.form = navigation?.extras?.state?.['form'];
       this.questions = this.form.questions;
-      this.selectedQuestion = this.questions[0];
+      this.selectedQuestion = this.questions[this.getLatestNotValidatedQuestion()];
       this.selectedAnswerIds.clear();
-      this.updateSelectedAnswerId();
+      this.updateDisplayOfAnswer();
       this.findAllCategory()
   }
   onAnswerChange(answer_id: number) {
@@ -80,7 +83,7 @@ export class FormsEsgValidateComponent {
       }
   }
 
-  updateSelectedAnswerId() {
+  updateDisplayOfAnswer() {
     if (this.selectedQuestion?.user_answers && this.selectedQuestion.user_answers.length > 0) {
         for (const answer of this.selectedQuestion.user_answers) {
             if(answer.commitment_pact || answer.now){
@@ -89,13 +92,23 @@ export class FormsEsgValidateComponent {
             if(answer.comment){
                 this.selectedAnswerComment[answer.answer_id] = answer.comment
             }
-
-            if(answer.now){
+            if(answer.status == "VALIDATED"){
+                if(answer.now_verif)
                 this.isNow[answer.answer_id] = "now"
             }
-
-            if(answer.commitment_pact){
-                this.isCommitment[answer.answer_id] ="commitment_pact"
+            else{
+                if(answer.now){
+                    this.isNow[answer.answer_id] = "now"
+                }
+            }
+            if(answer.status == "VALIDATED"){
+                if(answer.commitment_pact_verif)
+                    this.isCommitment[answer.answer_id] = "commitment_pact"
+            }
+            else{
+                if(answer.commitment_pact){
+                    this.isCommitment[answer.answer_id] ="commitment_pact"
+                }
             }
         }
     } else {
@@ -114,14 +127,16 @@ export class FormsEsgValidateComponent {
                 if(!answer.is_forced_comment){
                     const answerPayload: AnswerValidationPayload = {
                         form_id: this.form.form_id,
-                        now: this.isNow[answer.answer_id] == "now",
-                        commitment_pact: this.isCommitment[answer.answer_id]=="commitment_pact"
+                        now_verif: this.isNow[answer.answer_id] == "now",
+                        commitment_pact_verif: this.isCommitment[answer.answer_id]=="commitment_pact",
+                        comment : this.selectedAnswerComment[answer.answer_id]
+
                     };
                     this.responseService.sendAnswerValidationById(answerPayload, answer.answer_id).subscribe(
                         (response) => {                               
-                                this.formSerice.getUserForms().subscribe(
+                                this.companyService.getForms(this.form.company_id).subscribe(//formSerice.getUserForms().subscribe(
                                     (response) =>{
-                                        const forms : Form[] = response
+                                        const forms : Form[] = response.forms
                                         for (const formU of forms){
                                             if(formU.form_id == this.form.form_id){
                                                 this.form = formU
@@ -145,16 +160,15 @@ export class FormsEsgValidateComponent {
                     };
                     this.responseService.sendAnswerCommentOnlyValidationById(answerPayload,answer.answer_id).subscribe(
                         () => {
-                            this.formSerice.getUserForms().subscribe(
+                            this.companyService.getForms(this.form.company_id).subscribe(//formSerice.getUserForms().subscribe(
                                 (response) =>{
-                                    const forms : Form[] = response
-                                    for (const formU of forms ){
+                                    const forms : Form[] = response.forms
+                                    for (const formU of forms){
                                         if(formU.form_id == this.form.form_id){
                                             this.form = formU
                                             this.questions = this.form.questions;
                                             this.findAllCategory()
                                             this.cdr.detectChanges();  // Trigger change detection
-
                                         }
                                     }
                                 }
@@ -177,7 +191,7 @@ export class FormsEsgValidateComponent {
     this.selectedAnswerComment = [];
     this.isNow = [];
     this.isCommitment = [];
-    this.updateSelectedAnswerId();
+    this.updateDisplayOfAnswer();
 
     if(this.form && this.questions && this.selectedQuestion) {
       const index = this.questions.indexOf(this.selectedQuestion);
@@ -273,5 +287,11 @@ export class FormsEsgValidateComponent {
     isSubCategoryOpen(category: string, subCategory: string): boolean {
         const subCategorySet = this.openSubCategories.get(category);
         return subCategorySet ? subCategorySet.has(subCategory) : false;
+    }
+    private getLatestNotValidatedQuestion(): number {
+        const index = this.form.questions.findIndex((question) =>
+            question.user_answers.some((userAnswer) => userAnswer.status === "PENDING")
+        );
+        return index;
     }
 }

@@ -32,6 +32,7 @@ import { ScoreComponent } from "./pages/score/score.component";
 import {OnboardingValidationComponent} from "./pages/onboarding-validation/onboarding-validation.component";
 import { StatsService } from "./services/stats.service";
 import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from "@angular/common";
+import {CompanyDashboardComponent} from "./pages/company-dashboard/company-dashboard.component";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from "@a
     StatisticsComponent,
     OnboardingComponent,
     ScoreComponent,
-    OnboardingValidationComponent
+    OnboardingValidationComponent,
+    CompanyDashboardComponent
   ],
   imports: [
     MatFormFieldModule,

@@ -46,7 +46,7 @@ export class CompanyDashboardComponent {
 
   navigateTo(route: string): void {
     this.formService.getUserForms().subscribe((forms: Form[]) => {
-      let form = forms[forms.length - 1];            
+      let form = forms[forms.length - 1];
       this.router.navigate([route], { state: { form } } );
     });
   }
