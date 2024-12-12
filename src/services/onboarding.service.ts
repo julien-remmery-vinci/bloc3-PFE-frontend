@@ -15,6 +15,12 @@ export class OnboardingService {
     return this.http.post<any>(this.apiUrl, data);
   }
   getPendingOnboardingForms(): Observable<Onboarding[]> {
-       return this.http.get<Onboarding[]>(this.apiUrl+`/pending`);
-     }
+    return this.http.get<any>(this.apiUrl+`/pending`);
+  }
+  validateOnboardingRequest(onboarding_id: number): Observable<any> {
+      return this.http.post<any>(this.apiUrl+`/${onboarding_id}/accept`,null);
+  }
+  refuseOnboardingRequest(onboarding_id: number): Observable<any> {
+      return this.http.post<any>(this.apiUrl+`/${onboarding_id}/reject`,null);
+  }
 }
