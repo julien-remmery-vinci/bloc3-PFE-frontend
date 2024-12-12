@@ -1,0 +1,118 @@
+<div class="onboarding-wrapper">
+    <div class="onboarding-container">
+        <h1>Vérifier l’éligibilité de l'entreprise</h1>
+
+        <div *ngIf="submitted">
+            <p class="success-message">{{ successMessage }}</p>
+        </div>
+
+        <form>
+            <div>
+                <h2>Informations utilisateur</h2>
+                <label for="firstname">Quel est votre prénom ?</label>
+                <input id="firstname" type="text" placeholder="Prénom" [value]="onboarding.firstname" disabled />
+
+                <label for="lastname">Quel est votre nom ?</label>
+                <input id="lastname" type="text" placeholder="Nom" [value]="onboarding.lastname" disabled />
+
+                <label for="email">Quelle est votre adresse e-mail ?</label>
+                <input id="email" type="email" placeholder="Adresse e-mail" [value]="onboarding.email" disabled />
+
+                <label for="password">Mot de passe</label>
+                <input id="password" type="password" placeholder="Mot de passe" [value]="onboarding.password" disabled />
+
+                <label for="position">Quelle est votre fonction ?</label>
+                <input id="position" type="text" placeholder="Fonction" [value]="onboarding.position" disabled />
+            </div>
+
+            <div>
+                <h2>Informations sur l'entreprise</h2>
+                <label for="company_name">Quel est le nom de votre entreprise ?</label>
+                <input id="company_name" type="text" placeholder="Nom de l'entreprise" [value]="onboarding.company_name" disabled />
+
+                <label for="company_number">Quel est votre n° d'entreprise ?</label>
+                <input id="company_number" type="text" placeholder="Numéro d'entreprise" [value]="onboarding.company_number" disabled />
+
+                <label for="legal_form">Quelle est la forme juridique ?</label>
+                <input id="legal_form" type="text" placeholder="Forme juridique" [value]="onboarding.legal_form" disabled />
+
+                <label for="office_address">Quelle est l'adresse du siège social ?</label>
+                <input id="office_address" type="text" placeholder="Adresse du siège social" [value]="onboarding.office_address" disabled />
+
+                <label for="website">Quelle est l'adresse de votre site web ?</label>
+                <input id="website" type="url" placeholder="Site Web" [value]="onboarding.website" disabled />
+
+                <label for="nace_code">Quel est le Code NACE de votre activité principale ?</label>
+                <input id="nace_code" type="text" placeholder="Code NACE" [value]="onboarding.nace_code" disabled />
+
+                <label for="revenue">Quel est le chiffre d'affaires du dernier exercice clôturé ?</label>
+                <input id="revenue" type="number" placeholder="Chiffre d'affaires" [value]="onboarding.revenue" disabled />
+            </div>
+
+            <div>
+                <h2>Informations supplémentaires</h2>
+                <label for="nb_workers">Combien de travailleurs comptez-vous ?</label>
+                <input id="nb_workers" type="number" placeholder="Nombre de travailleurs" [value]="onboarding.nb_workers" disabled />
+
+                <div class="radio-group">
+                    <label>Votre entreprise est-elle une franchise ?</label>
+                    <label><input type="radio" [value]="true" [checked]="onboarding.franchise" disabled /> Oui</label>
+                    <label><input type="radio" [value]="false" [checked]="!onboarding.franchise" disabled /> Non</label>
+                </div>
+
+                <div class="radio-group">
+                    <label>Est-ce que votre entreprise est actuellement en litige social ou environnemental ?</label>
+                    <label><input type="radio" [value]="true" [checked]="onboarding.dispute" disabled /> Oui</label>
+                    <label><input type="radio" [value]="false" [checked]="!onboarding.dispute" disabled /> Non</label>
+                </div>
+
+                <div class="radio-group">
+                    <label>Dans le cadre de la certification Shifting Pact, vous engagez-vous à respecter nos critères ?</label>
+                    <label><input type="radio" [value]="true" [checked]="onboarding.honor_engagement" disabled /> Oui</label>
+                    <label><input type="radio" [value]="false" [checked]="!onboarding.honor_engagement" disabled /> Non</label>
+                </div>
+
+                <div class="radio-group">
+                    <label>Avez-vous l'intention de soumettre une demande de subside ?</label>
+                    <label><input type="radio" [value]="true" [checked]="onboarding.grant_application" disabled /> Oui</label>
+                    <label><input type="radio" [value]="false" [checked]="!onboarding.grant_application" disabled /> Non</label>
+                </div>
+
+                <div class="radio-group">
+                    <label>Êtes-vous propriétaire ?</label>
+                    <label><input type="radio" [value]="true" [checked]="onboarding.is_owner" disabled /> Oui</label>
+                    <label><input type="radio" [value]="false" [checked]="!onboarding.is_owner" disabled /> Non</label>
+                </div>
+
+                <div class="radio-group">
+                    <label>Proposez-vous des services ?</label>
+                    <label><input type="radio" [value]="true" [checked]="onboarding.offers_services" disabled /> Oui</label>
+                    <label><input type="radio" [value]="false" [checked]="!onboarding.offers_services" disabled /> Non</label>
+                </div>
+
+                <div class="radio-group">
+                    <label>Vendez-vous des produits ?</label>
+                    <label><input type="radio" [value]="true" [checked]="onboarding.sells_products" disabled /> Oui</label>
+                    <label><input type="radio" [value]="false" [checked]="!onboarding.sells_products" disabled /> Non</label>
+                </div>
+            </div>
+
+            <div>
+                <h2>Informations complémentaires</h2>
+                <label for="grant_application_partner">Qui est votre partenaire pour introduire une demande de subside ?</label>
+                <input id="grant_application_partner" type="text" [value]="onboarding.grant_application_partner" disabled />
+
+                <label for="something_else">Souhaitez-vous ajouter autre chose ?</label>
+                <textarea id="something_else" placeholder="Autres informations" disabled>{{ onboarding.something_else }}</textarea>
+
+                <label for="comment">Commentaires</label>
+                <textarea id="comment" placeholder="Commentaires" disabled>{{ onboarding.comment }}</textarea>
+            </div>
+
+            <div class="navigation-buttons">
+                <button type="button" (click)="submit()">Valider</button>
+                <button type="button" (click)="refuse()">Refuser</button>
+            </div>
+        </form>
+    </div>
+</div>

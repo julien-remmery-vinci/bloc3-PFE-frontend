@@ -29,6 +29,7 @@ import { HighchartsChartModule } from "highcharts-angular";
 import { StatisticsComponent } from "./pages/statistics/statistics.component";
 import { OnboardingComponent } from "./pages/onboarding/onboarding.component";
 import { ScoreComponent } from "./pages/score/score.component";
+import {OnboardingValidationComponent} from "./pages/onboarding-validation/onboarding-validation.component";
 import { StatsService } from "./services/stats.service";
 
 @NgModule({
@@ -42,7 +43,8 @@ import { StatsService } from "./services/stats.service";
     UserRegisterComponent,
     StatisticsComponent,
     OnboardingComponent,
-    ScoreComponent
+    ScoreComponent,
+    OnboardingValidationComponent
   ],
   imports: [
     MatFormFieldModule,
