@@ -1,5 +1,13 @@
 .flex {
     display: flex;
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    padding: 20px;
+    margin-bottom: 30px;
+    background-color: #b5cdbf;
+    color: var(--text-color);
+    height: 100%;
 }
 
 .questions {

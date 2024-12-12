@@ -8,4 +8,5 @@ export interface UserAnswerEsg {
     comment?: string;
     now_verif?: boolean;
     commitment_pact_verif?: boolean;
+    status:string
 }
