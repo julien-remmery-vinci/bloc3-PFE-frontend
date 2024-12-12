@@ -1,37 +1,63 @@
-import {Component, OnInit} from '@angular/core';
-import {LoadingService} from "../services/loading.service";
-import {AuthService} from "../services/auth.service";
-import { HighchartsChartModule } from 'highcharts-angular';
-import { Router, NavigationEnd } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { LoadingService } from "../services/loading.service";
+import { AuthService } from "../services/auth.service";
+import { HighchartsChartModule } from "highcharts-angular";
+import { Router, NavigationEnd } from "@angular/router";
+import { Title } from "@angular/platform-browser";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   loading: boolean = true;
 
   spinnerConfig = {
-    backdropBorderRadius: '3px',
-    animationType: 'ball-scale-multiple',
-    primaryColour: '#fde791',
-    secondaryColour: '#dfd4fb',
-    tertiaryColour: '#b5cdbf',
-    fullScreen: true
+    backdropBorderRadius: "3px",
+    animationType: "ball-scale-multiple",
+    primaryColour: "#fde791",
+    secondaryColour: "#dfd4fb",
+    tertiaryColour: "#b5cdbf",
+    fullScreen: true,
   };
-    constructor(private loadingService: LoadingService,private authService: AuthService, private router: Router) {}
+  constructor(
+    private loadingService: LoadingService,
+    private authService: AuthService,
+    private router: Router,
+    private titleService: Title
+  ) {}
 
-    ngOnInit() {
-      this.router.events.subscribe(event => {
-        if (event instanceof NavigationEnd) {
-          console.log('Current route:', event.urlAfterRedirects);
+  ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.updateTitle(event.urlAfterRedirects);
         }
-      });
-      this.authService.loadUserFromServerIfTokenValid()
+    });
+    this.authService.loadUserFromServerIfTokenValid();
 
-      this.loadingService.loading$.subscribe(isLoading => {
-        this.loading = isLoading;
-      });
+    this.loadingService.loading$.subscribe((isLoading) => {
+      this.loading = isLoading;
+    });
+  }
+
+  updateTitle(url: string): void {
+    let title = 'ShiftingPact';
+    if (url.includes('/home')) {
+      title = 'Accueil';
+    } else if (url.includes('/dashboard')) {
+      title = 'Panneau de gestion';
+    } else if (url.includes('/statistics')) {
+      title = 'Statistiques';
+    } else if (url.includes('/register')) {
+      title = 'Inscrire';
+    } else if (url.includes('/login')) {
+      title = 'Login';
+    } else if (url.includes('/onboarding')) {
+      title = 'Onboarding';
+    } else if (url.includes('/score')) {
+      title = 'Score';
     }
+    this.titleService.setTitle(title);
+  }
 }
