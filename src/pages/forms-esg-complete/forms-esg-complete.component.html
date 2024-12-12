@@ -24,7 +24,7 @@
             <thead>
             <tr>
                 <th>Answer</th>
-                <th>Maintenant</th>
+                <th>Pratiques mise en place aujourd'hui</th>
                 <th>Pacte d'engagement</th>
                 <th>Commentaires</th>
             </tr>
@@ -39,7 +39,7 @@
                 <td>
                     <!-- Now Radio Button -->
                     <div *ngIf="answer.answer">
-                        <label for="now{{answer.answer_id}}">Now</label>
+                        <!-- <label for="now{{answer.answer_id}}">aujourd'hui</label> -->
                         <input
                                 type="checkbox"
                                 [id]="'now' + answer.answer_id"
@@ -53,7 +53,7 @@
                 <td>
                     <!-- Commitment Pact Radio Button -->
                     <div *ngIf="answer.answer">
-                        <label for="commitmentPact{{answer.answer_id}}">Commitment Pact</label>
+                        <!-- <label for="commitmentPact{{answer.answer_id}}">Pacte d'engagement</label> -->
                         <input
                                 type="checkbox"
                                 [id]="'commitmentPact' + answer.answer_id"

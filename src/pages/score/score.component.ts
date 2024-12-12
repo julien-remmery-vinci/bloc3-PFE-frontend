@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormService } from 'src/services/form.service';
 import { ScoreService } from 'src/services/score.service';
 import { ScoreUpdate } from 'src/types/score.types';
+import Swal from 'sweetalert2';
 
 interface Question {
   question: {
@@ -122,15 +123,57 @@ export class ScoreComponent implements OnInit {
     if (Object.keys(scoreUpdate).length > 0) {
       this.scoreService.updateScore(answerId, scoreUpdate).subscribe(
         () => {
-          this.successMessage = "Score(s) mis à jour avec succès";
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Score(s) mis à jour avec succès"
+          });
           this.errorMessages[answerId] = '';
           setTimeout(() => this.successMessage = '', 3000);
         },
         (error) => {
           if (error.status === 400) {
-            this.errorMessages[answerId] = "Score(s) invalide(s)";
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              }
+            });
+            Toast.fire({
+              icon: "warning",
+              title: "Score(s) invalide(s)"
+            });
           } else {
-            this.errorMessages[answerId] = "Erreur lors de la mise à jour";
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              }
+            });
+            Toast.fire({
+              icon: "error",
+              title: "Erreur lors de la mise à jour"
+            });
           }
         }
       );
