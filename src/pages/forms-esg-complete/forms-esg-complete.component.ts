@@ -210,6 +210,8 @@ export class FormsEsgCompleteComponent {
       let confirmation: SubmitValidation = {
           confirmation: false
       };
+      console.log("test");
+      
       if(this.form && this.form.form_id){
           this.formSerice.submitForm(this.form.form_id,confirmation).subscribe(
               (response) => {
@@ -258,6 +260,7 @@ export class FormsEsgCompleteComponent {
           confirmation: true
       };
       if(this.form && this.form.form_id){
+        
           this.formSerice.submitForm(this.form.form_id,confirmation).subscribe(
             (response) => {
                 const Toast = Swal.mixin({
@@ -270,12 +273,12 @@ export class FormsEsgCompleteComponent {
                         toast.onmouseenter = Swal.stopTimer;
                         toast.onmouseleave = Swal.resumeTimer;
                     }
-                    });
-                    Toast.fire({
+                });
+                Toast.fire({
                     icon: "success",
                     title: "Questionnaire envoyé"
-                    }); 
-                    this.router.navigate(['/home']);
+                }); 
+                this.router.navigate(['/home']);
             },
             (error) => {
                 console.log(error)
