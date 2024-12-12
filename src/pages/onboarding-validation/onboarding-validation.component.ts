@@ -33,7 +33,6 @@ export class OnboardingValidationComponent {
   {
     const navigation = this.router.getCurrentNavigation();
     this.onboarding = navigation?.extras?.state?.['onboarding'];
-    console.log(this.onboarding)
   }
 
   submit(): void {

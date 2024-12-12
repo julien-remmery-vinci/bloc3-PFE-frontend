@@ -23,7 +23,6 @@ export class CompanyService {
   }
 
   getForms(companyId: number): Observable<{key : Company,forms : Form[]}> {
-    //   console.log(`Fetching status for company ID: ${companyId}`);
-       return this.http.get<{key : Company,forms : Form[]}>(this.apiUrl+`/${companyId}`);
-     }
+    return this.http.get<{key : Company,forms : Form[]}>(this.apiUrl+`/${companyId}`);
+  }
 }
