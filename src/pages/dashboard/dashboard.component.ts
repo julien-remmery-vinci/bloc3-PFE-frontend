@@ -36,7 +36,6 @@ export class DashboardComponent {
     })
     this.companyService.getCompanies().subscribe((data) => {
       this.companies = data;
-      console.log(this.companies)
       this.companies.forEach((company) => {
         this.companyService
           .getFormStatus(company.company_id!)
@@ -51,7 +50,10 @@ export class DashboardComponent {
       });
     });
   }
-
+  getScoreTotal(formId: number): number {
+    const score = this.scoresMap[formId];
+    return score ? Math.round(score.total) : 0;
+  }
   // Toggle dropdown visibility
   toggleDropdown(): void {
     this.isDropdownVisible = !this.isDropdownVisible;
@@ -108,7 +110,7 @@ export class DashboardComponent {
   // Get filtered companies by status
   filterCompaniesByStatus(status: string): Company[] {
     return this.filteredCompanies().filter(
-      (company) => this.getFormFromMap(company.company_id!).status === status
+      (company) => this.getFormFromMap(company.company_id!)?.status === status
     );
   }
 
@@ -121,4 +123,6 @@ export class DashboardComponent {
   getValidatedCompanies(): Company[] {
     return this.filterCompaniesByStatus('VALIDATED');
   }
+
+  protected readonly Math = Math;
 }

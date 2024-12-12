@@ -81,7 +81,7 @@
     <div class="container">
       <div *ngFor="let company of getValidatedCompanies()">
         <div class="card-approved">
-          <div class="medal-circle">{{scoresMap[getFormFromMap(company.company_id!).form_id!].total}}%</div>
+          <div class="medal-circle">{{Math.round(getScoreTotal(getFormFromMap(company.company_id!).form_id!))}}%</div>
           <div class="card-details">
             <p class="text-title">Entreprise: {{ company.company_name }}</p>
             <p class="text-body">Progression du formulaire ESG:</p>
@@ -89,9 +89,9 @@
               <div class="progress-bar-back"></div>
               <div
                 class="progress-bar-fill"
-                [style.width.%]="progressMap[company.company_id!]"
+                [style.width.%]="100"
               >
-                {{ progressMap[company.company_id!] }}%
+               Validé
               </div>
             </div>
           </div>

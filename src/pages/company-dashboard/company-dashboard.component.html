@@ -1,25 +1,22 @@
 <body>
-  <!-- Main Content -->
-  <div class="container">
+<!-- Main Content -->
+<div class="container">
 
-      <div class="card">
+    <div class="card">
         <div class="card-details">
-          
-          <p class="text-title">Entreprise: {{company.company_name}}</p>
-          <p class="text-body">Progression du formulaire ESG:</p>
-          
-          <div class="progress-bar">
-            <!-- Background bar -->
-            <div class="progress-bar-back"></div>
-            
-            <!-- Filled bar -->
-            <div class="progress-bar-fill" [style.width.%]="progressMap[company.company_id!]">
-              {{ progressMap[company.company_id!] }}%
+            <p class="text-title">Entreprise: {{company?.company_name}}</p>
+            <p class="text-body">Progression du formulaire ESG:</p>
+
+            <div class="progress-bar">
+                <div class="progress-bar-back"></div>
+
+                <div class="progress-bar-fill" [style.width.%]="progressMap[company?.company_id!]">
+                    {{ progressMap[company?.company_id!] }}%
+                </div>
             </div>
-          </div>
-          <button class="card-button" (click)="navigateTo(form)" >Inspecter le formulaire</button>
+            <button class="card-button" (click)="navigateTo('/forms/esg/complete')" >Inspecter le formulaire</button>
         </div>
-      </div>
-      
     </div>
+
+</div>
 </body>
