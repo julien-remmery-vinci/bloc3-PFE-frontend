@@ -1,23 +1,23 @@
 <body>
   <div class="section section-pending">
-  <h2>Entreprises en attente de validation de l'onboarding</h2>
-  <div class="container">
-    <div *ngFor="let onboarding of pendingOnboardings">
-      <div class="card-onboarding">
-        <div class="card-details-onboarding">
-          <p class="text-title">{{ onboarding.company_name}}</p>
-          <p class="onboarding-text">Adresse : {{onboarding.office_address}}</p>
-          <p class="onboarding-text">Nombres employés : {{onboarding.nb_workers}}</p>         
+      <h2>Entreprises en attente de validation de l'onboarding</h2>
+      <div class="container">
+        <div *ngFor="let onboarding of pendingOnboardings">
+          <div class="card-onboarding">
+            <div class="card-details-onboarding">
+              <p class="text-title">{{ onboarding.company_name}}</p>
+              <p class="onboarding-text">Adresse : {{onboarding.office_address}}</p>
+              <p class="onboarding-text">Nombres employés : {{onboarding.nb_workers}}</p>
+            </div>
+            <button
+              class="card-button"
+              (click)="goToOnboarding(onboarding)"
+            >
+              Inspecter l'onboarding
+            </button>
+          </div>
         </div>
-        <button
-          class="card-button"
-          (click)="goToOnboarding(onboarding)"
-        >
-          Inspecter l'onboarding
-        </button>
       </div>
-    </div>
-  </div>
   </div>
   <!-- Section: Pending Status Cards -->
   <div class="section section-pending">
@@ -104,5 +104,19 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="section section-pending">
+      <h2>Entreprises dont l'onboarding a été refusé</h2>
+      <div class="container">
+          <div *ngFor="let onboarding of rejectedOnboardings">
+              <div class="card-onboarding">
+                  <div class="card-details-onboarding">
+                      <p class="text-title">{{ onboarding.company_name}}</p>
+                      <p class="onboarding-text">Adresse : {{onboarding.office_address}}</p>
+                      <p class="onboarding-text">Nombres employés : {{onboarding.nb_workers}}</p>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
 </body>
