@@ -36,7 +36,6 @@ export class ScoreComponent implements OnInit {
   expandedSubCategories: Set<string> = new Set();
   expandedQuestions: Set<number> = new Set();
   successMessage: string = '';
-  errorMessage: string = '';
 
   constructor(private formService: FormService, private scoreService:ScoreService) {}
 
