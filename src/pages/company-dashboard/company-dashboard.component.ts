@@ -4,9 +4,11 @@ import { HttpClient } from "@angular/common/http";
 import { Router } from '@angular/router';
 import { AuthService } from 'src/services/auth.service';
 import { User } from 'src/types/User';
+import { Form } from 'src/types/Form';
 import { Company } from 'src/types/Company';
 import { CompanyService } from 'src/services/company.service';
 import { UserService } from 'src/services/user.service';
+import { ScoreService } from 'src/services/score.service';
 
 
 @Component({
@@ -15,6 +17,8 @@ import { UserService } from 'src/services/user.service';
   styleUrls: ['./company-dashboard.component.css']
 })
 export class CompanyDashboardComponent {
+  form: any;
+  score: any;
   user:any;
   company:any;
   searchTerm: string = ''; // Search bar input
@@ -26,7 +30,8 @@ export class CompanyDashboardComponent {
     private userService: UserService,
     private companyService: CompanyService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private scoreService : ScoreService
   ) {}
 
   ngOnInit(): void {
@@ -40,9 +45,21 @@ export class CompanyDashboardComponent {
         this.progressMap[this.company.company_id!] = prog;
       })
     });
+    this.companyService.getForms(this.company.company_id!).subscribe((forms) => {
+      this.form= forms.forms[0]!;
+      this.fillScoreMap(this.form.form_id);
+    });
   }
 
-  navigateTo(route: string): void {
-    this.router.navigate([route]);
+  fillScoreMap(id:number):void{
+    this.scoreService.getScoreFromFormId(id).subscribe((score)=>{
+      this.score = score;
+    });
+  }
+
+  navigateTo(form: Form): void {
+    this.router.navigate([`/forms/${form.type.toLowerCase()}/validate`], {
+      state: { form },
+    });
   }
 }

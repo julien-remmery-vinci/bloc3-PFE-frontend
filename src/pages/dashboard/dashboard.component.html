@@ -97,7 +97,7 @@
           </div>
           <button
             class="card-button"
-            (click)="navigateTo(getFormFromMap(company.company_id!))"
+            (click)="navigateToScoreDetail(scoresMap[getFormFromMap(company.company_id!).form_id!])"
           >
             Détail du score
           </button>

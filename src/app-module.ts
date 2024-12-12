@@ -30,6 +30,7 @@ import { HighchartsChartModule } from "highcharts-angular";
 import { StatisticsComponent } from "./pages/statistics/statistics.component";
 import { OnboardingComponent } from "./pages/onboarding/onboarding.component";
 import { ScoreComponent } from "./pages/score/score.component";
+import { ScoreReviewComponent } from "./pages/scoreReview/scoreReview.component";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ScoreComponent } from "./pages/score/score.component";
     UserRegisterComponent,
     StatisticsComponent,
     OnboardingComponent,
-    ScoreComponent
+    ScoreComponent,
+    ScoreReviewComponent
   ],
   imports: [
     MatFormFieldModule,

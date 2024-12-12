@@ -33,6 +33,7 @@ export class DashboardComponent {
     })
     this.companyService.getCompanies().subscribe((data) => {
       this.companies = data;
+      console.log(this.companies)
       this.companies.forEach((company) => {
         this.companyService
           .getFormStatus(company.company_id!)
@@ -71,6 +72,11 @@ export class DashboardComponent {
       state: { form },
     });
   }
+  navigateToScoreDetail(score: Score): void {
+    this.router.navigate([`/forms/score`], {
+      state: { score },
+    });
+  }
 
   goToOnboarding(onboarding:Onboarding): void {
     this.router.navigate([`/onboarding/${onboarding.onboarding_id}/validate`],{
@@ -106,7 +112,7 @@ export class DashboardComponent {
 
   // Filtered companies for 'PENDING' status
   getPendingCompanies(): Company[] {
-    return this.filterCompaniesByStatus('PENDING');
+    return this.filterCompaniesByStatus('SUBMITTED');
   }
 
   // Filtered companies for 'VALIDATED' status
